@@ -16,8 +16,8 @@ public class AccountThread implements Runnable{
 
 
 	public void run() {
-
-		Account account = new Account();
+        System.out.println("runing.................");
+        Account account = new Account();
 		account.setMoney(232.3);
 		account.setName("thread");
 		accountService.addAccount(account);

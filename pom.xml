@@ -48,6 +48,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring-version}</version>
+            <scope>test</scope>
         </dependency>
         <!--添加spring-web包 -->
         <dependency>

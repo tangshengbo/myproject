@@ -66,7 +66,7 @@ public class AccountController {
 		executorService.execute(new AccountThread(accountService));
 
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
