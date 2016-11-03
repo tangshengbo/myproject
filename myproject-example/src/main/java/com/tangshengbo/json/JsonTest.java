@@ -1,15 +1,14 @@
 package com.tangshengbo.json;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.HashMap;
-
 import com.tangshengbo.test.User;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.HashMap;
 
 
 public class JsonTest {

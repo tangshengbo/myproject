@@ -11,6 +11,7 @@ public class Test {
 			messageInfo.setChannel("test");
 			messageInfo.setContent("msg" + i);
 			sender.sendMessage(messageInfo);
-		}
+            System.out.println("");
+        }
 	}
 }
