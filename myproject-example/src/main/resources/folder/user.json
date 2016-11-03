@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "name": "唐唐",
+  "majoys": [
+    "唱歌",
+    "编程"
+  ],
+  "hasGrilFriend": false,
+  "money": 22.32,
+  "birthday": "2016-10-06"
+}

@@ -20,6 +20,9 @@ public class AccountThread implements Runnable{
         Account account = new Account();
 		account.setMoney(232.3);
 		account.setName("thread");
+		account.setName("thread");
+		account.setName("thread");
+		account.setName("thread");
 		accountService.addAccount(account);
 	}
 
