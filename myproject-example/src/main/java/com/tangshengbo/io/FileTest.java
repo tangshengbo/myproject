@@ -1,22 +1,7 @@
 package com.tangshengbo.io;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
 
 public class FileTest {
 	public static void main(String[] args) throws Exception {
@@ -26,7 +11,7 @@ public class FileTest {
 //		fileTest.read();
 //		fileTest.bufferRead();
 		fileTest.serializeObject();
-		
+
 	}
 	public void operationFile() throws IOException{
 		File file = new File("D:\\tang.txt");
@@ -84,7 +69,7 @@ public class FileTest {
 			pw.flush();
 		}
 	}
-	public void serializeObject() throws FileNotFoundException, IOException, ClassNotFoundException{
+	private void serializeObject() throws FileNotFoundException, IOException, ClassNotFoundException{
 		
 		ObjectOutputStream out = new  ObjectOutputStream(new FileOutputStream("folder\\serialize.txt"));
 		Student student = new Student("00000001", "唐声波", 42);
@@ -94,12 +79,7 @@ public class FileTest {
 		student = (Student)in.readObject();
 		System.out.println(student.toString());
 		Proxy proxy ;
-		
-		
-		
-		
-		
-		
+
 		
 	}
 

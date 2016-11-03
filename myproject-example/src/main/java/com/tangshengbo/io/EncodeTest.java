@@ -14,8 +14,8 @@ public class EncodeTest {
 	public void testCharset() {
 		String str = "唐声波";
 		Charset charset = Charset.forName("UTF-8");
-
-		ByteBuffer bf = charset.encode(str);
+        System.out.println("tangshengbo");
+        ByteBuffer bf = charset.encode(str);
 		CharBuffer cb = charset.decode(bf);
 		System.out.println(cb.toString());
 

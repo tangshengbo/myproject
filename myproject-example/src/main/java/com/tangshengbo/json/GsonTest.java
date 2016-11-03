@@ -15,9 +15,9 @@ public class GsonTest {
 		Account account = new Account();
 		account.setId(1);
 		account.setMoney(22.32);
-		account.setName("ÌÆÌÆ");
+		account.setName("糖糖");
 		account.setHasGrilFriend(false);
-		account.setMajoys(new String[] { "³ª¸è", "±à³Ì" });
+		account.setMajoys(new String[] { "唐阿卡", "卡卡" });
 		account.setBirthday(new Date());
 		GsonBuilder builder = new GsonBuilder();
 		builder.setPrettyPrinting();

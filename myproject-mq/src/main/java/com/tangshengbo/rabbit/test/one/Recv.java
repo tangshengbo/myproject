@@ -1,11 +1,11 @@
 package com.tangshengbo.rabbit.test.one;
 
-import java.util.concurrent.TimeoutException;
-
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
+
+import java.util.concurrent.TimeoutException;
 
 public class Recv {
 	// 队列名称
@@ -21,7 +21,7 @@ public class Recv {
 		Channel channel = connection.createChannel();
 		// 声明队列，主要为了防止消息接收者先运行此程序，队列还不存在时创建队列。
 		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-		System.out.println("Waiting for messages. To exit press CTRL+C");
+		System.out.println("Wai ting for messages. To exit press CTRL+C");
 
 		// 创建队列消费者
 		QueueingConsumer consumer = new QueueingConsumer(channel);

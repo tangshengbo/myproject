@@ -1,10 +1,10 @@
 package com.tangshengbo.rabbit.test.one;
 
-import java.util.concurrent.TimeoutException;
-
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+
+import java.util.concurrent.TimeoutException;
 
 public class Send {
 
@@ -27,7 +27,7 @@ public class Send {
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         String message = "hello world!";
         long start = System.currentTimeMillis(); // 获取开始时间6588ms
-        for (int i = 1; i < 10000; i++) {
+        for (int i = 1; i < 1000000; i++) {
             message = "hello world!"+i;
             //往队列中发出一条消息
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
