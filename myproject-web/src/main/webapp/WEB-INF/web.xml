@@ -18,6 +18,11 @@
         <!-- 配置spring.xml和spring-mybatis.xml这两个配置文件的位置，固定写法 -->
         <param-value>classpath:spring-context.xml,classpath:spring-mybatis.xml</param-value>
     </context-param>
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+
     <!-- springMVC核心配置 -->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
@@ -34,6 +39,7 @@
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
     <!-- 编码设置 -->
     <filter>
         <filter-name>encodingFilter</filter-name>

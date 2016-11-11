@@ -2,34 +2,35 @@ package com.tangshengbo.test;
 
 import com.tangshengbo.model.Account;
 import com.tangshengbo.service.AccountService;
+import org.apache.log4j.Logger;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 /**
- * Created by TangShengBo on 2016-10-19.
+ * Created by Administrator on 2016/11/11.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath*:/resources/*.xml")
-public class Test {
+@ContextConfiguration(locations = {"classpath:spring-context.xml","classpath:spring-mybatis.xml"})
+public class TestService {
+    private Logger log = Logger.getLogger(this.getClass());
     @Autowired
     private AccountService accountService;
-
-    @org.junit.Test
+    @Test
     public void test(){
         Account account = new Account();
         account.setMoney(232.3);
-        account.setName("thread");
+        account.setName("locations");
         accountService.addAccount(account);
-        System.out.println("...............");
+        log.info("addAccount");
+        List<Account> list = accountService.getAccountAll();
+        for (Account a : list){
+            log.info(a);
+        }
     }
-
-
-
-
-
-
-
 
 }
