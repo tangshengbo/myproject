@@ -104,7 +104,7 @@
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <archiveClasses>false</archiveClasses>
                 <filtering.resource>*.properties</filtering.resource>
-                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                <driverClassName>net.sf.log4jdbc.DriverSpy</driverClassName>
                 <validationQuery>SELECT 1</validationQuery>
                 <jdbc_url>
                     <![CDATA[
@@ -113,9 +113,13 @@
                 </jdbc_url>
                 <jdbc_username>root</jdbc_username>
                 <jdbc_password>root</jdbc_password>
-                <p.log4j.logger.jdbc.sqltiming>INFO,console</p.log4j.logger.jdbc.sqltiming>
-                <p.rootLogger>INFO, A1</p.rootLogger>
+                <!-- log4j -->
+                <p.rootLogger>DEBUG, A1</p.rootLogger>
+                <p.loger.lever.ibatis>DEBUG</p.loger.lever.ibatis>
                 <p.loger.lever.sql>DEBUG</p.loger.lever.sql>
+                <!-- 改为OFF可以关掉sql的输出 (INFO,console) -->
+                <p.log4j.logger.jdbc.sqltiming>INFO,console</p.log4j.logger.jdbc.sqltiming>
+
             </properties>
 
         </profile>

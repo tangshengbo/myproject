@@ -2,26 +2,25 @@ package com.tangshengbo.service;
 
 import com.tangshengbo.dao.AccountMapper;
 import com.tangshengbo.model.Account;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import java.util.List;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
-    private Logger log = Logger.getLogger(this.getClass());
+    protected final Log log = LogFactory.getLog(AccountServiceImpl.class);
 	@Autowired
 	private AccountMapper accountMapper;
 
 	public void addAccount(Account account) {
 		accountMapper.insert(account);
-        log.info("add account success");
-		System.out.println("add account success");
+        log.info("add account success{}");
 	}
 	public Account getAccount(Integer id) {
 		Account account = accountMapper.selectByPrimaryKey(id);
-		System.out.println("serach account success");
+        log.info("serach account success");
 		return account;
 	}
 
