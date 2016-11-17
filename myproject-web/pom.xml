@@ -67,10 +67,7 @@
             </activation>
             <properties>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <p.log4j.logger.jdbc.sqltiming>INFO,console</p.log4j.logger.jdbc.sqltiming>
-                <p.rootLogger>INFO, A1</p.rootLogger>
-                <!-- 改为OFF可以关掉sql的输出 (INFO,console) -->
-                <p.loger.lever.sql>DEBUG</p.loger.lever.sql>
+
             </properties>
         </profile>
     </profiles>

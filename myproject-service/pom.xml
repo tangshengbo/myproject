@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <parent>
         <artifactId>myproject</artifactId>
         <groupId>com.tangshengbo</groupId>
@@ -10,12 +11,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>myproject-service</artifactId>
     <name>${project.artifactId}</name>
+    <packaging>war</packaging>
     <dependencies>
         <dependency>
             <groupId>com.tangshengbo</groupId>
             <artifactId>myproject-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
     <build>
         <finalName>myproject-service</finalName>
@@ -104,13 +107,19 @@
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <archiveClasses>false</archiveClasses>
                 <filtering.resource>*.properties</filtering.resource>
-                <driverClassName>net.sf.log4jdbc.DriverSpy</driverClassName>
+                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                <driverClassNameLog>net.sf.log4jdbc.DriverSpy</driverClassNameLog>
                 <validationQuery>SELECT 1</validationQuery>
                 <jdbc_url>
                     <![CDATA[
                         jdbc:mysql://localhost:3306/myproject?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
                     ]]>
                 </jdbc_url>
+                <jdbc_url_log>
+                    <![CDATA[
+                        jdbc:log4jdbc:mysql://localhost:3306/myproject?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+                    ]]>
+                </jdbc_url_log>
                 <jdbc_username>root</jdbc_username>
                 <jdbc_password>root</jdbc_password>
                 <!-- log4j -->
@@ -120,6 +129,13 @@
                 <!-- 改为OFF可以关掉sql的输出 (INFO,console) -->
                 <p.log4j.logger.jdbc.sqltiming>INFO,console</p.log4j.logger.jdbc.sqltiming>
 
+                <!-- dubbo -->
+                <p.dubbo.application.name>myproject_service</p.dubbo.application.name>
+                <p.dubbo.registry.address>127.0.0.1:2181</p.dubbo.registry.address>
+                <p.dubbo.registry.protocol>zookeeper</p.dubbo.registry.protocol>
+                <p.dubbo.protocol.port>20881</p.dubbo.protocol.port>
+                <p.dubbo.monitor.address>127.0.0.1:7070</p.dubbo.monitor.address>
+                <p.dubbo.registry.delay>30000</p.dubbo.registry.delay>
             </properties>
 
         </profile>

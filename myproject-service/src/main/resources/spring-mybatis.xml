@@ -49,7 +49,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <property name="filters" value="mergeStat" />
     </bean> -->
     <!--commons-dbcp Basic 连接池  -->
-     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${driverClassName}"/>
         <property name="url" value="${jdbc_url}" />
         <property name="username" value="${jdbc_username}" />
@@ -60,17 +60,37 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <property name="defaultAutoCommit" value="true"/>
         <property name="validationQuery" value="${validationQuery}"/>
         <property name="testOnBorrow" value="true"/>
-    </bean>
+    </bean>-->
     
     <!-- 配置c3p0连接池 -->
-<!--	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${driverClassName}" />
 		<property name="jdbcUrl" value="${jdbc_url}" />
 		<property name="user" value="${jdbc_username}" />
 		<property name="password" value="${jdbc_password}" />
 	</bean>-->
-    
-    
+    <!--tomcat7数据库连接池配置-->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="${driverClassName}" />
+        <property name="url" value="${jdbc_url}" />
+        <property name="username" value="${jdbc_username}" />
+        <property name="password" value="${jdbc_password}" />
+
+        <property name="maxActive" value="20" /><!-- default 100 -->
+        <property name="initialSize" value="1" /><!-- default 10 -->
+        <property name="maxWait" value="60000" /><!-- default 30 sec -->
+        <property name="maxIdle" value="20" />
+        <property name="minIdle" value="1" />
+
+        <property name="timeBetweenEvictionRunsMillis" value="3000" /><!-- default 5 sec -->
+        <property name="minEvictableIdleTimeMillis" value="300000" /><!-- default 60 sec -->
+
+        <property name="validationQuery" value="${validationQuery}" /><!-- oracle: select 1 from dual -->
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+    </bean>
+
     
     
     
