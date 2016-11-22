@@ -10,7 +10,9 @@ public class FileTest {
 //		fileTest.dataFIleStream();
 //		fileTest.read();
 //		fileTest.bufferRead();
-		fileTest.serializeObject();
+		//fileTest.serializeObject();
+
+        System.out.println(0-0);
 
 	}
 	public void operationFile() throws IOException{
@@ -46,6 +48,7 @@ public class FileTest {
 	public void read() throws IOException{
 		FileInputStream fileInputStream = new FileInputStream("E:\\read.txt");
 		InputStreamReader reader  = new InputStreamReader(fileInputStream,"GBK");
+        reader.read();
 		int i;
 		while((i=reader.read())!= -1){
 			System.out.print((char)i);
@@ -79,6 +82,7 @@ public class FileTest {
 		student = (Student)in.readObject();
 		System.out.println(student.toString());
 		Proxy proxy ;
+
 
 		
 	}

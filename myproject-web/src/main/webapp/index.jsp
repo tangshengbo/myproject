@@ -1,8 +1,5 @@
+<%@ include file="/common/taglibs.jsp"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%--引入JSTL核心标签库 --%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<!DOCTYPE html>
 <html>
 <head>
   <title>显示用户信息</title>
@@ -12,7 +9,7 @@
       border-collapse: collapse;
     }
   </style>
-  <script type="text/javascript"  src="${ctx}/resources/js/jquery-1.11.3.min.js"></script>
+
 </head>
 
 <body>
