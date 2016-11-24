@@ -43,6 +43,7 @@ public class SocketThread implements Runnable {
 				OutputStream os = socket.getOutputStream();
 				PrintWriter pw = new PrintWriter(os);
 				pw.write("服务端收到你唐波可以登录.................." + Thread.currentThread().getName());
+                pw.close();
 				pw.flush();
 				
 
