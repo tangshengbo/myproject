@@ -6,7 +6,7 @@ public class TestRedis {
 	 RedisClient redisClient = 	new RedisClient();
 	 //redisClient.keyOperate();
 	 //redisClient.stringOperate();
-	 redisClient.listOperate();
+	 //redisClient.listOperate();
 	 
 	}
 }
