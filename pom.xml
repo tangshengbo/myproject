@@ -16,7 +16,8 @@
         <module>myproject-example</module>
     </modules>
     <properties>
-        <spring-version>4.1.4.RELEASE</spring-version>
+        <spring-version>4.1.6.RELEASE</spring-version>
+        <spring-security-version>3.2.2.RELEASE</spring-security-version>
     </properties>
     <dependencies>
         <!-- 添加Spring4.1.4的核心包 -->
@@ -251,7 +252,21 @@
             <artifactId>HikariCP</artifactId>
             <version>2.5.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
 
 
     </dependencies>

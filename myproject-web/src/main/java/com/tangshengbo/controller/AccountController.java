@@ -9,16 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,12 +53,12 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addAccount(Account account, @RequestBody MultipartFile file, Model model) {
+    public String addAccount(Account account, Model model) {
 
         log.info("apache"+account.toString());
         ExecutorService executorService = Executors.newFixedThreadPool(500);
         executorService.execute(new AccountThread(accountService));
-        System.out.println(file.getOriginalFilename());
+      //  System.out.println(file.getOriginalFilename());
         try {
             Thread.sleep(10000);
 
@@ -77,7 +71,7 @@ public class AccountController {
 //		List<Account> list = accountService.getAccountAll();
 //		System.out.println(list.size());
 
-        try {
+      /*  try {
             FileCopyUtils.copy(file.getInputStream(),
                     new FileOutputStream(new File("D:\\", System.currentTimeMillis() + file.getOriginalFilename())));
         } catch (FileNotFoundException e) {
@@ -86,7 +80,7 @@ public class AccountController {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
         List<Account> list = accountService.getAccountAll();
         System.out.println(list.size());
         model.addAttribute("accountList", list);

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Administrator on 2016/11/14.
  */
-public class LoggingTest {
+public class TestLogging {
 
-    static  Logger logger = LoggerFactory.getLogger(LoggingTest.class);
+    static  Logger logger = LoggerFactory.getLogger(TestLogging.class);
     public static void main(String[] args) {
         // 记录error信息
         logger.error("[info message]{}","kkss");

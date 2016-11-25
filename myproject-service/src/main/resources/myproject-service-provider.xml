@@ -7,6 +7,6 @@
         http://code.alibabatech.com/schema/dubbo
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:service ref="accountService"  interface="com.tangshengbo.service.AccountService"/>
+   <!-- <dubbo:service ref="accountService"  interface="com.tangshengbo.service.AccountService"/>-->
 
 </beans>
