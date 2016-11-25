@@ -1,11 +1,14 @@
 package com.tangshengbo.test;
 
 import com.tangshengbo.model.Account;
+import com.tangshengbo.model.UserInfo;
 import com.tangshengbo.service.AccountService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.tangshengbo.service.UserInfoService;
+import com.tangshengbo.utils.MD5Util;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,11 +21,15 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-context.xml","classpath:spring-mybatis.xml"})
 public class TestService {
-    protected final Log log = LogFactory.getLog(TestService.class);
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private UserInfoService userInfoService;
+
+
     @Test
-    public void test(){
+    public void testAccount(){
         Account account = new Account();
         account.setMoney(232.3);
         account.setName("locations");
@@ -30,10 +37,19 @@ public class TestService {
 
         List<Account> list = accountService.getAccountAll();
         for (Account a : list){
-            log.info(a.toString());
+            logger.info(a.toString());
         }
-        log.info(accountService.getAccount(1));
-        ;
+       logger.info("Account:{}",accountService.getAccount(1));
+
+    }
+    @Test
+    public void testUser(){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName("tang");
+        userInfo.setUserPwd("4123");
+        logger.info("register UserInfo:{}", userInfoService.register(userInfo));
+        logger.info(" login UserInfo:{}",userInfoService.login(userInfo));
+
     }
 
 }

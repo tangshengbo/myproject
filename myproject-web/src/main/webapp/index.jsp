@@ -1,4 +1,5 @@
 <%@ include file="/common/taglibs.jsp"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -14,9 +15,9 @@
 
 <body>
 <div>
-  <form class="f1" action="${ctx}/courses/add" method="post" enctype="multipart/form-data">
+  <form class="f1" action="${ctx}/courses/add" method="post" >
     <fieldset >
-      <legend>表单的注册</legend>
+      <legend>表单的注册 <sec:authentication property="name"/> </legend>
       <table width=100% >
         <tbody>
         <tr ><td class=“left” width=40% align="right"><label for="t1">姓 名：</label></td>
