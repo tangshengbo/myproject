@@ -12,6 +12,11 @@
         <description>Spring监听器</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!--这个监听器会在session创建和销毁的时候通知Spring Security-->
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
     <!-- ContextLoaderListener初始化Spring上下文时需要使用到的contextConfigLocation参数 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -28,10 +33,6 @@
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <init-param>
-            <param-name>targetBeanName</param-name>
-            <param-value>springSecurityFilterChain</param-value>
-        </init-param>
     </filter>
     <filter>
         <filter-name>encodingFilter</filter-name>

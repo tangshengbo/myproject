@@ -21,25 +21,63 @@
     <!-- 表示匿名用户可以访问 -->
     <http security="none" pattern="/login.jsp" />
     <http security="none" pattern="/error.jsp" />
-    <http auto-config="true" authentication-manager-ref="authenticationManager">
+    <http auto-config="true" authentication-manager-ref="authenticationManager" access-denied-page="/denied.jsp">
         <form-login login-page="/login.jsp"
                     login-processing-url="/user/login" username-parameter="userName"
-                    password-parameter="userPwd"  default-target-url="/index.jsp" authentication-failure-url="/error.jsp" />
-        <intercept-url pattern="/**" access="ROLE_USER"/>
+                    password-parameter="userPwd"  default-target-url="/index.jsp" authentication-failure-url="/login.jsp?error=true" />
+
+          <intercept-url pattern="/register.jsp" access="ROLE_ADMIN" />
+          <intercept-url pattern="/**" access="ROLE_USER"/>
+        <!--禁止多同时登陆-->
+        <session-management >
+            <concurrency-control error-if-maximum-exceeded="false" />
+        </session-management>
+
     </http>
-    <!-- <authentication-manager alias="myAuthenticationManager">
-         <authentication-provider user-service-ref="cwSysUserDetailsService">
-             <password-encoder hash="md5"></password-encoder>
-         </authentication-provider>
-     </authentication-manager>-->
-    <authentication-manager  id="authenticationManager">
+
+    <!--<authentication-manager  id="authenticationManager">
         <authentication-provider>
             <user-service>
                 <user name="user" password="user" authorities="ROLE_USER,ROLE_ADMIN"/>
                 <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
+    </authentication-manager>-->
+   <!-- 启用用户的缓存功能-->
+    <beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+        <beans:property name="cache" ref="userEhCache"/>
+    </beans:bean>
+
+    <beans:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <beans:property name="cacheManager" ref="cacheManager"/>
+        <beans:property name="cacheName" value="userCache"/>
+    </beans:bean>
+
+    <beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <beans:property name="configLocation" value="/WEB-INF/classes/ehcache.xml"/>
+    </beans:bean>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsService">
+            <!--<password-encoder hash="md5">
+                <salt-source user-property="username" />
+            </password-encoder>-->
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="select username,password,status as enabled  from user where username=?"
+                                       authorities-by-username-query="select u.username,r.name as authority
+                                                  from user u
+                                                  join user_role ur
+                                                    on u.id=ur.user_id
+                                                  join role r
+                                                    on r.id=ur.role_id
+                                                 where u.username=?"
+                               cache-ref="userCache"
+                                                    />
+
+        </authentication-provider>
+
     </authentication-manager>
+
 
 
 

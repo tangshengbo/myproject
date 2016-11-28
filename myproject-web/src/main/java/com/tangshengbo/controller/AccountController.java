@@ -26,6 +26,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+
     // 本方法将处理 /courses/view?courseId=123 形式的URL
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String getAccount(@RequestParam("tang") String tang, Model model) {

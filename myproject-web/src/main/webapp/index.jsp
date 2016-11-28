@@ -1,3 +1,7 @@
+<%@ page import="org.springframework.security.core.GrantedAuthority" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
+<%@ page import="java.util.Collection" %>
 <%@ include file="/common/taglibs.jsp"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
@@ -12,7 +16,15 @@
   </style>
 
 </head>
+<%
 
+    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+    System.out.println(userDetails.getAuthorities()+"\t"+userDetails.getPassword()+"\t"+userDetails.getUsername());
+
+
+%>
 <body>
 <div>
   <form class="f1" action="${ctx}/courses/add" method="post" >

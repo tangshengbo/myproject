@@ -6,6 +6,9 @@ import com.tangshengbo.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,9 @@ public class UserInfoController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private MessageSource messageSource;
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(Model model, UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) {
         logger.info("login param {}", model);
@@ -47,6 +53,10 @@ public class UserInfoController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(Model model , UserInfo userInfo, HttpServletRequest request){
         logger.info("register param [{}]",userInfo);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        System.out.println(userDetails.toString());
         if(userInfoService.register(userInfo)){
             logger.info("注册成功>>>>>>>>>>>>>>>>>>>>>>>>");
             request.getSession().setAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY,"success");
