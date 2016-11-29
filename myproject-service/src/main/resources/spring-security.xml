@@ -4,8 +4,11 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans
 	    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	    http://www.springframework.org/schema/security
-	    http://www.springframework.org/schema/security/spring-security-3.2.xsd ">
+	    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
+
+
+    <global-method-security pre-post-annotations="enabled" />
     <!-- 配置不过滤的资源（静态资源及登录相关） -->
     <http pattern="/**/*.css" security="none"></http>
     <http pattern="/**/*.jpg" security="none"></http>
@@ -58,11 +61,13 @@
     </beans:bean>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userDetailsService">
-            <!--<password-encoder hash="md5">
+        <authentication-provider  user-service-ref="customUserDetailsService">
+          <!--  <password-encoder hash="md5"/>-->
+            <!--md5 加盐 password{username} -->
+            <password-encoder hash="md5">
                 <salt-source user-property="username" />
-            </password-encoder>-->
-            <jdbc-user-service data-source-ref="dataSource"
+            </password-encoder>
+          <!--  <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="select username,password,status as enabled  from user where username=?"
                                        authorities-by-username-query="select u.username,r.name as authority
                                                   from user u
@@ -72,13 +77,13 @@
                                                     on r.id=ur.role_id
                                                  where u.username=?"
                                cache-ref="userCache"
-                                                    />
+                                                    />-->
 
         </authentication-provider>
 
     </authentication-manager>
 
-
+    <beans:bean id="customUserDetailsService" class="com.tangshengbo.service.UserDetailsServiceImpl" />
 
 
 </beans:beans>
