@@ -15,6 +15,7 @@
     <http pattern="/**/*.jpeg" security="none"></http>
     <http pattern="/**/*.gif" security="none"></http>
     <http pattern="/**/*.png" security="none"></http>
+    <http pattern="/**/*.ico" security="none"></http>
     <http pattern="/js/**/*.js" security="none"></http>
 
 

@@ -1,13 +1,14 @@
 <%@ page import="org.springframework.security.core.GrantedAuthority" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
-<%@ page import="java.util.Collection" %>
 <%@ include file="/common/taglibs.jsp"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <html>
+
 <head>
   <title>显示用户信息</title>
+
   <style type="text/css">
     table,td{
       border: 1px solid;

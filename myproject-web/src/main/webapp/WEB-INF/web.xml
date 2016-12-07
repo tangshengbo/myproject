@@ -24,10 +24,10 @@
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
-    <!--这个监听器会在session创建和销毁的时候通知Spring Security-->
+   <!-- &lt;!&ndash;这个监听器会在session创建和销毁的时候通知Spring Security&ndash;&gt;
     <listener>
         <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-    </listener>
+    </listener>-->
     <listener>
         <description>Spring监听器</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

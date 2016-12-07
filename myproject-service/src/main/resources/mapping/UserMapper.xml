@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tangshengbo.dao.UserMapper">
+    <cache />
     <resultMap id="BaseResultMap" type="com.tangshengbo.model.User">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
@@ -36,7 +37,9 @@
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{descn,jdbcType=VARCHAR})
   </insert>
+
     <insert id="insertSelective" parameterType="com.tangshengbo.model.User">
+
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

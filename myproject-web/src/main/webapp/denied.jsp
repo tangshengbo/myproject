@@ -1,3 +1,4 @@
+<%@ include file="/common/taglibs.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>

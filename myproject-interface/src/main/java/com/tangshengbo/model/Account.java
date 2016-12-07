@@ -2,44 +2,42 @@ package com.tangshengbo.model;
 
 import java.io.Serializable;
 
-public class Account implements Serializable{
+public class Account implements Serializable {
     private Integer id;
 
     private String name;
 
     private Double money;
-    public Integer getId() {
+
+    public final Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public final void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
 
-    public Double getMoney() {
+    public final Double getMoney() {
         return money;
     }
 
-    
-    public void setMoney(Double money) {
+
+    public final void setMoney(Double money) {
         this.money = money;
     }
 
-    
-    
-    
-    
-	@Override
-	public String toString() {
-		return "Account [id=" + id + ", name=" + name + ", money=" + money + "]";
-	}
-    
+
+    @Override
+    public String toString() {
+        return "Account [id=" + id + ", name=" + name + ", money=" + money + "]";
+    }
+
 }
