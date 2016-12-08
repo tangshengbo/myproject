@@ -1,24 +1,23 @@
 package com.tangshengbo.controller;
 
-import com.tangshengbo.commons.AccountThread;
 import com.tangshengbo.model.*;
 import com.tangshengbo.service.AccountService;
+import com.tangshengbo.service.LongTermTaskCallbackService;
+import com.tangshengbo.service.LongTermTaskCallbackServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Controller
 @RequestMapping("/courses")
@@ -26,6 +25,8 @@ public class AccountController {
     private Logger log = Logger.getLogger(this.getClass());
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private LongTermTaskCallbackServiceImpl longTermTaskCallbackService;
 
 
     // 本方法将处理 /courses/view?courseId=123 形式的URL
@@ -53,8 +54,8 @@ public class AccountController {
         return new ModelAndView("forward:/index.jsp");
 
     }
-    @PreAuthorize("ROLE_ADMIN")
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+
+ /*   @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addAccount(Account account, Model model) {
 
         log.info("apache"+account.toString());
@@ -73,7 +74,7 @@ public class AccountController {
 //		List<Account> list = accountService.getAccountAll();
 //		System.out.println(list.size());
 
-      /*  try {
+      *//*  try {
             FileCopyUtils.copy(file.getInputStream(),
                     new FileOutputStream(new File("D:\\", System.currentTimeMillis() + file.getOriginalFilename())));
         } catch (FileNotFoundException e) {
@@ -82,11 +83,28 @@ public class AccountController {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }*/
+        }*//*
         List<Account> list = accountService.getAccountAll();
         System.out.println(list.size());
         model.addAttribute("accountList", list);
         return "index";
+    }*/
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public DeferredResult<ModelAndView> addAccount(Account account, Model model) {
+
+        log.info("apache"+account.toString());
+        DeferredResult<ModelAndView> deferredResult = new DeferredResult<ModelAndView>();
+        System.out.println("/asynctask 调用！thread id is : " + Thread.currentThread().getId());
+        longTermTaskCallbackService.makeRemoteCallAndUnknownWhenFinish(new LongTermTaskCallbackService() {
+            @Override
+            public void callback(Object result) {
+                System.out.println("异步调用执行完成, thread id is : " + Thread.currentThread().getId());
+                ModelAndView mav = new ModelAndView("remotecalltask");
+                mav.addObject("result", result);
+                deferredResult.setResult(mav);
+            }
+        });
+        return deferredResult;
     }
 
     @RequestMapping(value = "/tojson/{all}", method = RequestMethod.GET)
