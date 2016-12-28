@@ -5,6 +5,7 @@ import com.tangshengbo.model.Role;
 import java.util.List;
 
 public interface RoleMapper {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(Role record);

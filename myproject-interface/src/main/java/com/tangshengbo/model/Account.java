@@ -3,6 +3,7 @@ package com.tangshengbo.model;
 import java.io.Serializable;
 
 public class Account implements Serializable {
+
     private Integer id;
 
     private String name;

@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class MapTest {
+
     public static void main(String[] args) throws UnsupportedEncodingException {
 
         MapTest mapTest = new MapTest();
@@ -51,7 +52,6 @@ public class MapTest {
             map.remove(it.next());
             System.out.println("没有报错");
         }*/
-
     }
 
     public void linkedMap() {
@@ -78,8 +78,6 @@ public class MapTest {
         while (it.hasNext()) {
             System.out.println(it.next());
         }
-
-
     }
 
     private void testCopyArray() {
@@ -95,7 +93,6 @@ public class MapTest {
 
             System.out.print(destArray[j] + " ");
         }
-
     }
 
     private void calculate(int number) {
@@ -127,9 +124,5 @@ public class MapTest {
             String charset = "UTF-8";
             charsets.add(charset);
         }
-
-
     }
-
-
 }

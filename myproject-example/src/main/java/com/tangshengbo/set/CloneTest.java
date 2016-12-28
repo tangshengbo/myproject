@@ -6,9 +6,10 @@ package com.tangshengbo.set;
 public class CloneTest {
 
     public static void main(String[] args) throws CloneNotSupportedException {
+
         Paper paper = new Paper();
         Paper clonePaper = (Paper) paper.clone();
-        System.out.println(clonePaper.getFlag());
 
+        System.out.println(clonePaper.getFlag());
     }
 }

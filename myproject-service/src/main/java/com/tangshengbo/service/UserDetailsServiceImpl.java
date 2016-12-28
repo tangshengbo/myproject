@@ -27,6 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         logger.info("loadUserByUsername start>>>>>>>>>>>>>>>>>>>>>>{}", username);
         User user = userRoleService.getUserByLoginName(username);
         List<Role> roles = userRoleService.getRolesByLoginName(username);
@@ -40,8 +41,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                                                            credentialsNonExpired, accountNonLocked, grantedAuthorities);
 
         logger.info("loadUserByUsername end>>>>>>>>>>>>>>>>>>>>>>{}", userDetails);
-        return userDetails;
 
+        return userDetails;
     }
 
     /**

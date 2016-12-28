@@ -4,6 +4,7 @@ package com.tangshengbo.set;
  * Created by Administrator on 2016/11/30.
  */
 public class Paper implements  Cloneable{
+
     private String flag;
 
     public String getFlag() {

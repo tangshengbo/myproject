@@ -11,22 +11,31 @@ import org.springframework.stereotype.Service;
  */
 @Service("userInfoService")
 public class UserInfoServiceImpl implements UserInfoService{
+
     final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserInfoMapper userInfoMapper;
+
     @Override
     public boolean login(UserInfo userInfo){
         logger.info("login  param {}",userInfo.toString());
+
         int findResult = userInfoMapper.selectForLogin(userInfo);
+
         logger.info("login  result {}",findResult);
+
         return findResult>=1;
     }
 
     @Override
     public boolean register(UserInfo userInfo) {
         logger.info("register inParam{}",userInfo.toString());
+
         int registerResult = userInfoMapper.insertSelective(userInfo);
+
         logger.info("register result {}",registerResult);
+
         return registerResult>=1;
     }
 }

@@ -2,8 +2,6 @@ package com.tangshengbo.controller;
 
 import com.tangshengbo.model.*;
 import com.tangshengbo.service.AccountService;
-import com.tangshengbo.service.LongTermTaskCallbackService;
-import com.tangshengbo.service.LongTermTaskCallbackServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,37 +20,40 @@ import java.util.List;
 @Controller
 @RequestMapping("/courses")
 public class AccountController {
+
     private Logger log = Logger.getLogger(this.getClass());
+
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private LongTermTaskCallbackServiceImpl longTermTaskCallbackService;
+
+/*    @Autowired
+    private LongTermTaskCallbackServiceImpl longTermTaskCallbackService;*/
 
 
     // 本方法将处理 /courses/view?courseId=123 形式的URL
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String getAccount(@RequestParam("tang") String tang, Model model) {
 
-        System.out.println(".............RequestParam" + tang);
-        System.out.println(accountService.getAccount(4));
+        log.info(".............RequestParam" + tang);
+        log.info(accountService.getAccount(4));
         List<Account> list = accountService.getAccountAll();
         System.out.println(list.size());
         model.addAttribute("accountList", list);
-        return "index";
 
+        return "index";
     }
 
     // 本方法将处理 /courses/view2/123 形式的URL restful
     @RequestMapping(value = "/view2/{tang}", method = RequestMethod.GET)
     public ModelAndView getAccount2(@PathVariable("tang") String tang, Model model) {
 
-        System.out.println(".............@PathVariable" + tang);
+        log.info(".............@PathVariable" + tang);
         System.out.println(accountService.getAccount(4));
         List<Account> list = accountService.getAccountAll();
         System.out.println(list.size());
         model.addAttribute("accountList", list);
-        return new ModelAndView("forward:/index.jsp");
 
+        return new ModelAndView("forward:/index.jsp");
     }
 
  /*   @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -89,13 +90,14 @@ public class AccountController {
         model.addAttribute("accountList", list);
         return "index";
     }*/
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public DeferredResult<ModelAndView> addAccount(Account account, Model model) {
 
         log.info("apache"+account.toString());
         DeferredResult<ModelAndView> deferredResult = new DeferredResult<ModelAndView>();
         System.out.println("/asynctask 调用！thread id is : " + Thread.currentThread().getId());
-        longTermTaskCallbackService.makeRemoteCallAndUnknownWhenFinish(new LongTermTaskCallbackService() {
+        /*longTermTaskCallbackService.makeRemoteCallAndUnknownWhenFinish(new LongTermTaskCallbackService() {
             @Override
             public void callback(Object result) {
                 System.out.println("异步调用执行完成, thread id is : " + Thread.currentThread().getId());
@@ -103,16 +105,18 @@ public class AccountController {
                 mav.addObject("result", result);
                 deferredResult.setResult(mav);
             }
-        });
+        });*/
         return deferredResult;
     }
 
     @RequestMapping(value = "/tojson/{all}", method = RequestMethod.GET)
     public ResponseEntity accountToJson(@PathVariable("all") String all) {
-        System.out.println("toJson.................." + all);
-        List<Account> list = accountService.getAccountAll();
-        return new ResponseEntity(list, HttpStatus.OK);
 
+        log.info("toJson.................." + all);
+
+        List<Account> list = accountService.getAccountAll();
+
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 
     // public void init() {
@@ -137,7 +141,6 @@ public class AccountController {
     // http://localhost:8080/webdome/courses/toobj?name=tang&age=12&contact.phone=12345555
     @RequestMapping(value = "/toobj", method = RequestMethod.GET)
     public ResponseEntity<User> accountObject(User user) {
-
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
@@ -152,14 +155,13 @@ public class AccountController {
 
     @InitBinder("user")
     public void initUser(WebDataBinder webDataBinder) {
-        System.out.println("init user");
+        log.info("init user");
         webDataBinder.setFieldDefaultPrefix("user.");
     }
 
     @InitBinder("admin")
     public void initAdmin(WebDataBinder webDataBinder) {
-        System.out.println("init admin");
-
+        log.info("init admin");
         webDataBinder.setFieldDefaultPrefix("admin.");
     }
 
@@ -203,6 +205,7 @@ public class AccountController {
             e.printStackTrace();
         }
         System.out.println(admin.toString());
+
         return new ResponseEntity(admin, HttpStatus.OK);
     }
 

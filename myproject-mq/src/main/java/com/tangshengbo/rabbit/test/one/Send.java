@@ -11,8 +11,7 @@ public class Send {
     //队列名称
     private final static String QUEUE_NAME = "queue";
 
-    public static void main(String[] argv) throws java.io.IOException, TimeoutException
-    {
+    public static void main(String[] argv) throws java.io.IOException, TimeoutException {
         /**
          * 创建连接连接到MabbitMQ
          */
@@ -28,7 +27,7 @@ public class Send {
         String message = "hello world!";
         long start = System.currentTimeMillis(); // 获取开始时间6588ms
         for (int i = 1; i < 1000000; i++) {
-            message = "hello world!"+i;
+            message = "hello world!" + i;
             //往队列中发出一条消息
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
         }

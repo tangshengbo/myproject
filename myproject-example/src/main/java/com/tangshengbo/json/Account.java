@@ -4,12 +4,15 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Account {
+
 	private Integer id;
 	// @SerializedName("NAME")
 	private String name;
 
 	private String[] majoys;
+
 	private Boolean hasGrilFriend;
+
 	private Double money;
 	
 	private Date birthday;

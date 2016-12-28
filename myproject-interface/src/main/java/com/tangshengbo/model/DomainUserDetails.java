@@ -10,7 +10,6 @@ import java.util.Collection;
  */
 public class DomainUserDetails implements UserDetails {
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

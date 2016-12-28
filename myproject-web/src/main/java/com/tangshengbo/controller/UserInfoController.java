@@ -24,14 +24,18 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/user")
 public class UserInfoController {
+
     final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserInfoService userInfoService;
 
     @Autowired
     private MessageSource messageSource;
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(Model model, UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) {
+
         logger.info("login param {}", model);
         String loginStatus = (String)request.getSession().getAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY);
         if(loginStatus == null){
@@ -52,6 +56,7 @@ public class UserInfoController {
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(Model model , UserInfo userInfo, HttpServletRequest request){
+
         logger.info("register param [{}]",userInfo);
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
@@ -62,8 +67,8 @@ public class UserInfoController {
             request.getSession().setAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY,"success");
             return  new ModelAndView("redirect:/login.jsp");
         }
-        return new ModelAndView("redirect:/register.jsp");
 
+        return new ModelAndView("redirect:/register.jsp");
     }
 
 

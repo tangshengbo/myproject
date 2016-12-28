@@ -16,25 +16,34 @@ import java.util.List;
  */
 @Service("userRoleService")
 public class UserRoleServiceImpl implements UserRoleService {
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserMapper userMapper;
+
     @Autowired
     private RoleMapper roleMapper;
 
     @Override
     public User getUserByLoginName(String userName) {
         logger.info("getUserByLoginName start>>>>>>>>>>>>>>>>>>>>>>{}", userName);
+
         User user = userMapper.getUserByLoginName(userName);
+
         logger.info("getUserByLoginName end>>>>>>>>>>>>>>>>>>>>>>{}", user.toString());
+
         return user;
     }
 
     @Override
     public List<Role> getRolesByLoginName(String userName) {
         logger.info("getRolesByLoginName start>>>>>>>>>>>>>>>>>>>>>>{}", userName);
+
         List<Role> roles = roleMapper.getRolesByLoginName(userName);
+
         logger.info("getRolesByLoginName end>>>>>>>>>>>>>>>>>>>>>>{}", roles.toString());
+
         return roles;
     }
 }
