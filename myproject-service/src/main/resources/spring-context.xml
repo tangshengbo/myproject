@@ -44,6 +44,11 @@
     <import resource="spring-mybatis.xml"/>
     <!--<import resource="myproject-service-provider.xml"/>-->
 
+
+
+
     <import resource="spring-security.xml"/>
+    <!--<import resource="spring-quartz.xml"/>-->
+    <import resource="spring-task.xml"/>
 
 </beans>
