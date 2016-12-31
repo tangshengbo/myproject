@@ -1,3 +1,4 @@
+/*
 package com.tangshengbo.controller.base;
 
 
@@ -16,9 +17,11 @@ import java.io.PrintWriter;
 import java.util.*;
 
 
+*/
 /**
  * create by tangshengbo
- */
+ *//*
+
 public abstract class BaseController {
     private Logger log = Logger.getLogger(this.getClass());
     protected ModelAndView getModelAndView(String viewName) {
@@ -81,7 +84,8 @@ public abstract class BaseController {
             e.printStackTrace();
         }
     }
-    /**
+    */
+/**
      * 把HttpServletRequest中的参数转换为Map，转换后的参数值类型为String，request中的参数名称与Map中的Key一致
      *
      * @param map
@@ -90,12 +94,14 @@ public abstract class BaseController {
      *            Map中的key
      * @param request
      *            HttpServletRequest
-     */
+     *//*
+
     protected void extractRequestParam(Map<String, Object> map, String key, HttpServletRequest request) {
         this.extractRequestParam(map, key, key, String.class, request);
     }
 
-    /**
+    */
+/**
      * 把HttpServletRequest中的参数转换为Map，转换后的参数值类型为String，request中的参数名称与Map中的Key一致
      *
      * @param map
@@ -106,12 +112,14 @@ public abstract class BaseController {
      *            参数值的类型
      * @param request
      *            HttpServletRequest
-     */
+     *//*
+
     protected void extractRequestParam(Map<String, Object> map, String key, Class<?> cls, HttpServletRequest request) {
         this.extractRequestParam(map, key, key, cls, request);
     }
 
-    /**
+    */
+/**
      * 把HttpServletRequest中的参数转换为Map
      *
      * @param map
@@ -124,7 +132,8 @@ public abstract class BaseController {
      *            request中的参数名
      * @param cls
      *            参数值的类型
-     */
+     *//*
+
     protected void extractRequestParam(Map<String, Object> map, String key, String paramName, Class<?> cls, HttpServletRequest request) {
         String[] vals = request.getParameterValues(paramName);
         if (vals == null || vals.length == 0) {
@@ -132,10 +141,12 @@ public abstract class BaseController {
             return;
         }
         if (vals.length == 1) {
-           /* if (StringUtil.isEmptyString(vals[0])) {
+           */
+/* if (StringUtil.isEmptyString(vals[0])) {
                 log.debug(paramName + "'s value is an empty string");
                 return;
-            }*/
+            }*//*
+
             Object o_val = null;
             String val = vals[0].trim();
             if (Date.class.getName().equals(cls.getName())) {
@@ -174,3 +185,4 @@ public abstract class BaseController {
     }
 
 }
+*/

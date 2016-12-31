@@ -3,6 +3,7 @@ package com.tangshengbo.model;
 import java.util.Date;
 
 public class UserInfo {
+
     private Long userId;
 
     private String userName;

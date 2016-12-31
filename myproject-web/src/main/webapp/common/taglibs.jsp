@@ -8,3 +8,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="servletPath" value="${pageContext.request.servletPath}"/>
 <c:set var="adminctx" value="${pageContext.request.contextPath}/admin"/>
+<link href="${ctx}/img/favicon.ico" rel="bookmark" type="image/x-icon" />
+<link href="${ctx}/img/favicon.ico"  rel="icon" type="image/x-icon" />
+<link href="${ctx}/img/favicon.ico"  rel="shortcut icon" type="image/x-icon" />

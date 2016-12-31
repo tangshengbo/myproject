@@ -11,21 +11,27 @@ import java.util.List;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
-    protected final Log log = LogFactory.getLog(AccountServiceImpl.class);
+
+    final Log log = LogFactory.getLog(AccountServiceImpl.class);
+
 	@Autowired
 	private AccountMapper accountMapper;
 
 	public void addAccount(Account account) {
+
 		accountMapper.insert(account);
         log.info("add account success{}");
 	}
 	public Account getAccount(Integer id) {
+
 		Account account = accountMapper.selectByPrimaryKey(id);
         log.info("serach account success");
+
 		return account;
 	}
 
 	public List<Account> getAccountAll() {
+
         log.info("getAccountAll account success");
 		return accountMapper.getAccounts();
 	}

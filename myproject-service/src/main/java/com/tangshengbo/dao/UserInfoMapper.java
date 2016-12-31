@@ -3,6 +3,7 @@ package com.tangshengbo.dao;
 import com.tangshengbo.model.UserInfo;
 
 public interface UserInfoMapper {
+
     int deleteByPrimaryKey(Long userId);
 
     int insert(UserInfo record);
