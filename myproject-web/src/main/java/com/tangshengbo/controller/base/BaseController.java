@@ -4,7 +4,6 @@ package com.tangshengbo.controller.base;
 
 import com.tangshengbo.commons.DateUtil;
 import org.apache.log4j.Logger;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -14,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 */
@@ -53,7 +55,7 @@ public abstract class BaseController {
     public abstract Map<String,Object> initParams(Map<String, Object> params);
 
     public Map<String, Object> initBaseParams(Map<String, Object> params) {
-        Map<String, Object> result = new HashMap<>();
+        /*Map<String, Object> result = new HashMap<>();
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             switch (entry.getKey()) {
                 case "orderId":
@@ -68,8 +70,8 @@ public abstract class BaseController {
                     result.put(entry.getKey(), entry.getValue());
             }
         }
-        initParams(result);
-        return result;
+        initParams(result);*/
+   /*     return null;
     }
 
     public void sendAjaxResultByJson(String json) {
