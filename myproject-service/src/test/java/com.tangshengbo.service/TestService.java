@@ -27,7 +27,6 @@ public class TestService {
     @Autowired
     private UserInfoService userInfoService;
 
-
     @Test
     public void testAccount(){
         Account account = new Account();
