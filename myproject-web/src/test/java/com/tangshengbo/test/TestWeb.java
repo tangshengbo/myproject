@@ -13,7 +13,7 @@ public class TestWeb {
     private AccountService accountService;
 
     @Test
-    public void test(){
+    public void com.tangshengbo.service(){
         Account account = new Account();
         account.setMoney(232.3);
         account.setName("thread");

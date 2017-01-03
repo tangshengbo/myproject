@@ -1,4 +1,4 @@
-package com.tangshengbo.test;
+package com.tangshengbo.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TestLogging {
 
-    static  Logger logger = LoggerFactory.getLogger(TestLogging.class);
+    private static  Logger logger = LoggerFactory.getLogger(TestLogging.class);
+
     public static void main(String[] args) {
         // 记录error信息
         logger.error("[info message]{}","kkss");
@@ -19,7 +20,9 @@ public class TestLogging {
         logger.debug("[debug message]");
         // 记录trace信息
         logger.trace("[trace message]");
+
         System.out.println("hello world");
 
     }
+
 }

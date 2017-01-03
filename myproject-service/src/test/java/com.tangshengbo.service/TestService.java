@@ -1,10 +1,7 @@
-package com.tangshengbo.test;
+package com.tangshengbo.service;
 
 import com.tangshengbo.model.Account;
 import com.tangshengbo.model.UserInfo;
-import com.tangshengbo.service.AccountService;
-import com.tangshengbo.service.UserInfoService;
-import com.tangshengbo.utils.MD5Util;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,9 +18,12 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-context.xml","classpath:spring-mybatis.xml"})
 public class TestService {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private AccountService accountService;
+
     @Autowired
     private UserInfoService userInfoService;
 
@@ -49,7 +49,6 @@ public class TestService {
         userInfo.setUserPwd("4123");
         logger.info("register UserInfo:{}", userInfoService.register(userInfo));
         logger.info(" login UserInfo:{}",userInfoService.login(userInfo));
-
     }
 
 }
