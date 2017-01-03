@@ -20,6 +20,9 @@ public class AnnotationTaskJob {
 
     private final static String KEY = "tang";
 
+
+
+
     @Scheduled(cron = "*/2 * * * * ?")
     public void provider(){
 

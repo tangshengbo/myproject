@@ -8,7 +8,7 @@ public class Test {
 		Sender sender = new Sender("testQueue");
 		for (int i = 0; i < 5; i++) {
 			MessageInfo messageInfo = new MessageInfo();
-			messageInfo.setChannel("test");
+			messageInfo.setChannel("com.tangshengbo.service");
 			messageInfo.setContent("msg" + i);
 			sender.sendMessage(messageInfo);
             System.out.println("");

@@ -48,7 +48,7 @@
         </authentication-provider>
     </authentication-manager>-->
    <!-- 启用用户的缓存功能-->
-    <beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+    <!--<beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
         <beans:property name="cache" ref="userEhCache"/>
     </beans:bean>
 
@@ -59,7 +59,7 @@
 
     <beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <beans:property name="configLocation" value="/WEB-INF/classes/ehcache.xml"/>
-    </beans:bean>
+    </beans:bean>-->
 
     <authentication-manager alias="authenticationManager">
         <authentication-provider  user-service-ref="customUserDetailsService">

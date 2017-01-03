@@ -1,5 +1,6 @@
 package com.tangshengbo.service;
 
+import com.google.common.collect.Maps;
 import com.tangshengbo.dao.AccountMapper;
 import com.tangshengbo.model.Account;
 import org.apache.commons.logging.Log;
@@ -20,6 +21,8 @@ public class AccountServiceImpl implements AccountService {
 	public void addAccount(Account account) {
 
 		accountMapper.insert(account);
+        Maps.newConcurrentMap();
+
         log.info("add account success{}");
 	}
 	public Account getAccount(Integer id) {

@@ -19,7 +19,7 @@ public class Test {
         // new Thread() {
         // public void run() {
         // try {
-        // test.insert(Thread.currentThread());
+        // com.tangshengbo.service.insert(Thread.currentThread());
         // } catch (InterruptedException e) {
         // // TODO Auto-generated catch block
         // e.printStackTrace();
@@ -30,7 +30,7 @@ public class Test {
         // Thread thread = new Thread() {
         // public void run() {
         // try {
-        // test.insert(Thread.currentThread());
+        // com.tangshengbo.service.insert(Thread.currentThread());
         // } catch (InterruptedException e) {
         // // TODO Auto-generated catch block
         // e.printStackTrace();
@@ -43,7 +43,7 @@ public class Test {
         long start = System.currentTimeMillis(); // 获取开始时间6588ms
         new Thread() {
             public void run() {
-                // test.get(Thread.currentThread());
+                // com.tangshengbo.service.get(Thread.currentThread());
                 test.getByLock(Thread.currentThread());
             }
 
@@ -52,7 +52,7 @@ public class Test {
 
         new Thread() {
             public void run() {
-                // test.get(Thread.currentThread());
+                // com.tangshengbo.service.get(Thread.currentThread());
                 test.getByLock(Thread.currentThread());
             }
 

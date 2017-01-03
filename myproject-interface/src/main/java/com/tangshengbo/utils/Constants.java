@@ -102,7 +102,7 @@ public class Constants {
     public static final String CCP_RES_ALL_PUT_FLAG_UPDATEIN = "70";
     public static final String CCP_RES_ALL_PUT_FLAG_WAITPUBLISH = "20";
 
-    public static final String CCP_BAOSTEEL_WEBSERVICEPURL = "http://sim-test.baosteel.info/services/ServiceSOWB005r";
+    public static final String CCP_BAOSTEEL_WEBSERVICEPURL = "http://sim-com.tangshengbo.service.baosteel.info/services/ServiceSOWB005r";
     public static final String CCP_BATCHPUT_FIEL_PATH = "D:/tmp/";
 
     public static final String TELE_RETURNRESTRANSPRICE = "V5XZ02";
