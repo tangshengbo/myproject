@@ -1,4 +1,4 @@
-package com.tangshengbo.service.task;
+package com.tangshengbo.task;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

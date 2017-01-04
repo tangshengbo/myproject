@@ -1,4 +1,4 @@
-package com.tangshengbo.service.quartz;
+package com.tangshengbo.quartz;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

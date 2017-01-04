@@ -18,4 +18,8 @@ public interface UserRoleService {
 
     List<Role> getRolesByLoginName(String userName);
 
+    void reload();
+
+    User updateUserByName(String userName);
+
 }

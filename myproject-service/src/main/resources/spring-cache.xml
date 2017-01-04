@@ -10,13 +10,13 @@
            http://www.springframework.org/schema/cache
            http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-<context:component-scan base-package="com.tangshengbo.service.cache"/>
+    <context:component-scan base-package="com.tangshengbo.cache"/>
 
     <context:annotation-config/>
 
     <cache:annotation-driven/>
 
-    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+    <!--<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
@@ -27,6 +27,24 @@
                 </bean>
             </set>
         </property>
+    </bean>-->
+    <bean id="cacheManager" class="com.tangshengbo.cache.MyCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="com.tangshengbo.cache.MyCache">
+                    <property name="name" value="userRoleServiceCache"/>
+                </bean>
+            </set>
+        </property>
     </bean>
+
+   <!-- <bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
+        <property name="cacheSpecification" value="concurrencyLevel=4,expireAfterAccess=100s,expireAfterWrite=100s" />
+        <property name="cacheNames">
+            <list>
+                <value>dictTableCache</value>
+            </list>
+        </property>
+    </bean>-->
 
 </beans>

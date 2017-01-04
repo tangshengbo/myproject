@@ -8,7 +8,7 @@
           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="com.tangshengbo.service.task" />
+    <context:component-scan base-package="com.tangshengbo.task" />
 
     <!-- 配置任务线性池 -->
     <task:executor id="executor" pool-size="6" />

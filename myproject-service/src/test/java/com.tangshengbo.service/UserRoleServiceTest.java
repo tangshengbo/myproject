@@ -34,6 +34,19 @@ public class UserRoleServiceTest {
             logger.info("testGetUserByName end>>>>>>>>>>>>>>>>>>>>query first");
         }
 
+        try {
+            Thread.sleep(2000);
+            userRoleService.reload();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+       /* {
+
+            userRoleService.updateUserByName("user");
+
+        }*/
+
         {
             logger.info("testGetUserByName start>>>>>>>>>>>>>>>>>>>query  second ");
 
@@ -41,7 +54,7 @@ public class UserRoleServiceTest {
 
             logger.info("Get User:{}",user.toString());
 
-            logger.info("testGetUserByName end>>>>>>>>>>>>>>>>>>>>query second ");
+            logger.info("testGetUserByName end>>>>>>>>>>>>>>>>>>>>query  second");
         }
 
     }

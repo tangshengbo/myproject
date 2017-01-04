@@ -7,8 +7,11 @@ import com.tangshengbo.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.TagUtils;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Cacheable(value="userRoleServiceCache")
+    @Cacheable(value = "userRoleServiceCache",condition = "#userName.equals('user')")
     @Override
     public User getUserByLoginName(String userName) {
         logger.info("getUserByLoginName start>>>>>>>>>>>>>>>>>>>>>>{}", userName);
@@ -47,5 +50,30 @@ public class UserRoleServiceImpl implements UserRoleService {
         logger.info("getRolesByLoginName end>>>>>>>>>>>>>>>>>>>>>>{}", roles.toString());
 
         return roles;
+    }
+
+    @CacheEvict(value = "userRoleServiceCache",allEntries = true)
+    @Override
+    public void reload() {
+
+        logger.info("reload user>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+    }
+
+    @CachePut(value = "userRoleServiceCache")
+    @Override
+    public User updateUserByName(String userName) {
+        logger.info("updateUserByName start>>>>>>>>>>>>>>>>>>>>>>{}", userName);
+
+        User user = null;
+
+        int result = userMapper.updateUserByName(userName);
+        if(result >= 1 ){
+            user = userMapper.getUserByLoginName(userName);
+        }
+
+        logger.info("updateUserByName end>>>>>>>>>>>>>>>>>>>>>>{}", userName);
+
+        return user;
     }
 }
