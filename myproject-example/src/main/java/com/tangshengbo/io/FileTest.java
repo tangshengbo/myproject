@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 public class FileTest {
 
     public static void main(String[] args) throws Exception {
-        FileTest fileTest = new FileTest();
+        //FileTest fileTest = new FileTest();
 //		fileTest.operationFile();
 //		fileTest.dataFIleStream();
 //		fileTest.read();

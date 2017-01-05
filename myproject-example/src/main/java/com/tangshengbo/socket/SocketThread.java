@@ -1,12 +1,5 @@
 package com.tangshengbo.socket;
 
-import com.tangshengbo.io.Student;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,7 +9,6 @@ public class SocketThread implements Runnable {
 
     private Socket socket;
 
-    private Lock lock = new ReentrantLock();
 
     public SocketThread(Socket socket) {
         this.socket = socket;
@@ -24,10 +16,11 @@ public class SocketThread implements Runnable {
 
 
     public void run() {
-
+        Lock lock = new ReentrantLock();
+        lock.lock();
         try {
-            Thread.sleep(2);
-            lock.lock();
+           /* Thread.sleep(2);
+
             System.out.println("获得锁" + lock.tryLock());
 
             InputStream is = socket.getInputStream();
@@ -39,6 +32,7 @@ public class SocketThread implements Runnable {
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+
             }
             socket.shutdownInput();
 
@@ -48,18 +42,19 @@ public class SocketThread implements Runnable {
 
             pw.close();
             pw.flush();
-
+*/
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+
         } finally {
-            try {
+          /*  try {
                 socket.shutdownOutput();
                 socket.close();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
+            }*/
             lock.unlock();
         }
 

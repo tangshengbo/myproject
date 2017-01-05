@@ -50,9 +50,6 @@ public class GsonTest {
         Account account = gson.fromJson(content, Account.class);
         System.out.println(account.toString());
 
-        String string = new String("kjllkjil");
-
-
     }
 
 

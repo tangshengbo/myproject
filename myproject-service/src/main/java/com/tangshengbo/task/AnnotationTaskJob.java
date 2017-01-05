@@ -30,7 +30,7 @@ public class AnnotationTaskJob {
             resource.put(AnnotationTaskJob.KEY, "tangshengbo");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception" + e.getStackTrace());
+            log.info("QuartzJob Exception" + e);
         }
 
         log.info("AnnotationTaskJob>>>>>>>>>>>>end>>>>>>>>>");
@@ -46,7 +46,7 @@ public class AnnotationTaskJob {
             log.info("consumer{}:" + resource.get(AnnotationTaskJob.KEY));
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception" + e.getStackTrace());
+            log.info("QuartzJob Exception" + e);
         }
 
         log.info("AnnotationTaskJob>>>>>>>>>>>>end>>>>>>>>>");

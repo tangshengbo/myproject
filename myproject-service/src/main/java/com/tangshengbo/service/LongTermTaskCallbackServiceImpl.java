@@ -2,23 +2,19 @@ package com.tangshengbo.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
 /**
  * Created by Administrator on 2016/12/8.
  */
 @Service("longTermTaskCallbackService")
 public class LongTermTaskCallbackServiceImpl {
 
-    private final int corePoolSize = 4;
+    private static final int COREPOOLSIZE = 4;
 
-    private final long needSeconds = 3;
+    private static final long NEEDSECONDS = 3;
 
-    private Random random = new Random();
+    //private Random random = new Random();
 
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(corePoolSize);
+   // private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(COREPOOLSIZE);
 
     /*public void makeRemoteCallAndUnknownWhenFinish(LongTermTaskCallbackService callback){
         System.out.println("完成此任务需要 : " + NeedSeconds + " 秒");

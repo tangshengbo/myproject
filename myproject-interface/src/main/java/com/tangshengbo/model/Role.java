@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Role implements Serializable {
 
+    private static final long serialVersionUID = -8421800683579879622L;
+
     private Long id;
 
     private String name;
@@ -56,4 +58,6 @@ public class Role implements Serializable {
                 + ", authoritys=" + authoritys
                 + '}';
     }
+
+
 }

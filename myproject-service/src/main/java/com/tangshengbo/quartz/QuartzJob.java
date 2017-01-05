@@ -17,7 +17,7 @@ public class QuartzJob {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception" + e.getStackTrace());
+            log.info("QuartzJob Exception" + e);
         }
 
         log.info("QuartzJob>>>>>>>>>>>>end>>>>>>>>>");

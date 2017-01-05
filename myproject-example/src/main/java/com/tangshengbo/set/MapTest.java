@@ -36,8 +36,6 @@ public class MapTest {
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");
-        map.get("");
-        map.remove("");
 
         Iterator it = map.values().iterator();
         while (it.hasNext()) {

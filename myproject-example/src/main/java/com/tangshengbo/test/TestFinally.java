@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
@@ -14,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestFinally {
 
     public static void main(String[] args) throws Exception {
-        TestFinally testFinally = new TestFinally();
+        //TestFinally testFinally = new TestFinally();
         //testFinally.urlCoding();
         //testFinally.eachSet();
         SimpleObject simpleObject = SimpleObject.getInstance();
@@ -44,7 +43,7 @@ public class TestFinally {
 //		Account account = new Account();
 //		account.setBalance(1000);
         /*
-		 * for (int i = 0; i < 10; i++) { System.out.println("创建线程" + i);
+         * for (int i = 0; i < 10; i++) { System.out.println("创建线程" + i);
 		 * Runnable run = new Runnable() {
 		 * 
 		 * @Override public void run() { System.out.println("启动线程"); } }; //
@@ -72,17 +71,17 @@ public class TestFinally {
     }
 
     public void modifyObj(User user) {
-        user = null;
+        System.out.println(user.toString());
     }
 
     public void eachSet() {
-        Map map = new ConcurrentHashMap();
+        Map map = null;
         Stack stack = new Stack();
         stack.push("tang");
         stack.push("sang");
         stack.push("bang");
 //	    Queue queue = new ArrayDeque();
-        List list = new ArrayList();
+        // List list = new ArrayList();
         map = Collections.synchronizedMap(new HashMap());
         map.put("23423", "fsfsd");
         map.put("13423", "fsfsd");
@@ -91,6 +90,7 @@ public class TestFinally {
         while (it.hasNext()) {
             map.remove(it.next());
         }
+        System.out.println(stack.pop());
         //it.forEachRemaining(obj -> System.out.println("迭代集合元素：" + obj));  
 
     }
@@ -128,17 +128,17 @@ public class TestFinally {
         int[] arr = new int[]{8, 2, 1, 0, 3};
         int[] index = new int[]{2, 0, 3, 2, 4, 0, 1, 3, 2, 3, 3};
         String tel = "";
+        StringBuffer buf = new StringBuffer();
         for (int i : index) {
-            tel += arr[i];
-
+            buf.append(arr[i]);
         }
         System.out.println("联系方式" + tel);
     }
 
     public void testString() {
 
-        String string = new String();
-        string.equals(null);
+        String string = "";
+        string.equals("");
 
 
     }
