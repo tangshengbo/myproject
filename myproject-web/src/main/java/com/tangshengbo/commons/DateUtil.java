@@ -37,7 +37,7 @@ public final class DateUtil {
     public static final String PATTERN_yyyyMMdd_HHmmss = "yyyy/MM/dd HH:mm:ss";
     public static final String PATTERN_yyyyMMdd2 = "yyyy/MM/dd";
 
-    static Log LOG = LogFactory.getLog(DateUtil.class);
+   private static final  Log LOG = LogFactory.getLog(DateUtil.class);
 
     /**
      * 取日期是一个月中的几号.
