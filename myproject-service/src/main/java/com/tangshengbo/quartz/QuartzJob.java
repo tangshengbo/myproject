@@ -10,14 +10,14 @@ public class QuartzJob {
 
     private final Log log = LogFactory.getLog(QuartzJob.class);
 
-    public void doJob(){
+    public void doJob() {
 
         log.info("QuartzJob>>>>>>>>>>>>start>>>>>>>>>");
 
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception"+e.getStackTrace());
+            log.info("QuartzJob Exception" + e.getStackTrace());
         }
 
         log.info("QuartzJob>>>>>>>>>>>>end>>>>>>>>>");

@@ -12,14 +12,14 @@ public class TaskJob {
 
     private final Log log = LogFactory.getLog(TaskJob.class);
 
-    public void doJob(){
+    public void doJob() {
 
         log.info("TaskJob>>>>>>>>>>>>start>>>>>>>>>");
 
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception"+e.getStackTrace());
+            log.info("QuartzJob Exception" + e.getStackTrace());
         }
 
         log.info("TaskJob>>>>>>>>>>>>end>>>>>>>>>");

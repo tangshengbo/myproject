@@ -13,7 +13,7 @@ import java.util.List;
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
 
-    final Log log = LogFactory.getLog(AccountServiceImpl.class);
+   private final Log log = LogFactory.getLog(AccountServiceImpl.class);
 
 	@Autowired
 	private AccountMapper accountMapper;

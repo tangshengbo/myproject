@@ -10,11 +10,11 @@ public class RedisClient {
 
     private Jedis jedis; // 非分片客户端连接
 
-    private JedisPool jedisPool;// 非分片客户端连接池
+    private JedisPool jedisPool; // 非分片客户端连接池
 
-    private ShardedJedis shardedJedis;// 分片客户端 --采用一致哈希分片算法
+    private ShardedJedis shardedJedis; // 分片客户端 --采用一致哈希分片算法
 
-    private ShardedJedisPool shardedJedisPool;// 分片客户端连接池 --采用一致哈希分片算法
+    private ShardedJedisPool shardedJedisPool; // 分片客户端连接池 --采用一致哈希分片算法
 
     public RedisClient() {
         initJedisPool();

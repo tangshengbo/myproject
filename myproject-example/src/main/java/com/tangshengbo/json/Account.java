@@ -5,16 +5,16 @@ import java.util.Date;
 
 public class Account {
 
-	private Integer id;
-	// @SerializedName("NAME")
-	private String name;
+    private Integer id;
+    // @SerializedName("NAME")
+    private String name;
 
-	private String[] majoys;
+    private String[] majoys;
 
 	private Boolean hasGrilFriend;
 
 	private Double money;
-	
+
 	private Date birthday;
 
 	public Date getBirthday() {
@@ -70,9 +70,5 @@ public class Account {
 		return "Account [id=" + id + ", name=" + name + ", majoys=" + Arrays.toString(majoys) + ", hasGrilFriend="
 				+ hasGrilFriend + ", money=" + money + ", birthday=" + birthday + "]";
 	}
-
-
-
-	
 
 }

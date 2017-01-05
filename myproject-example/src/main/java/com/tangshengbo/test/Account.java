@@ -12,7 +12,7 @@ public class Account {
 		this.balance = balance;
 	}
 
-	public void addAmount(double amount) {
+    public void addAmount(double amount) {
 		
 		balance += amount;
 

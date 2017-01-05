@@ -3,7 +3,7 @@ package com.tangshengbo.set;
 /**
  * Created by Administrator on 2016/11/30.
  */
-public class Paper implements  Cloneable{
+public class Paper implements Cloneable {
 
     private String flag;
 
@@ -15,12 +15,12 @@ public class Paper implements  Cloneable{
         this.flag = flag;
     }
 
-    public  Paper(){
+    public Paper() {
         flag = "success";
         System.out.println("construction Paper>>>>>>>>>>>>>>>>>>>");
     }
 
-    public void usePaper(){
+    public void usePaper() {
         System.out.println("使用纸张>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 

@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 
 public class ServiceClient {
 
-	public static void main(String[] args) throws  RemoteException {
+    public static void main(String[] args) throws  RemoteException {
 //	    Endpoint.publish("http://localhost:9003/Service/ServiceServer", new ServiceServer());
 		
 //		System.out.println("success");

@@ -11,7 +11,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.TagUtils;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Cacheable(value = "userRoleServiceCache",condition = "#userName.equals('user')")
+    @Cacheable(value = "userRoleServiceCache", condition = "#userName.equals('user')")
     @Override
     public User getUserByLoginName(String userName) {
         logger.info("getUserByLoginName start>>>>>>>>>>>>>>>>>>>>>>{}", userName);
@@ -52,7 +51,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         return roles;
     }
 
-    @CacheEvict(value = "userRoleServiceCache",allEntries = true)
+    @CacheEvict(value = "userRoleServiceCache", allEntries = true)
     @Override
     public void reload() {
 
@@ -68,7 +67,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         User user = null;
 
         int result = userMapper.updateUserByName(userName);
-        if(result >= 1 ){
+        if (result >= 1) {
             user = userMapper.getUserByLoginName(userName);
         }
 

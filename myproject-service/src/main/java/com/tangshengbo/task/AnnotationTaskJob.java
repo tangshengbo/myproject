@@ -16,23 +16,21 @@ public class AnnotationTaskJob {
 
     private final Log log = LogFactory.getLog(AnnotationTaskJob.class);
 
-    private Map<String,Object> resource = new HashMap<String,Object>();
+    private Map<String, Object> resource = new HashMap<String, Object>();
 
-    private final static String KEY = "tang";
-
-
+    private static final  String KEY = "tang";
 
 
     @Scheduled(cron = "*/2 * * * * ?")
-    public void provider(){
+    public void provider() {
 
         log.info("AnnotationTaskJob>>>>>>>>>>>>start>>>>>>>>>");
 
         try {
-            resource.put(AnnotationTaskJob.KEY,"tangshengbo");
+            resource.put(AnnotationTaskJob.KEY, "tangshengbo");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception"+e.getStackTrace());
+            log.info("QuartzJob Exception" + e.getStackTrace());
         }
 
         log.info("AnnotationTaskJob>>>>>>>>>>>>end>>>>>>>>>");
@@ -40,15 +38,15 @@ public class AnnotationTaskJob {
     }
 
     @Scheduled(cron = "*/2 * * * * ?")
-    public void consumer(){
+    public void consumer() {
 
         log.info("AnnotationTaskJob>>>>>>>>>>>>start>>>>>>>>>");
 
         try {
-        log.info("consumer{}:"+resource.get(AnnotationTaskJob.KEY));
+            log.info("consumer{}:" + resource.get(AnnotationTaskJob.KEY));
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            log.info("QuartzJob Exception"+e.getStackTrace());
+            log.info("QuartzJob Exception" + e.getStackTrace());
         }
 
         log.info("AnnotationTaskJob>>>>>>>>>>>>end>>>>>>>>>");

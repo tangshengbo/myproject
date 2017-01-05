@@ -2,9 +2,9 @@ package com.tangshengbo.proxy;
 
 public interface BookFacade {
 
-    public void addBook();
+    void addBook();
 
-    public void same();
+    void same();
 
 
 }

@@ -1,35 +1,36 @@
 package com.tangshengbo.model;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="admin")
+@XmlRootElement(name = "admin")
 public class Admin {
 
-	private String name;
+    private String name;
 
-	private Integer age;
+    private Integer age;
 
-	 @XmlElement(name="name")
-	public String getName() {
-		return name;
-	}
+    @XmlElement(name = "name")
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@XmlElement(name="age")
-	public Integer getAge() {
-		return age;
-	}
+    @XmlElement(name = "age")
+    public Integer getAge() {
+        return age;
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-	@Override
-	public String toString() {
-		return "Admin [name=" + name + ", age=" + age + "]";
-	}
+    @Override
+    public String toString() {
+        return "Admin [name=" + name + ", age=" + age + "]";
+    }
 
 }

@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
  * @author TangShengBo
  *
  */
-public interface RemoteService extends Remote{
+public interface RemoteService extends Remote {
 
 	 String sayHello(String name) throws RemoteException;
 

@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.List;
 
-public class Role implements Serializable{
+public class Role implements Serializable {
 
     private Long id;
 
@@ -49,11 +49,11 @@ public class Role implements Serializable{
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", descn='" + descn + '\'' +
-                ", authoritys=" + authoritys +
-                '}';
+        return "Role{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", descn='" + descn + '\''
+                + ", authoritys=" + authoritys
+                + '}';
     }
 }

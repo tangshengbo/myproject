@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
  * Created by Administrator on 2016/12/29.
  */
 public class SchedulerTest {
-    private final static Logger logger = LoggerFactory.getLogger(SchedulerTest.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(SchedulerTest.class);
 
     public static void main(String[] args) {
 
@@ -28,7 +29,7 @@ public class SchedulerTest {
             // 定义调度触发规则
 
             // SimpleTrigger
-          Trigger trigger=TriggerBuilder.newTrigger().withIdentity("SimpleTrigger", Scheduler.DEFAULT_GROUP)
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("SimpleTrigger", Scheduler.DEFAULT_GROUP)
                     .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(1).withRepeatCount(1))
                     .startNow().build();
 

@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class UserMapForm {
 	
-	private Map<String, User> users ;
+	private Map<String, User> users;
 
 	public Map<String, User> getUsers() {
 		return users;

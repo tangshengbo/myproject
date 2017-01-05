@@ -1,10 +1,10 @@
 package com.tangshengbo.rabbit.test.two;
 
+import org.apache.commons.lang.SerializationUtils;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
-
-import org.apache.commons.lang.SerializationUtils;
 
 public class Sender extends BaseConnector {
 	public Sender(String queueName) throws IOException, TimeoutException {
@@ -12,6 +12,6 @@ public class Sender extends BaseConnector {
 	}
 	
 	public void sendMessage(Serializable object) throws IOException {
-        channel.basicPublish("",queueName, null, SerializationUtils.serialize(object));
+        getChannel().basicPublish("",getQueueName(), null, SerializationUtils.serialize(object));
     }  	
 }

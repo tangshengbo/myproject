@@ -94,7 +94,7 @@ public class AccountController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public DeferredResult<ModelAndView> addAccount(Account account, Model model) {
 
-        log.info("apache"+account.toString());
+        log.info("apache" + account.toString());
         DeferredResult<ModelAndView> deferredResult = new DeferredResult<ModelAndView>();
         System.out.println("/asynctask 调用！thread id is : " + Thread.currentThread().getId());
         /*longTermTaskCallbackService.makeRemoteCallAndUnknownWhenFinish(new LongTermTaskCallbackService() {

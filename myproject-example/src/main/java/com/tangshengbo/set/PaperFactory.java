@@ -5,7 +5,7 @@ package com.tangshengbo.set;
  */
 public class PaperFactory {
 
-    public Paper paperBese = new Paper();
+    private Paper paperBese = new Paper();
 
     public Paper createPaper() throws CloneNotSupportedException {
         return (Paper) paperBese.clone();

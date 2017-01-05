@@ -90,8 +90,8 @@ public class Constants {
     /**
      * The name of System config
      *
-     * @deprecated 系统配置文件
      * @author wanghui
+     * @deprecated 系统配置文件
      */
     public static final class SYSTEM {
         public static final String PROPERTIES_FILE = "systemconf";
@@ -162,22 +162,22 @@ public class Constants {
     public static final String CCP_FUTURE_UPLOADPACKS_URL = rb
             .getString("webservice.QDAUploadPacksService_PortType_URL");
 
-    public static final String CPP_WEBADD_ServiceSOWB008=rb
+    public static final String CPP_WEBADD_ServiceSOWB008 = rb
             .getString("webservice.ServiceSOWB008_URL");
 
-    public static final String CPP_WEBADD_ServiceSOWB0022=rb
+    public static final String CPP_WEBADD_ServiceSOWB0022 = rb
             .getString("webservice.ServiceSOWB0022_URL");
 
-    public static final String CPP_WEBADD_ServiceSOWB007=rb
+    public static final String CPP_WEBADD_ServiceSOWB007 = rb
             .getString("webservice.ServiceSOWB007_URL");
 
-    public static final String CPP_WEBADD_ServiceSOWBhe003=rb
+    public static final String CPP_WEBADD_ServiceSOWBhe003 = rb
             .getString("webservice.ServiceSOWBhe003_URL");
 
-    public static final String CPP_WEBADD_QDADealInfoService_address=rb
+    public static final String CPP_WEBADD_QDADealInfoService_address = rb
             .getString("webservice.QDADealInfoService_address");
 
-    public static final String RANDOM_LOGIN_KEY="login_code";
+    public static final String RANDOM_LOGIN_KEY = "login_code";
     public static final String DATACENTER_SOAP_RPC = rb.getString("datacenter.soap.rpc");
     public static final String JYZX_PARSE_RES_SALE_LIST = rb.getString("jyzx.parse.res.sale.list");
 

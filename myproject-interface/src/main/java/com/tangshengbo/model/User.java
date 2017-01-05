@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.List;
 
-public class User implements Serializable{
+public class User implements Serializable {
 
     private Long id;
 
@@ -69,13 +69,13 @@ public class User implements Serializable{
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", status=" + status +
-                ", descn='" + descn + '\'' +
-                ", roles=" + roles +
-                '}';
+        return "User{"
+                + "id=" + id
+                + ", username='" + username + '\''
+                + ", password='" + password + '\''
+                + ", status=" + status
+                + ", descn='" + descn + '\''
+                + ", roles=" + roles
+                + '}';
     }
 }

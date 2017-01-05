@@ -3,12 +3,12 @@ package com.tangshengbo.commons;
 import com.tangshengbo.model.Account;
 import com.tangshengbo.service.AccountService;
 
-public class AccountThread implements Runnable{
+public class AccountThread implements Runnable {
 	private AccountService accountService;
 	
 	private ThreadLocal threadLocal;
 	
-	public AccountThread(AccountService accountService){
+	public AccountThread(AccountService accountService) {
 		this.accountService = accountService;
 		
 	}

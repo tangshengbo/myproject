@@ -6,11 +6,11 @@ import com.tangshengbo.model.Account;
 
 public interface AccountService {
 	
-	public void addAccount(Account account);
+    void addAccount(Account account);
 	
-	public Account getAccount(Integer id);
+    Account getAccount(Integer id);
 	
-	public List<Account> getAccountAll();
+    List<Account> getAccountAll();
 
 
 

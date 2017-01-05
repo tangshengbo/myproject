@@ -42,7 +42,7 @@ public class BubbleSortTest {
         int i = arr.length - 1; // 初始时,最后位置保持不变
         while (i > 0) {
             int pos = 0; // 每趟开始时,无记录交换
-            for (int j = 0; j < i; j++)
+            for (int j = 0; j < i; j++) {
                 if (arr[j] > arr[j + 1]) {
                     pos = j; // 记录交换的位置
                     System.out.println("记录交换的位置" + pos);
@@ -50,7 +50,8 @@ public class BubbleSortTest {
                     arr[j] = arr[j + 1];
                     arr[j + 1] = tmp;
                 }
-            i = pos; // 为下一趟排序作准备
+                i = pos; // 为下一趟排序作准备
+            }
         }
         System.out.println("改进后冒泡排序耗时");
         return arr;
@@ -61,22 +62,25 @@ public class BubbleSortTest {
         int high = arr.length - 1; //设置变量的初始值
         int tmp, j;
         while (low < high) {
-            for (j = low; j < high; ++j) //正向冒泡,找到最大者
+            for (j = low; j < high; ++j) { //正向冒泡,找到最大者
                 if (arr[j] > arr[j + 1]) {
                     tmp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = tmp;
                 }
-            --high;                 //修改high值, 前移一位
-            for (j = high; j > low; --j) //反向冒泡,找到最小者
-                if (arr[j] < arr[j - 1]) {
-                    tmp = arr[j];
-                    arr[j] = arr[j - 1];
-                    arr[j - 1] = tmp;
+                --high;                 //修改high值, 前移一位
+                for (j = high; j > low; --j) { //反向冒泡,找到最小者
+                    if (arr[j] < arr[j - 1]) {
+                        tmp = arr[j];
+                        arr[j] = arr[j - 1];
+                        arr[j - 1] = tmp;
+                    }
+                    ++low;
                 }
-            ++low;                  //修改low值,后移一位
+            } //修改low值,后移一位
         }
         return arr;
+
 
     }
 

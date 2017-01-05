@@ -1,7 +1,8 @@
 package com.tangshengbo.rabbit.test.two;
 
 public class Test {
-	public static void main(String[] args) throws Exception{
+
+	public static void main(String[] args) throws Exception {
 		Receiver receiver = new Receiver("testQueue");
 		Thread receiverThread = new Thread(receiver);
 		receiverThread.start();

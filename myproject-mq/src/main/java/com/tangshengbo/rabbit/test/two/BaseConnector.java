@@ -1,17 +1,43 @@
 package com.tangshengbo.rabbit.test.two;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
 public class BaseConnector {
-	protected Channel channel;
-    protected Connection connection;
-    protected String queueName;
-    public BaseConnector(String queueName) throws IOException, TimeoutException{
+
+	private Channel channel;
+    private Connection connection;
+    private String queueName;
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public String getQueueName() {
+        return queueName;
+    }
+
+    public void setQueueName(String queueName) {
+        this.queueName = queueName;
+    }
+
+    public BaseConnector(String queueName) throws IOException, TimeoutException {
     	this.queueName = queueName;
     	//打开连接和创建频道
         ConnectionFactory factory = new ConnectionFactory();

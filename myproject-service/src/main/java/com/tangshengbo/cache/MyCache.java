@@ -58,9 +58,9 @@ public class MyCache implements Cache {
         System.out.println("put" + key);
 
         User user = (User) value;
-        String name = (String) key;
+        String keyName = (String) key;
 
-        store.put(name, user);
+        store.put(keyName, user);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MyCache implements Cache {
 
     @Override
     public void evict(Object key) {
-        System.out.println("e"+key);
+        System.out.println("e" + key);
         this.store.remove(key);
 
     }

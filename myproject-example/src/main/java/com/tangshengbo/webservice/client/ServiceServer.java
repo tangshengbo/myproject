@@ -8,8 +8,8 @@
 package com.tangshengbo.webservice.client;
 
 public interface ServiceServer extends java.rmi.Remote {
-    public String addObj(String arg0) throws java.rmi.RemoteException;
-    public void searchObj() throws java.rmi.RemoteException;
-    public String removeObj(String arg0) throws java.rmi.RemoteException;
-    public String modifyObj(String arg0) throws java.rmi.RemoteException;
+    String addObj(String arg0) throws java.rmi.RemoteException;
+    void searchObj() throws java.rmi.RemoteException;
+    String removeObj(String arg0) throws java.rmi.RemoteException;
+    String modifyObj(String arg0) throws java.rmi.RemoteException;
 }

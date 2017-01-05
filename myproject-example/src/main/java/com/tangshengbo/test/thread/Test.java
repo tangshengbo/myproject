@@ -45,18 +45,16 @@ public class Test {
             public void run() {
                 // com.tangshengbo.service.get(Thread.currentThread());
                 test.getByLock(Thread.currentThread());
-            }
+            };
 
-            ;
         }.start();
 
         new Thread() {
             public void run() {
                 // com.tangshengbo.service.get(Thread.currentThread());
                 test.getByLock(Thread.currentThread());
-            }
+            };
 
-            ;
         }.start();
 
         Thread.sleep(5000);

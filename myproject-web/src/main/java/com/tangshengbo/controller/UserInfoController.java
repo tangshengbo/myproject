@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/user")
 public class UserInfoController {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserInfoService userInfoService;
@@ -33,12 +33,12 @@ public class UserInfoController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(Model model, UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) {
 
         logger.info("login param {}", model);
-        String loginStatus = (String)request.getSession().getAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY);
-        if(loginStatus == null){
+        String loginStatus = (String) request.getSession().getAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY);
+        if (loginStatus == null) {
             logger.info("登录失败>>>>>>>>>>>>>>>>>>>>>>>>");
             return "redirect:/login.jsp";
         }
@@ -47,7 +47,7 @@ public class UserInfoController {
             result = "登录成功 欢迎你" + userInfo.getUserName();
             model.addAttribute("loginInfo", result);
             logger.info("登录成功>>>>>>>>>>>>>>>>>>>>>>>>");
-            request.getSession().setAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY,"success");
+            request.getSession().setAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY, "success");
             return "index";
         } else {
             logger.info("登录失败>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -55,16 +55,16 @@ public class UserInfoController {
         }
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView register(Model model , UserInfo userInfo, HttpServletRequest request){
+    public ModelAndView register(Model model, UserInfo userInfo, HttpServletRequest request) {
 
-        logger.info("register param [{}]",userInfo);
+        logger.info("register param [{}]", userInfo);
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
         System.out.println(userDetails.toString());
-        if(userInfoService.register(userInfo)){
+        if (userInfoService.register(userInfo)) {
             logger.info("注册成功>>>>>>>>>>>>>>>>>>>>>>>>");
-            request.getSession().setAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY,"success");
+            request.getSession().setAttribute(com.tangshengbo.utils.Constants.RANDOM_LOGIN_KEY, "success");
             return  new ModelAndView("redirect:/login.jsp");
         }
 
