@@ -12,6 +12,6 @@ public class Sender extends BaseConnector {
 	}
 	
 	public void sendMessage(Serializable object) throws IOException {
-        getChannel().basicPublish("",getQueueName(), null, SerializationUtils.serialize(object));
+        getChannel().basicPublish("", getQueueName(), null, SerializationUtils.serialize(object));
     }  	
 }

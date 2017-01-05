@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SchedulerTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(SchedulerTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerTest.class);
 
     public static void main(String[] args) {
 
@@ -52,11 +52,11 @@ public class SchedulerTest {
 
         } catch (SchedulerException e) {
 
-            logger.info("SchedulerException {}", e.getMessage());
+            LOGGER.info("SchedulerException {}", e.getMessage());
 
         } catch (InterruptedException e) {
 
-            logger.info("SchedulerException {}", e.getMessage());
+            LOGGER.info("SchedulerException {}", e.getMessage());
 
         }
 
