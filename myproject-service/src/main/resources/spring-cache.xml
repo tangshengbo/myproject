@@ -28,7 +28,7 @@
             </set>
         </property>
     </bean>-->
-    <bean id="cacheManager" class="com.tangshengbo.cache.MyCacheManager">
+    <!--<bean id="cacheManager" class="com.tangshengbo.cache.MyCacheManager">
         <property name="caches">
             <set>
                 <bean class="com.tangshengbo.cache.MyCache">
@@ -36,15 +36,15 @@
                 </bean>
             </set>
         </property>
-    </bean>
-
-   <!-- <bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
-        <property name="cacheSpecification" value="concurrencyLevel=4,expireAfterAccess=100s,expireAfterWrite=100s" />
-        <property name="cacheNames">
-            <list>
-                <value>dictTableCache</value>
-            </list>
-        </property>
     </bean>-->
+
+    <bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
+    <property name="cacheSpecification" value="concurrencyLevel=4,expireAfterAccess=100s,expireAfterWrite=100s" />
+    <property name="cacheNames">
+        <list>
+            <value>userRoleServiceCache</value>
+        </list>
+    </property>
+</bean>
 
 </beans>

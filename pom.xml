@@ -268,12 +268,13 @@
             <version>${spring-security-version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.google.collections/google-collections -->
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
         </dependency>
+
 
     </dependencies>
 </project>
