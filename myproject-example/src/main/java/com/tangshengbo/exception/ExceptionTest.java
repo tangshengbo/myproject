@@ -1,5 +1,7 @@
 package com.tangshengbo.exception;
 
+import java.math.BigDecimal;
+
 /**
  * Created by tangshengbo on 2017/2/14.
  */
@@ -9,6 +11,10 @@ public class ExceptionTest {
         ExceptionTest test = new ExceptionTest();
         String result = test.testFinally();
         System.out.println(result);
+        BigDecimal bigDecimal= BigDecimal.valueOf(0.0);
+        if (bigDecimal.doubleValue() <= 0) {
+            System.out.println(bigDecimal.intValue());
+        }
 
     }
 
