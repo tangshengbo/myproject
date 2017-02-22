@@ -11,6 +11,5 @@ public class FactoryMethodTest {
 
         pizzaFactory = new AmericanPizzaFactory();
         pizzaFactory.orderPizza("cheese");
-
     }
 }

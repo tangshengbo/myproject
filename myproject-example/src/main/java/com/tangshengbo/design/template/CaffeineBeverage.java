@@ -27,5 +27,4 @@ public abstract class CaffeineBeverage {
     abstract void addCondiments();
 
     abstract void brew();
-
 }

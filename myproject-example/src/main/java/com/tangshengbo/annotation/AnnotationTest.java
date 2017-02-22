@@ -11,7 +11,6 @@ public class AnnotationTest {
 
         try {
             Description description;
-            String[] names;
             Class c = Class.forName("com.tangshengbo.annotation.People");
 
             boolean present = c.isAnnotationPresent(Description.class);
@@ -24,7 +23,7 @@ public class AnnotationTest {
             for (Method method : methods) {
                 present = method.isAnnotationPresent(Description.class);
                 if (present) {
-                    description = (Description) method.getAnnotation(Description.class);
+                    description = method.getAnnotation(Description.class);
                    printAnnotationValue(description);
                 }
             }

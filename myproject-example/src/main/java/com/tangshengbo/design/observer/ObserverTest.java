@@ -14,6 +14,5 @@ public class ObserverTest {
         subject.setWeather(new Weather(1.2f,13.2f,23.1f));
         subject.setWeather(new Weather(1.2f,13.2f,23.1f));
         subject.setWeather(new Weather(1.2f,13.2f,23.1f));
-
     }
 }
