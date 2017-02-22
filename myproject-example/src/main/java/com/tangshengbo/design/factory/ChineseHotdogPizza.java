@@ -8,6 +8,5 @@ public class ChineseHotdogPizza implements Pizza {
     @Override
     public void taste() {
         System.out.println("ChineseHotdogPizza    taste");
-
     }
 }
