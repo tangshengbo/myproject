@@ -23,7 +23,6 @@ public class Company implements Runnable {
 //			}
 //			System.out.println("结束存钱。。。。。。。。。。。。");
 //		}
-
         lock.lock();
         try {
 

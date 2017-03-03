@@ -1,19 +1,18 @@
 package com.tangshengbo.io;
 
 import java.io.*;
-import java.lang.reflect.Proxy;
 
 public class FileTest {
 
     public static void main(String[] args) throws Exception {
-        //FileTest fileTest = new FileTest();
+        FileTest fileTest = new FileTest();
 //		fileTest.operationFile();
-//		fileTest.dataFIleStream();
+		fileTest.dataFIleStream();
 //		fileTest.read();
-//		fileTest.bufferRead();
+//		fileTest.buffered();
         //fileTest.serializeObject();
 
-        System.out.println(0 - 0);
+//        fileTest.serializeObject();
 
     }
 
@@ -39,16 +38,25 @@ public class FileTest {
     }
 
     public void dataFIleStream() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("D:/tang.txt");
+        FileInputStream fileInputStream = new FileInputStream("E:\\read.txt");
         DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-        System.out.println(dataInputStream.readInt());
+        System.out.println(dataInputStream.read());
         fileInputStream.close();
         dataInputStream.close();
 
     }
 
-    public void buffered() throws FileNotFoundException {
-        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(""));
+    public void buffered() throws IOException {
+        BufferedInputStream ios = new BufferedInputStream(new FileInputStream("E:\\入职\\junit部署.avi"));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("D:\\junit部署.avi"));
+        byte [] bytes = new byte[1024];
+        int len;
+        while ((len = ios.read()) != -1) {
+            bos.write(bytes, 0, len);
+        }
+        bos.flush();
+        bos.close();
+        ios.close();
     }
 
     public void read() throws IOException {
@@ -63,34 +71,31 @@ public class FileTest {
 
     public void bufferRead() throws IOException {
         //BufferReader br = new BufferReader(new InputStreamReader(System.in));
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("E:\\read.txt"), "GBK"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("E:\\read.txt"), "UTF-8"));
 
-
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\writer.txt", true)));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\writer.txt"), "UTF-8"));
         PrintWriter pw = new PrintWriter(bw);
         String line;
         while ((line = br.readLine()) != null) {
-            //	bw.write(line);
-            pw.write(line);
-            pw.println(line);
+            bw.write(line);
+//            pw.write(line);
+//            pw.println(line);
 
-//			bw.newLine();
-            pw.flush();
+			bw.newLine();
+            bw.flush();
+//            pw.flush();
         }
     }
 
     private void serializeObject() throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("folder\\serialize.txt"));
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("D:\\serialize.txt"));
         Student student = new Student("00000001", "唐声波", 42);
         out.writeObject(student);
         out.close();
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("folder\\serialize.txt"));
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\serialize.txt"));
         student = (Student) in.readObject();
         System.out.println(student.toString());
-        Proxy proxy;
-
-
     }
 
 }

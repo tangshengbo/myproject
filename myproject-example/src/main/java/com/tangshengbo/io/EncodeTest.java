@@ -9,7 +9,8 @@ public class EncodeTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
         EncodeTest test = new EncodeTest();
-        test.testCharset();
+//        test.testCharset();
+        test.encodeType();
     }
 
     public void testCharset() {

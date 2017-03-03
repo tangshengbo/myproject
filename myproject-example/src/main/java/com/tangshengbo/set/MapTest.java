@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MapTest {
 
@@ -31,18 +32,20 @@ public class MapTest {
     }
 
     public void hashMap() {
-        HashMap map = new HashMap();
+        Map map = new ConcurrentHashMap();
 
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");
+        map.put("n", "n");
 
-        Iterator it = map.values().iterator();
-        while (it.hasNext()) {
-            map.remove(it.next());
-            System.out.println("没有报错");
 
-        }
+//        Iterator it = map.values().iterator();
+//        while (it.hasNext()) {
+//            map.remove(it.next());
+//            System.out.println("没有报错");
+//
+//        }
 
        /* Set keys = map.keySet();
         Iterator it = keys.iterator();
