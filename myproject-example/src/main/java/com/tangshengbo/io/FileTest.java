@@ -96,6 +96,7 @@ public class FileTest {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("D:\\serialize.txt"));
         student = (Student) in.readObject();
         System.out.println(student.toString());
+
     }
 
 }
