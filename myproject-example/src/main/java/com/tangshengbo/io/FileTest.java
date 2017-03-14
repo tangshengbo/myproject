@@ -7,11 +7,11 @@ public class FileTest {
     public static void main(String[] args) throws Exception {
         FileTest fileTest = new FileTest();
 //		fileTest.operationFile();
-		fileTest.dataFIleStream();
+//		fileTest.dataFIleStream();
 //		fileTest.read();
 //		fileTest.buffered();
         //fileTest.serializeObject();
-
+        fileTest.printToDisplay();
 //        fileTest.serializeObject();
 
     }
@@ -97,6 +97,18 @@ public class FileTest {
         student = (Student) in.readObject();
         System.out.println(student.toString());
 
+    }
+
+    public void printToDisplay() {
+        char ch;
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));  //将字节流转为字符流，带缓冲
+        try {
+            while ((ch = (char) in.read()) != -1){
+                System.out.print(ch);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
