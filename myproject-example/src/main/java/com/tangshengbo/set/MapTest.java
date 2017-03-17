@@ -12,8 +12,8 @@ public class MapTest {
 
         MapTest mapTest = new MapTest();
         //mapTest.calculate(10);
-        //mapTest.testCopyArray();
-        mapTest.hashMap();
+        mapTest.testCopyArray();
+//        mapTest.hashMap();
         // mapTest.linkedMap();
         //mapTest.treeMap();
         //mapTest.testRedis();
@@ -82,18 +82,14 @@ public class MapTest {
     }
 
     private void testCopyArray() {
-        int[] srcArray = new int[100];
+        int[] srcArray = new int[1000];
         int length = srcArray.length;
         for (int i = 0; i < length; i++) {
             srcArray[i] = i;
         }
-        int[] destArray = new int[100];
-        System.arraycopy(srcArray, 0, destArray, 0, 100);
-        length = destArray.length;
-        for (int j = 0; j < length; j++) {
-
-            System.out.print(destArray[j] + " ");
-        }
+        int[] destArray = new int[1000];
+        System.arraycopy(srcArray, 0, destArray, 0, 1000);
+        System.out.println(Arrays.toString(destArray));
     }
 
     private void calculate(int number) {

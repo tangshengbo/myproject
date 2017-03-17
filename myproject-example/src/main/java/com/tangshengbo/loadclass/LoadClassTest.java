@@ -18,8 +18,29 @@ public class LoadClassTest {
         //Class clazz = getClass().getClassLoader().loadClass("");
         int count = StringUtils.countMatches("lllslslllslllsllsllls","s");
         System.out.println(count);
+        LoadClassTest classTest = new LoadClassTest();
+        Person person = new Person("lls", 123);
+        Person newPerson = classTest.transmitObject();
+        System.out.println(person.hashCode() + "\t" + newPerson.hashCode());
+        System.out.println(person.toString());
 
+    }
 
-
+    public Person transmitObject() {
+        Person person = new Person();
+        person.setAge(10);
+        person.setName("3322324234");
+        //跳出多重循环
+        label:
+        for (int i = 0; i < 100; i++) {
+            System.out.println("i:" + i);
+            for (int j = 0; j < 100; j++) {
+                System.out.println("j:" + j);
+                break label;
+            }
+        }
+        System.out.println("label:break");
+        System.gc();
+        return person;
     }
 }

@@ -24,8 +24,6 @@ public class InternalClassTest {
         {
             MethodOut out = new MethodOut();
             out.print(1);
-            //只能外部类使用
         }
-
     }
 }
