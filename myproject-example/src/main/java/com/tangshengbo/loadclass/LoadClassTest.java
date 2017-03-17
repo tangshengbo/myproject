@@ -16,14 +16,13 @@ public class LoadClassTest {
         Thread.currentThread().isInterrupted();
 
         //Class clazz = getClass().getClassLoader().loadClass("");
-        int count = StringUtils.countMatches("lllslslllslllsllsllls","s");
+        int count = StringUtils.countMatches("lllslslllslllsllsllls", "s");
         System.out.println(count);
         LoadClassTest classTest = new LoadClassTest();
         Person person = new Person("lls", 123);
         Person newPerson = classTest.transmitObject();
         System.out.println(person.hashCode() + "\t" + newPerson.hashCode());
         System.out.println(person.toString());
-
     }
 
     public Person transmitObject() {
@@ -40,7 +39,6 @@ public class LoadClassTest {
             }
         }
         System.out.println("label:break");
-        System.gc();
         return person;
     }
 }

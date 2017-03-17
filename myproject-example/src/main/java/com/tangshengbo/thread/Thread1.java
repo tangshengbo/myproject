@@ -1,4 +1,4 @@
-package com.tangshengbo.test;
+package com.tangshengbo.thread;
 
 public class Thread1 implements Runnable {
 

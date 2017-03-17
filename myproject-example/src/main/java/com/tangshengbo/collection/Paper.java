@@ -1,4 +1,4 @@
-package com.tangshengbo.set;
+package com.tangshengbo.collection;
 
 /**
  * Created by Administrator on 2016/11/30.

@@ -1,4 +1,4 @@
-package com.tangshengbo.test;
+package com.tangshengbo.thread;
 
 import java.net.InetAddress;
 import java.net.MalformedURLException;

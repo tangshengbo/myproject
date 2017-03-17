@@ -121,8 +121,8 @@ public class RedisClient {
         System.out.println("获取key002对应的新值" + jedis.get("key002"));
 
         /**
-         * mset,mget同时新增，修改，查询多个键值对 等价于： jedis.set("name","ssss");
-         * jedis.set("jarorwar","xxxx");
+         * mset,mget同时新增，修改，查询多个键值对 等价于： jedis.collection("name","ssss");
+         * jedis.collection("jarorwar","xxxx");
          */
         System.out.println("一次性新增key201,key202,key203,key204及其对应值："
                 + jedis.mset("key201", "value201", "key202", "value202", "key203", "value203", "key204", "value204"));

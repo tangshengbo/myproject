@@ -37,7 +37,7 @@ public class Constants {
     public static final String CONFIG = "appConfig";
 
     /**
-     * Session scope attribute that holds the locale set by the user. By setting
+     * Session scope attribute that holds the locale collection by the user. By setting
      * this key to the same one that Struts uses, we get synchronization in
      * Struts w/o having to do extra work or have two session-level variables.
      */
@@ -83,7 +83,7 @@ public class Constants {
     /**
      * The name of the CSS Theme setting.
      *
-     * @deprecated No longer used to set themes.
+     * @deprecated No longer used to collection themes.
      */
     public static final String CSS_THEME = "csstheme";
 

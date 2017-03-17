@@ -1,4 +1,4 @@
-package com.tangshengbo.internalclass;
+package com.tangshengbo.innerclass;
 
 /**
  * Created by tangshengbo on 2017/3/14.

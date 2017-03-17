@@ -1,4 +1,4 @@
-package com.tangshengbo.test.thread;
+package com.tangshengbo.thread;
 
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;

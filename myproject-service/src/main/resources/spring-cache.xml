@@ -18,23 +18,23 @@
 
     <!--<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
-            <set>
+            <collection>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="default"/>
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="userRoleServiceCache"/>
                 </bean>
-            </set>
+            </collection>
         </property>
     </bean>-->
     <!--<bean id="cacheManager" class="com.tangshengbo.cache.MyCacheManager">
         <property name="caches">
-            <set>
+            <collection>
                 <bean class="com.tangshengbo.cache.MyCache">
                     <property name="name" value="userRoleServiceCache"/>
                 </bean>
-            </set>
+            </collection>
         </property>
     </bean>-->
 

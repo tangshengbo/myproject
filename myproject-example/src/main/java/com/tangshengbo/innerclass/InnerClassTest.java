@@ -1,9 +1,9 @@
-package com.tangshengbo.internalclass;
+package com.tangshengbo.innerclass;
 
 /**
  * Created by tangshengbo on 2017/3/14.
  */
-public class InternalClassTest {
+public class InnerClassTest {
 
     public static void main(String[] args) {
         {

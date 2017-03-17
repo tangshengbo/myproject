@@ -215,7 +215,7 @@ jQuery.fn = jQuery.prototype = {
 	// The default length of a jQuery object is 0
 	length: 0,
 
-	// The number of elements contained in the matched element set
+	// The number of elements contained in the matched element collection
 	size: function() {
 		return this.length;
 	},
@@ -224,8 +224,8 @@ jQuery.fn = jQuery.prototype = {
 		return slice.call( this, 0 );
 	},
 
-	// Get the Nth element in the matched element set OR
-	// Get the whole matched element set as a clean array
+	// Get the Nth element in the matched element collection OR
+	// Get the whole matched element collection as a clean array
 	get: function( num ) {
 		return num == null ?
 
@@ -237,9 +237,9 @@ jQuery.fn = jQuery.prototype = {
 	},
 
 	// Take an array of elements and push it onto the stack
-	// (returning the new matched element set)
+	// (returning the new matched element collection)
 	pushStack: function( elems, name, selector ) {
-		// Build a new jQuery matched element set
+		// Build a new jQuery matched element collection
 		var ret = this.constructor();
 
 		if ( jQuery.isArray( elems ) ) {
@@ -260,11 +260,11 @@ jQuery.fn = jQuery.prototype = {
 			ret.selector = this.selector + "." + name + "(" + selector + ")";
 		}
 
-		// Return the newly-formed element set
+		// Return the newly-formed element collection
 		return ret;
 	},
 
-	// Execute a callback for every element in the matched set.
+	// Execute a callback for every element in the matched collection.
 	// (You can seed the arguments with an array of args, but this is
 	// only used internally.)
 	each: function( callback, args ) {
@@ -822,7 +822,7 @@ jQuery.extend({
 		return proxy;
 	},
 
-	// Mutifunctional method to get and set values to a collection
+	// Mutifunctional method to get and collection values to a collection
 	// The value/s can optionally be executed if it's a function
 	access: function( elems, fn, key, value, chainable, emptyGet, pass ) {
 		var exec,
@@ -850,7 +850,7 @@ jQuery.extend({
 						return exec.call( jQuery( elem ), value );
 					};
 
-				// Otherwise they run against the entire set
+				// Otherwise they run against the entire collection
 				} else {
 					fn.call( elems, value );
 					fn = null;
@@ -1562,7 +1562,7 @@ jQuery.support = (function() {
 		div = document.createElement("div");
 		container.appendChild( div );
 
-		// Check if table cells still have offsetWidth/Height when they are set
+		// Check if table cells still have offsetWidth/Height when they are collection
 		// to display:none and there are still other visible table cells in a
 		// table row; if so, offsetWidth/Height are not reliable for use when
 		// determining if an element has been hidden directly using
@@ -2001,7 +2001,7 @@ function dataAttr( elem, key, data ) {
 					data;
 			} catch( e ) {}
 
-			// Make sure we set the data so it isn't changed later
+			// Make sure we collection the data so it isn't changed later
 			jQuery.data( elem, key, data );
 
 		} else {
@@ -2345,7 +2345,7 @@ jQuery.fn.extend({
 
 			} else if ( type === "undefined" || type === "boolean" ) {
 				if ( this.className ) {
-					// store className if set
+					// store className if collection
 					jQuery._data( this, "__className__", this.className );
 				}
 
@@ -2420,7 +2420,7 @@ jQuery.fn.extend({
 
 			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
 
-			// If set returns undefined, fall back to normal setting
+			// If collection returns undefined, fall back to normal setting
 			if ( !hooks || !("set" in hooks) || hooks.set( this, val, "value" ) === undefined ) {
 				this.value = val;
 			}
@@ -2512,7 +2512,7 @@ jQuery.extend({
 		var ret, hooks, notxml,
 			nType = elem.nodeType;
 
-		// don't get/set attributes on text, comment and attribute nodes
+		// don't get/collection attributes on text, comment and attribute nodes
 		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
@@ -2602,7 +2602,7 @@ jQuery.extend({
 					jQuery.error( "type property can't be changed" );
 				} else if ( !jQuery.support.radioValue && value === "radio" && jQuery.nodeName(elem, "input") ) {
 					// Setting the type on a radio button after the value resets the value in IE6-9
-					// Reset value to it's default in case type is set after value
+					// Reset value to it's default in case type is collection after value
 					// This is for element creation
 					var val = elem.value;
 					elem.setAttribute( "type", value );
@@ -2653,7 +2653,7 @@ jQuery.extend({
 		var ret, hooks, notxml,
 			nType = elem.nodeType;
 
-		// don't get/set properties on text, comment and attribute nodes
+		// don't get/collection properties on text, comment and attribute nodes
 		if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
@@ -2687,7 +2687,7 @@ jQuery.extend({
 	propHooks: {
 		tabIndex: {
 			get: function( elem ) {
-				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
+				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly collection
 				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
 				var attributeNode = elem.getAttributeNode("tabindex");
 
@@ -2718,14 +2718,14 @@ boolHook = {
 	set: function( elem, value, name ) {
 		var propName;
 		if ( value === false ) {
-			// Remove boolean attributes when set to false
+			// Remove boolean attributes when collection to false
 			jQuery.removeAttr( elem, name );
 		} else {
 			// value is true since we know at this point it's type boolean and not false
-			// Set boolean attributes to the same name and set the DOM property
+			// Set boolean attributes to the same name and collection the DOM property
 			propName = jQuery.propFix[ name ] || name;
 			if ( propName in elem ) {
-				// Only set the IDL specifically if it already exists on the element
+				// Only collection the IDL specifically if it already exists on the element
 				elem[ propName ] = true;
 			}
 
@@ -3018,7 +3018,7 @@ jQuery.event = {
 
 	global: {},
 
-	// Detach an event or set of events from an element
+	// Detach an event or collection of events from an element
 	remove: function( elem, types, handler, selector, mappedTypes ) {
 
 		var elemData = jQuery.hasData( elem ) && jQuery._data( elem ),
@@ -3565,7 +3565,7 @@ jQuery.Event.prototype = {
 		if ( e.preventDefault ) {
 			e.preventDefault();
 
-		// otherwise set the returnValue property of the original event to false (IE)
+		// otherwise collection the returnValue property of the original event to false (IE)
 		} else {
 			e.returnValue = false;
 		}
@@ -3581,7 +3581,7 @@ jQuery.Event.prototype = {
 		if ( e.stopPropagation ) {
 			e.stopPropagation();
 		}
-		// otherwise set the cancelBubble property of the original event to true (IE)
+		// otherwise collection the cancelBubble property of the original event to true (IE)
 		e.cancelBubble = true;
 	},
 	stopImmediatePropagation: function() {
@@ -3795,7 +3795,7 @@ jQuery.fn.extend({
 		if ( one === 1 ) {
 			origFn = fn;
 			fn = function( event ) {
-				// Can use an empty set, since event contains the info
+				// Can use an empty collection, since event contains the info
 				jQuery().off( event );
 				return origFn.apply( this, arguments );
 			};
@@ -4023,7 +4023,7 @@ var Sizzle = function( selector, context, results, seed ) {
 		}
 
 	} else {
-		// Take a shortcut and set the context if the root selector is an ID
+		// Take a shortcut and collection the context if the root selector is an ID
 		// (but not if it'll be faster if the inner selector is an ID)
 		if ( !seed && parts.length > 1 && context.nodeType === 9 && !contextXML &&
 				Expr.match.ID.test(parts[0]) && !Expr.match.ID.test(parts[parts.length - 1]) ) {
@@ -5400,7 +5400,7 @@ var runtil = /Until$/,
 	isSimple = /^.[^:#\[\.,]*$/,
 	slice = Array.prototype.slice,
 	POS = jQuery.expr.match.globalPOS,
-	// methods guaranteed to produce a unique set when starting from a unique set
+	// methods guaranteed to produce a unique collection when starting from a unique collection
 	guaranteedUnique = {
 		children: true,
 		contents: true,
@@ -5468,7 +5468,7 @@ jQuery.fn.extend({
 	is: function( selector ) {
 		return !!selector && (
 			typeof selector === "string" ?
-				// If this is a positional selector, check membership in the returned set
+				// If this is a positional selector, check membership in the returned collection
 				// so $("p:first").is("p:last") won't return true for a doc with two "p".
 				POS.test( selector ) ?
 					jQuery( selector, this.context ).index( this[0] ) >= 0 :
@@ -5526,7 +5526,7 @@ jQuery.fn.extend({
 	},
 
 	// Determine the position of an element within
-	// the matched set of elements
+	// the matched collection of elements
 	index: function( elem ) {
 
 		// No argument, return index in parent
@@ -6155,7 +6155,7 @@ function cloneFixAttributes( src, dest ) {
 	} else if ( nodeName === "input" && (src.type === "checkbox" || src.type === "radio") ) {
 		// IE6-8 fails to persist the checked state of a cloned checkbox
 		// or radio button. Worse, IE6-7 fail to give the cloned element
-		// a checked appearance if the defaultChecked value isn't also set
+		// a checked appearance if the defaultChecked value isn't also collection
 		if ( src.checked ) {
 			dest.defaultChecked = dest.checked = src.checked;
 		}
@@ -6171,7 +6171,7 @@ function cloneFixAttributes( src, dest ) {
 	} else if ( nodeName === "option" ) {
 		dest.selected = src.defaultSelected;
 
-	// IE6-8 fails to set the defaultValue to the correct value when
+	// IE6-8 fails to collection the defaultValue to the correct value when
 	// cloning other types of input fields
 	} else if ( nodeName === "input" || nodeName === "textarea" ) {
 		dest.defaultValue = src.defaultValue;
@@ -6358,7 +6358,7 @@ jQuery.extend({
 
 		srcElements = destElements = null;
 
-		// Return the cloned set
+		// Return the cloned collection
 		return clone;
 	},
 
@@ -6615,9 +6615,9 @@ jQuery.extend({
 		"float": jQuery.support.cssFloat ? "cssFloat" : "styleFloat"
 	},
 
-	// Get and set the style property on a DOM Node
+	// Get and collection the style property on a DOM Node
 	style: function( elem, name, value, extra ) {
-		// Don't set styles on text and comment nodes
+		// Don't collection styles on text and comment nodes
 		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style ) {
 			return;
 		}
@@ -6639,7 +6639,7 @@ jQuery.extend({
 				type = "number";
 			}
 
-			// Make sure that NaN and null values aren't set. See: #7116
+			// Make sure that NaN and null values aren't collection. See: #7116
 			if ( value == null || type === "number" && isNaN( value ) ) {
 				return;
 			}
@@ -6649,7 +6649,7 @@ jQuery.extend({
 				value += "px";
 			}
 
-			// If a hook was provided, use that value, otherwise just set the specified value
+			// If a hook was provided, use that value, otherwise just collection the specified value
 			if ( !hooks || !("set" in hooks) || (value = hooks.set( elem, value )) !== undefined ) {
 				// Wrapped to prevent IE from throwing errors when 'invalid' values are provided
 				// Fixes bug #5509
@@ -6899,7 +6899,7 @@ if ( !jQuery.support.opacity ) {
 				}
 			}
 
-			// otherwise, set new filter values
+			// otherwise, collection new filter values
 			style.filter = ralpha.test( filter ) ?
 				filter.replace( ralpha, opacity ) :
 				filter + " " + opacity;
@@ -7016,7 +7016,7 @@ var r20 = /%20/g,
 	allTypes = ["*/"] + ["*"];
 
 // #8138, IE may throw an exception when accessing
-// a field from window.location if document.domain has been set
+// a field from window.location if document.domain has been collection
 try {
 	ajaxLocation = location.href;
 } catch( e ) {
@@ -7630,7 +7630,7 @@ jQuery.extend({
 		// Determine if request has content
 		s.hasContent = !rnoContent.test( s.type );
 
-		// Watch for a new set of requests
+		// Watch for a new collection of requests
 		if ( fireGlobals && jQuery.active++ === 0 ) {
 			jQuery.event.trigger( "ajaxStart" );
 		}
@@ -7738,7 +7738,7 @@ jQuery.extend({
 		return jqXHR;
 	},
 
-	// Serialize an array of form elements or a set of
+	// Serialize an array of form elements or a collection of
 	// key/values into a query string
 	param: function( a, traditional ) {
 		var s = [],
@@ -8227,8 +8227,8 @@ if ( jQuery.support.ajax ) {
 
 					// X-Requested-With header
 					// For cross-domain requests, seeing as conditions for a preflight are
-					// akin to a jigsaw puzzle, we simply never set it to be sure.
-					// (it can always be set on a per-request basis or even using ajaxSetup)
+					// akin to a jigsaw puzzle, we simply never collection it to be sure.
+					// (it can always be collection on a per-request basis or even using ajaxSetup)
 					// For same-domain requests, won't change header if already provided.
 					if ( !s.crossDomain && !headers["X-Requested-With"] ) {
 						headers[ "X-Requested-With" ] = "XMLHttpRequest";
@@ -8556,7 +8556,7 @@ jQuery.fn.extend({
 					// Make sure that nothing sneaks out
 					// Record all 3 overflow attributes because IE does not
 					// change the overflow attribute when overflowX and
-					// overflowY are set to the same value
+					// overflowY are collection to the same value
 					opt.overflow = [ this.style.overflow, this.style.overflowX, this.style.overflowY ];
 
 					// Set display property to inline-block for height/width
@@ -9188,7 +9188,7 @@ jQuery.offset = {
 	setOffset: function( elem, options, i ) {
 		var position = jQuery.css( elem, "position" );
 
-		// set position first, in-case top/left are set even on static elem
+		// collection position first, in-case top/left are collection even on static elem
 		if ( position === "static" ) {
 			elem.style.position = "relative";
 		}

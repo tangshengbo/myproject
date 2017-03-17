@@ -1,6 +1,6 @@
 package com.tangshengbo.json;
 
-import com.tangshengbo.test.User;
+import com.tangshengbo.thread.User;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 

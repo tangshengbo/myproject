@@ -1,4 +1,4 @@
-package com.tangshengbo.set;
+package com.tangshengbo.collection;
 
 import com.google.common.collect.Lists;
 
