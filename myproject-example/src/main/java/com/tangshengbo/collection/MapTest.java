@@ -33,7 +33,7 @@ public class MapTest {
 
     public void hashMap() {
         Map map = new ConcurrentHashMap();
-
+        map.containsValue("");
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");

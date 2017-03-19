@@ -11,8 +11,9 @@ public class FileTest {
 //		fileTest.read();
 //		fileTest.buffered();
         //fileTest.serializeObject();
-        fileTest.printToDisplay();
+//        fileTest.printToDisplay();
 //        fileTest.serializeObject();
+        fileTest.printFilesByFolder("D:\\");
 
     }
 
@@ -108,6 +109,41 @@ public class FileTest {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void printFilesByFolder(String folderName) {
+        if (folderName == null) {
+            return;
+        }
+        FileInputStream fis;
+        String fileName;
+        long fileSize = 0;
+
+        File baseFile = new File(folderName);
+        File[] files = baseFile.listFiles();
+        if (files == null) {
+            return;
+        }
+        for(File file : files) {
+            if (file.isDirectory()) {
+                printFilesByFolder(file.getPath());
+            }
+
+            if (file.isFile()) {
+                fileName = file.getName();
+                try {
+                    fis = new FileInputStream(file);
+                    fileSize = fis.available();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+                System.out.println(fileName + "\t" + suffix + "\t" + fileSize/1048576 + "MB");
+            }
         }
     }
 
