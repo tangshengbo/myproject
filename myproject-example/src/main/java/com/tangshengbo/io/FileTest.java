@@ -1,8 +1,12 @@
 package com.tangshengbo.io;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.*;
+import java.math.BigDecimal;
 
 public class FileTest {
+
 
     public static void main(String[] args) throws Exception {
         FileTest fileTest = new FileTest();
@@ -13,8 +17,9 @@ public class FileTest {
         //fileTest.serializeObject();
 //        fileTest.printToDisplay();
 //        fileTest.serializeObject();
-        fileTest.printFilesByFolder("D:\\");
-
+//        fileTest.operationFile();
+        int count = fileTest.countMatchesOfFile("C:\\Users\\Administrator\\Desktop\\新建文本文档 (4).txt", "唐声波");
+        System.out.println(count);
     }
 
     public void operationFile() throws IOException {
@@ -25,6 +30,10 @@ public class FileTest {
             file.createNewFile();
         }
         System.out.println(file.getAbsolutePath() + "\t" + file.getParent());
+        FileWriter fw = new FileWriter("D:\\tang.txt");
+        fw.write("hello world!" + System.getProperty("line.separator"));
+        fw.write("你好！北京！");
+        fw.close();
 
     }
 
@@ -50,7 +59,7 @@ public class FileTest {
     public void buffered() throws IOException {
         BufferedInputStream ios = new BufferedInputStream(new FileInputStream("E:\\入职\\junit部署.avi"));
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("D:\\junit部署.avi"));
-        byte [] bytes = new byte[1024];
+        byte[] bytes = new byte[1024];
         int len;
         while ((len = ios.read()) != -1) {
             bos.write(bytes, 0, len);
@@ -82,7 +91,7 @@ public class FileTest {
 //            pw.write(line);
 //            pw.println(line);
 
-			bw.newLine();
+            bw.newLine();
             bw.flush();
 //            pw.flush();
         }
@@ -104,7 +113,7 @@ public class FileTest {
         char ch;
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));  //将字节流转为字符流，带缓冲
         try {
-            while ((ch = (char) in.read()) != -1){
+            while ((ch = (char) in.read()) != -1) {
                 System.out.print(ch);
             }
         } catch (IOException e) {
@@ -116,16 +125,17 @@ public class FileTest {
         if (folderName == null) {
             return;
         }
-        FileInputStream fis;
+        FileInputStream fis = null;
         String fileName;
-        long fileSize = 0;
+        double fileSize = 0;
+        BigDecimal bigDecimal;
 
         File baseFile = new File(folderName);
         File[] files = baseFile.listFiles();
         if (files == null) {
             return;
         }
-        for(File file : files) {
+        for (File file : files) {
             if (file.isDirectory()) {
                 printFilesByFolder(file.getPath());
             }
@@ -139,12 +149,48 @@ public class FileTest {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    try {
+                        if (fis != null) {
+                            fis.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-                System.out.println(fileName + "\t" + suffix + "\t" + fileSize/1048576 + "MB");
+                fileSize = fileSize / 1048576;
+                bigDecimal = new BigDecimal(fileSize);
+                fileSize = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                System.out.println(fileName + "\t" + suffix + "\t" + fileSize + "MB");
             }
         }
+    }
+
+    private int countMatchesOfFile(String fileName, String words) {
+        int count = 0;
+        String line;
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            while ((line = reader.readLine()) != null) {
+                count += StringUtils.countMatches(line, words);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return count;
     }
 
 }
