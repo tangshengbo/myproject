@@ -30,7 +30,7 @@ public class LoadClassTest {
         String result = classTest.reverseStr("qwertyuiop");
         System.out.println(result);
         System.out.println("replaceStr=======================================================");
-        System.out.println(classTest.replaceStr(result, "qwertyuiop"));
+        System.out.println(classTest.replaceStr( 0, result, "qwertyuiop"));
         System.out.println("reverseStrByCharArray============================================");
         result = classTest.reverseStrByCharArray("qwertyuiop");
         System.out.println(result);
@@ -79,9 +79,9 @@ public class LoadClassTest {
         return reverse;
     }
 
-    public String replaceStr(String srcStr, String descStr) {
+    public String replaceStr(int index, String srcStr, String targetStr) {
         StringBuffer sb = new StringBuffer(srcStr);
-        sb.replace(0, srcStr.length(), descStr);
+        sb.replace(index, srcStr.length(), targetStr);
         return sb.toString();
     }
 
@@ -96,7 +96,7 @@ public class LoadClassTest {
         try {
             newStr = new String(targetStr.getBytes(), encodeType);
         } catch (UnsupportedEncodingException e) {
-           return "不支持编码格式";
+            return "不支持编码格式";
         }
         return newStr;
     }
