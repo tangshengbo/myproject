@@ -1,5 +1,7 @@
 package com.tangshengbo.math;
 
+import com.tangshengbo.loadclass.Person;
+
 import java.util.Scanner;
 
 /**
@@ -19,6 +21,10 @@ public class Calculate {
         System.out.print("请输入一个浮点数：");
         num = in.nextDouble();
         new MathRound(num).invoke();
+        Person person = new Person();
+
+
+        calc();
     }
 
     private static class MathRound {
@@ -38,5 +44,11 @@ public class Calculate {
             long lnum = Math.round(num);
             System.out.println(num + "四舍五入得到长整数：" + lnum);
         }
+    }
+    public static void calc() {
+        int a = Integer.MAX_VALUE;
+        int b = Integer.MAX_VALUE;
+        int sum = a + b;
+        System.out.println("a:\t" + a + "\t+ b:\t" + b + "=" +sum);
     }
 }

@@ -9,6 +9,12 @@ public class Person {
 
     private int age;
 
+    int friendly;
+
+    protected int protect;
+
+    public int pub;
+    
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
