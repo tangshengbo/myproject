@@ -18,7 +18,6 @@ public class DoubleCheckedSingleton {
                     singleton = new DoubleCheckedSingleton();
                 }
             }
-
         }
         return singleton;
     }
