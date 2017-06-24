@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class AccountServiceImpl implements AccountService {
 
         log.info("add account success{}");
 	}
+
+	@Transactional(readOnly=true)
 	public Account getAccount(Integer id) {
 
 		Account account = accountMapper.selectByPrimaryKey(id);

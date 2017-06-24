@@ -1,5 +1,6 @@
 package com.tangshengbo.datetime;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -64,5 +65,17 @@ public class CalenderTest {
         String yesterdayNow = formatter.format(todayNow);
         System.out.println(yesterdayNow);
         return yesterdayNow;
+    }
+
+    public static Date stringToDate() {
+        String str = "2014-07-09 10:48:23";
+        Date d = null;
+        try {
+            d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(d);
+        return d;
     }
 }

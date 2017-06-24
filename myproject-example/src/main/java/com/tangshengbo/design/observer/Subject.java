@@ -11,5 +11,11 @@ public interface Subject {
     void removeObserver(Observer observer);
 
     void notifyObservers();
+
+    void attach(Observer observer);
+
+    void detach(Observer observer);
+
+    void notifyALl();
 }
 

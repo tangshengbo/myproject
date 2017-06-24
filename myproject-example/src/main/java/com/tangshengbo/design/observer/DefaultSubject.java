@@ -19,4 +19,19 @@ public class DefaultSubject implements Subject {
     public void notifyObservers() {
 
     }
+
+    @Override
+    public void attach(Observer observer) {
+
+    }
+
+    @Override
+    public void detach(Observer observer) {
+
+    }
+
+    @Override
+    public void notifyALl() {
+
+    }
 }

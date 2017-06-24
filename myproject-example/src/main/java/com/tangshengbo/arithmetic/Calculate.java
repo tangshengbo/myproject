@@ -1,4 +1,4 @@
-package com.tangshengbo.math;
+package com.tangshengbo.arithmetic;
 
 import com.tangshengbo.loadclass.Person;
 

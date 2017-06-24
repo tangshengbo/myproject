@@ -219,6 +219,7 @@ public class RedisClient {
         System.out.println("获取下标为2的元素：" + shardedJedis.lindex("stringlists", 2) + "\n");
 
 
+
     }
 
 }

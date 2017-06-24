@@ -24,4 +24,9 @@ public class CurrentDisplayObserver implements Observer,Displayer {
         this.weather = weather;
         this.display();
     }
+
+    @Override
+    public void update() {
+
+    }
 }

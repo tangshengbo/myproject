@@ -46,4 +46,19 @@ public class WeatherSubject implements Subject {
         this.weather = weather;
         measurementsChanged();
     }
+
+    @Override
+    public void attach(Observer observer) {
+
+    }
+
+    @Override
+    public void detach(Observer observer) {
+
+    }
+
+    @Override
+    public void notifyALl() {
+
+    }
 }

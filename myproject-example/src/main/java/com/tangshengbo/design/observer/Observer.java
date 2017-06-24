@@ -7,4 +7,6 @@ package com.tangshengbo.design.observer;
 public interface Observer {
 
     void update(Weather weather);
+
+    void update();
 }
