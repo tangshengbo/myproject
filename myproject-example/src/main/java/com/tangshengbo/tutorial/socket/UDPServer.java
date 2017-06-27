@@ -22,7 +22,7 @@ public class UDPServer {
                 ds.receive(dp);
                 ByteArrayInputStream bais = new ByteArrayInputStream(buf);
                 DataInputStream dis = new DataInputStream(bais);
-                System.out.println(dis.readLong() + "\t" + dis.readInt());
+                System.out.println(dis.readLong() + "\t" + dis.readInt() + "\t" + dis.readUTF());
             }
         } catch (SocketException e) {
             e.printStackTrace();

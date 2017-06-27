@@ -23,7 +23,7 @@ public class UDPClient {
         try {
             dos.writeLong(num);
             dos.writeInt(location);
-            dos.write(buf);
+            dos.writeUTF(name);
         } catch (IOException e) {
             e.printStackTrace();
         }
