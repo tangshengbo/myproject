@@ -10,7 +10,7 @@ public class IOStreamTest {
     public static void main(String[] args) {
 
         copyFile("E:\\New folder\\KTH.mp4", "D:\\KTH.mp4");
-        byteArrayStream();
+        testByteArrayStream();
     }
 
     public static void copyFile(String srcFileName, String destFileName) {
@@ -38,7 +38,7 @@ public class IOStreamTest {
         }
     }
 
-    public static void byteArrayStream() {
+    public static void testByteArrayStream() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
@@ -69,7 +69,6 @@ public class IOStreamTest {
         } catch (Exception e) {
             System.out.println("删除文件操作出错");
             e.printStackTrace();
-
         }
     }
 }
