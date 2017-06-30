@@ -16,7 +16,7 @@ public class JmsTemplate {
     private Destination destination;
     private MessageConsumer consumer;
     private MessageProducer producer;
-    private String queueName = "default-queue";
+    private String queueName;
     private JmsMessageMode  jmsMessageMode = JmsMessageMode.QUEUE;
 
     public JmsTemplate(String queueName) {
@@ -29,8 +29,11 @@ public class JmsTemplate {
         init();
     }
 
+    public JmsTemplate(JmsMessageMode jmsMessageMode) {
+        this("default-queue", jmsMessageMode);
+    }
     public JmsTemplate() {
-        init();
+        this("default-queue");
     }
 
     private void init() {
@@ -61,6 +64,8 @@ public class JmsTemplate {
         try {
             producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+            producer.setTimeToLive(1000);//消息的存活时间
+            producer.setPriority(9);//消息优先级
             MessageObject message = new MessageObject();
             for (int i = 0; i < 5; i++) {
                 message.setId(i);
