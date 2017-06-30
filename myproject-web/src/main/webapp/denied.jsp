@@ -18,7 +18,7 @@
 <hr>
 <div class="error">
     访问被拒绝<br>
-    ${requestScope['SPRING_SECURITY_403_EXCEPTION'].message}
+    ${requestScope['SPRING_SECURITY_403_EXCEPTION'].messageObject}
 </div>
 <hr>
 </body>
