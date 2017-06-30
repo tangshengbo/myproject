@@ -9,14 +9,21 @@ import java.util.concurrent.TimeUnit;
  * Created by Tang on 2017/6/29.
  */
 public class BeeperControl {
+
     private final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(1);
+            Executors.newScheduledThreadPool(10);
 
     public void beepForAnHour() {
 
         final Runnable beeper = new Runnable() {
             public void run() {
-                System.out.println("beep");
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("beep............." + Thread.currentThread().getName());
+
             }
         };
 

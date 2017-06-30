@@ -11,13 +11,22 @@ public class CallableTest {
     public static void main(String[] args) {
         try {
             completionServiceCount();
+            Callable callable = Executors.callable(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }, "tangshengbo");
+
+            System.out.println(callable.call());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 
     /**
      * 使用completionService收集callable结果
@@ -36,6 +45,7 @@ public class CallableTest {
         int sum = 0;
         int temp;
         for (int i = 0; i < threadNum; i++) {
+            //拿到一个已经完成的Callable并返回结果
             temp = completionService.take().get();
             sum += temp;
             System.out.print(temp + "\t");
@@ -49,8 +59,8 @@ public class CallableTest {
         Callable<Integer> task = new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
-                int time = rand.nextInt(100)*100;
-                System.out.println("Thread:"+ no+" time is:"+time);
+                int time = rand.nextInt(100) * 100;
+                System.out.println("Thread:" + no + " time is:" + time);
                 Thread.sleep(time);
                 return no;
             }
