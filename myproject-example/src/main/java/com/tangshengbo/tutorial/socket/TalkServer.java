@@ -1,6 +1,8 @@
 package com.tangshengbo.tutorial.socket;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -22,8 +24,8 @@ public class TalkServer {
             //建立服务器连接
             ServerSocket serverSocket = new ServerSocket(port);
             //等待用户连接
-            socket = serverSocket.accept();
             System.out.println("欢迎来到Java Socket聊天室***********************");
+            socket = serverSocket.accept();
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             // 获取控制台输入的Scanner

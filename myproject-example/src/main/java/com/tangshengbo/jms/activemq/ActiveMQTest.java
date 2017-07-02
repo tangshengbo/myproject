@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class ActiveMQTest {
 
     public static void main(String[] args) throws InterruptedException {
-        JmsTemplate jmsTemplate = new JmsTemplate(JmsMessageMode.TOPIC);
+        JmsTemplate jmsTemplate = new JmsTemplate(JmsMessageMode.QUEUE);
         jmsTemplate.send();
         TimeUnit.SECONDS.sleep(2);
 //        int i = 1 / 0;
