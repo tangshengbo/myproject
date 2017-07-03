@@ -10,7 +10,7 @@ public class ProducerConsumerTest {
         Producer producer = new Producer(box);
         Consumer consumer = new Consumer(box);
 
-        Thread producerThread = new Thread(producer, "Producer");
+        Thread producerThread = new Thread(producer, "QueueProducer");
         Thread consumerThread = new Thread(consumer, "ConsumerT1");
         Thread consumerThread2 = new Thread(consumer, "ConsumerT2");
 
