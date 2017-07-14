@@ -73,9 +73,7 @@ public class NIOClient {
                 } else if (key.isReadable()) {
                     read(key);
                 }
-
             }
-
         }
     }
 
@@ -230,7 +228,6 @@ public class NIOClient {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

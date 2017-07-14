@@ -73,9 +73,7 @@ public class NIOServer {
                 } else if (key.isReadable()) {
                     read(key);
                 }
-
             }
-
         }
     }
 
