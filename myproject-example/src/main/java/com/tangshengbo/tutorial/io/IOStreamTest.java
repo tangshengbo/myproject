@@ -10,7 +10,7 @@ public class IOStreamTest {
     public static void main(String[] args) {
 
         copyFile("E:\\New folder\\KTH.mp4", "D:\\KTH.mp4");
-        testByteArrayStream();
+//        testByteArrayStream();
     }
 
     public static void copyFile(String srcFileName, String destFileName) {
