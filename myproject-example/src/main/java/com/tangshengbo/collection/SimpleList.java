@@ -1,5 +1,6 @@
 package com.tangshengbo.collection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -13,12 +14,15 @@ public class SimpleList<T> {
     public int size() {
         return elementData.length;
     }
+
     public SimpleList(){
         elementData = new Object[size];
     }
+
     public boolean isEmpty() {
         return elementData.length == 0;
     }
+
     public boolean add(T e) {
         int currentIdx = elementData.length;
         if (elementData.length == size) {
@@ -27,9 +31,11 @@ public class SimpleList<T> {
         }
         return false;
     }
+
     public boolean remove(Object o) {
         return false;
     }
+
     public T get(int index) {
         return null;
     }
@@ -40,6 +46,12 @@ public class SimpleList<T> {
             list.add(i);
         }
         System.out.println(list.size);
+
+        ArrayList arrayList = new ArrayList();
+        for (int i = 0; i < 100; i++) {
+            arrayList.add(i);
+        }
+        System.out.println(10 >> 1);
 
     }
 }
