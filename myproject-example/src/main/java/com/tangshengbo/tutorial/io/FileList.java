@@ -22,7 +22,6 @@ public class FileList {
 
         //获取该目录下所有子文件
         File[] files = file.listFiles();
-
         for (int i = 0; i < files.length; i++) {
             System.out.println(preStr + files[i].getName());
             if (files[i].isDirectory()) {
