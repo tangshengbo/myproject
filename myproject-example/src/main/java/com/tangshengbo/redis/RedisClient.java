@@ -45,6 +45,8 @@ public class RedisClient {
 
         List<JedisShardInfo> list = new ArrayList<JedisShardInfo>();
         list.add(new JedisShardInfo("localhost", 6379));
+        list.add(new JedisShardInfo("localhost", 6380));
+        list.add(new JedisShardInfo("localhost", 6381));
 
         shardedJedisPool = new ShardedJedisPool(jedisPoolConfig, list);
     }
