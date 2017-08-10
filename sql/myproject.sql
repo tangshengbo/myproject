@@ -112,7 +112,36 @@ INSERT INTO resc_role(resc_id,role_id) VALUES(2,2);
 
 -- --------------------------------------------------------------------------------------------
 
+CREATE TABLE `t_job_log` (
+  `job_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `job_start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `job_status` varchar(20) NOT NULL,
+  `remark` varchar(100) DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`job_log_id`),
+  UNIQUE KEY `job_id` (`job_id`,`group_id`,`job_start_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
 
+
+
+CREATE TABLE `t_job_group` (
+  `group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_interval` int(11) NOT NULL,
+  `remark` varchar(100) DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+
+CREATE TABLE `t_job` (
+  `job_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `job_name` varchar(50) NOT NULL,
+  `remark` varchar(100) DEFAULT NULL,
+  `CREATE_DATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`job_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
 
 
 
