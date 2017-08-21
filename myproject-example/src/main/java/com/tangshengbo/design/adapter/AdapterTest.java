@@ -9,5 +9,11 @@ public class AdapterTest {
         Duck duck = new TurkeyDuck(new WildTurkey());
         duck.quack();
         duck.fly();
+
+        //内存中的对象实际是TurkeyDuck
+        if (duck instanceof TurkeyDuck) {
+            TurkeyDuck turkeyDuck = (TurkeyDuck) duck;
+            System.out.println("instanceof");
+        }
     }
 }
