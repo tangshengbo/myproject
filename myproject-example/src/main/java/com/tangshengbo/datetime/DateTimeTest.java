@@ -1,7 +1,14 @@
 package com.tangshengbo.datetime;
 
 
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.FastDateFormat;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/11/30.
@@ -9,8 +16,22 @@ import java.text.SimpleDateFormat;
 public class DateTimeTest {
 
     public static void main(String[] args) {
-        DateTimeTest dateTimeTest = new DateTimeTest();
-        dateTimeTest.dateDiff("2016-8-23 10:12", "2010-8-23 20:52", "yyyy-MM-dd HH:mm");
+        try {
+            Date begin = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
+            Date end = DateUtils.parseDate("2017-08-22", new String[]{"yyyy-MM-dd"});
+            List<String> dates = getDateInterval(begin, end);
+            int count = 0;
+            for (String date : dates) {
+                System.out.println(date);
+                count++;
+            }
+            System.out.println(count);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        DateTimeTest dateTimeTest = new DateTimeTest();
+//        dateTimeTest.dateDiff("2016-8-23 10:12", "2010-8-23 20:52", "yyyy-MM-dd HH:mm");
     }
 
     public void dateDiff(String startTime, String endTime, String format) {
@@ -35,4 +56,31 @@ public class DateTimeTest {
             e.printStackTrace();
         }
     }
+
+    private static List<String> getDateInterval(Date begin, Date end) {
+        List<String> dates = new ArrayList<>();
+        if (DateUtils.isSameDay(begin, end)) {
+            System.out.println("日期不能相同");
+            return dates;
+        }
+
+        if (begin.getTime() > end.getTime()) {
+            System.out.println("前一个日期不能大于后一日期");
+            return dates;
+        }
+
+        long beginTime = begin.getTime();
+        long endTime = end.getTime();
+        long oneDayTime = 1000 * 60 * 60 * 24L;
+        long currentTIme = beginTime;
+        while (currentTIme <= endTime) {
+            dates.add(FastDateFormat.getInstance("yyyyMMdd")
+                    .format(new Date(currentTIme)));
+            currentTIme += oneDayTime;
+        }
+        return dates;
+    }
 }
+
+
+
