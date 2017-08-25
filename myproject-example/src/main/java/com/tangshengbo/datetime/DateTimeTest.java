@@ -18,14 +18,18 @@ public class DateTimeTest {
     public static void main(String[] args) {
         try {
             Date begin = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
-            Date end = DateUtils.parseDate("2017-08-22", new String[]{"yyyy-MM-dd"});
-            List<String> dates = getDateInterval(begin, end);
+            Date end = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
+            List<String> dates = formatDate(begin, end);
             int count = 0;
             for (String date : dates) {
                 System.out.println(date);
                 count++;
             }
             System.out.println(count);
+
+            Date date = DateUtils.parseDate("2017-08-27", new String[]{"yyyy-MM-dd"});
+            String formatDate = formatDate(DateUtils.addDays(new Date(), -5));
+            System.out.println(formatDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -57,7 +61,7 @@ public class DateTimeTest {
         }
     }
 
-    private static List<String> getDateInterval(Date begin, Date end) {
+    private static List<String> formatDate(Date begin, Date end) {
         List<String> dates = new ArrayList<>();
         if (DateUtils.isSameDay(begin, end)) {
             System.out.println("日期不能相同");
@@ -80,7 +84,13 @@ public class DateTimeTest {
         }
         return dates;
     }
+
+    private static String formatDate(Date date) {
+        long time = date.getTime();
+        if (time >= new Date().getTime()) {
+            throw new IllegalArgumentException("日期不能大于当前日期");
+        }
+        return FastDateFormat.getInstance("yyyyMMdd")
+                .format(new Date(time));
+    }
 }
-
-
-
