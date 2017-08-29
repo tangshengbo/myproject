@@ -71,6 +71,11 @@
             <artifactId>netty</artifactId>
             <version>3.4.0.Final</version>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.6</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
