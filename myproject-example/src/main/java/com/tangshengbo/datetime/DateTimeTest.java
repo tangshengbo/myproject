@@ -35,10 +35,10 @@ public class DateTimeTest {
         }
 
 //        DateTimeTest dateTimeTest = new DateTimeTest();
-//        dateTimeTest.dateDiff("2016-8-23 10:12", "2010-8-23 20:52", "yyyy-MM-dd HH:mm");
+         dateDiff("2015-11-25 10:12", "2017-9-6 20:52", "yyyy-MM-dd HH:mm");
     }
 
-    public void dateDiff(String startTime, String endTime, String format) {
+    public static void dateDiff(String startTime, String endTime, String format) {
         //按照传入的格式生成一个simpledateformate对象
         SimpleDateFormat sd = new SimpleDateFormat(format);
         long nd = 1000 * 24 * 60 * 60; //一天的毫秒数
@@ -54,8 +54,8 @@ public class DateTimeTest {
             long min = diff % nd % nh / nm; //计算差多少分钟
             long sec = diff % nd % nh % nm / ns; //计算差多少秒
             //输出结果
-            //System.out.println("时间相差：" + day + "天" + hour + "小时" + min + "分钟" + sec + "秒。");
-            System.out.println(hour + "小时" + min + "分钟" + sec + "秒。");
+            System.out.println("时间相差：" + day + "天" + hour + "小时" + min + "分钟" + sec + "秒。");
+//            System.out.println(hour + "小时" + min + "分钟" + sec + "秒。");
         } catch (Exception e) {
             e.printStackTrace();
         }
