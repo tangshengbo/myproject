@@ -2,8 +2,6 @@ package com.tangshengbo.redis;
 
 import redis.clients.jedis.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class RedisClient {
@@ -26,29 +24,29 @@ public class RedisClient {
 
     // 初始化非分片连接池
     public void initJedisPool() {
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxIdle(20);
-        jedisPoolConfig.setMaxTotal(20 * 50);
-        jedisPoolConfig.setMaxWaitMillis(20 * 100);
-        jedisPoolConfig.setTestOnBorrow(false);
-        jedisPool = new JedisPool(jedisPoolConfig, "localhost", 6379);
+//        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+//        jedisPoolConfig.setMaxIdle(20);
+//        jedisPoolConfig.setMaxTotal(20 * 50);
+//        jedisPoolConfig.setMaxWaitMillis(20 * 100);
+//        jedisPoolConfig.setTestOnBorrow(false);
+//        jedisPool = new JedisPool(jedisPoolConfig, "localhost", 6379);
     }
 
     // 初始化分片连接池
     public void initShardedJedisPool() {
-
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxIdle(20);
-        jedisPoolConfig.setMaxTotal(20 * 50);
-        jedisPoolConfig.setMaxWaitMillis(20 * 100);
-        jedisPoolConfig.setTestOnBorrow(false);
-
-        List<JedisShardInfo> list = new ArrayList<JedisShardInfo>();
-        list.add(new JedisShardInfo("localhost", 6379));
-        list.add(new JedisShardInfo("localhost", 6380));
-        list.add(new JedisShardInfo("localhost", 6381));
-
-        shardedJedisPool = new ShardedJedisPool(jedisPoolConfig, list);
+//
+//        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+//        jedisPoolConfig.setMaxIdle(20);
+//        jedisPoolConfig.setMaxTotal(20 * 50);
+//        jedisPoolConfig.setMaxWaitMillis(20 * 100);
+//        jedisPoolConfig.setTestOnBorrow(false);
+//
+//        List<JedisShardInfo> list = new ArrayList<JedisShardInfo>();
+//        list.add(new JedisShardInfo("localhost", 6379));
+//        list.add(new JedisShardInfo("localhost", 6380));
+//        list.add(new JedisShardInfo("localhost", 6381));
+//
+//        shardedJedisPool = new ShardedJedisPool(jedisPoolConfig, list);
     }
 
     public void show() {
