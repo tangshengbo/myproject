@@ -55,8 +55,34 @@ public class SimpleList<T> {
 //        System.out.println(10 >> 1);
         testArrayToList();
 
+        List<String> list = new ArrayList<>();
+        list.add("AAA");
+        List<List<String>> lists = new ArrayList<>();
+        lists.add(list);
+        list.add("BBB");
+        System.out.println(list);
+        List<String> list2 = lists.get(0);
+        System.out.println(list2);
 
+        String s1 = "hello";
+        String s2 = "world";
+        change(s1, s2);
+        StringBuilder sb1 = new StringBuilder("hello");
+        StringBuilder sb2 = new StringBuilder("hello");
+        change(sb1, sb2);
+        System.out.println(s1 + "\t" + s2);
+        System.out.println(sb1 + "\t" + sb2);
     }
+
+    private static void change(String s1 , String s2) {
+        s1 = s2;
+        s2 = s1 + s2;
+    }
+
+    private static void change(StringBuilder s1 , StringBuilder s2) {
+        s1 = s2;
+        s2.append("world");
+}
 
     private static void testArrayToList() {
         String[] arr = new String[10];
