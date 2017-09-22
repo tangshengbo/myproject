@@ -17,13 +17,13 @@ public class JodaTimeTest {
         System.out.println(dateTime.toString("yyyy-MM-dd"));
 
 
-
         System.out.println(DateTime.now().minusDays(3).toDate());
         System.out.println(formatDate());
 
-        DateTime begin = new DateTime("2015-11-25");
+        DateTime begin = new DateTime("2017-09-22");
         DateTime end = new DateTime();
-        Duration d = new Duration(new DateTime("2015-11-25"), new DateTime());
+        System.out.println("Days:" + Days.daysBetween(begin, end).getDays());
+        Duration d = new Duration(new DateTime(), new DateTime());
         System.out.println(d.getStandardDays());
         Period p = new Period(begin, end, PeriodType.days());
 
@@ -42,7 +42,7 @@ public class JodaTimeTest {
         return DateTime.now().plusDays(-1).toDate();
     }
 
-    private  static void diffDate(Date begin, Date end) {
+    private static void diffDate(Date begin, Date end) {
         DateTime beginTime = new DateTime(begin);
         DateTime endTime = new DateTime(end);
         System.out.println("时间相差:");
