@@ -5,5 +5,5 @@ package com.tangshengbo.design.oop.calc;
  */
 public interface Goods {
 
-    int getPrice();
+    float getPrice();
 }

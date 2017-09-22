@@ -1,6 +1,7 @@
 package com.tangshengbo.design.oop.calc;
 
 import com.google.common.collect.Lists;
+import com.tangshengbo.design.oop.calc.impl.*;
 
 import java.util.List;
 
@@ -14,8 +15,9 @@ public class CalcTest {
         List<Goods> goodses = Lists.newArrayList();
         goodses.add(new Apple());
         goodses.add(new Banana());
-        goodses.add(new Water());
-        goodses.add(new InstantNoodles());
+        goodses.add(new Peach());
+        goodses.add(new YibaoWater());
+        goodses.add(new KsfInstantNoodles());
         electronicBalance.calcPrice(goodses);
     }
 }

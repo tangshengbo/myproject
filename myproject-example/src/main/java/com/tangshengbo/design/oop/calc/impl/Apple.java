@@ -1,4 +1,6 @@
-package com.tangshengbo.design.oop.calc;
+package com.tangshengbo.design.oop.calc.impl;
+
+import com.tangshengbo.design.oop.calc.Fruit;
 
 /**
  * Created by Tangshengbo on 2017/9/22.
@@ -6,7 +8,7 @@ package com.tangshengbo.design.oop.calc;
 public class Apple implements Fruit {
 
     @Override
-    public int getPrice() {
+    public float getPrice() {
         return 10;
     }
 }
