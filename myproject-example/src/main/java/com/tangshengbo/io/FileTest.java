@@ -18,7 +18,7 @@ public class FileTest {
 //        fileTest.printToDisplay();
 //        fileTest.serializeObject();
 //        fileTest.operationFile();
-        int count = fileTest.countMatchesOfFile("C:\\Users\\Administrator\\Desktop\\新建文本文档 (4).txt", "唐声波");
+        int count = fileTest.countMatchesOfFile("C:/Users/Tangshengbo/Desktop/IOUtils.java", "IO");
         System.out.println(count);
     }
 
@@ -171,24 +171,12 @@ public class FileTest {
     private int countMatchesOfFile(String fileName, String words) {
         int count = 0;
         String line;
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             while ((line = reader.readLine()) != null) {
                 count += StringUtils.countMatches(line, words);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return count;
     }
