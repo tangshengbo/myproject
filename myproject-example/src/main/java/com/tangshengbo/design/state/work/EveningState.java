@@ -19,5 +19,6 @@ public class EveningState implements State {
             return;
         }
         work.setCurrent(new SleepingState());
+        work.writeProgram();
     }
 }
