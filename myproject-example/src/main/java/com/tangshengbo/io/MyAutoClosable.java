@@ -17,6 +17,8 @@ public class MyAutoClosable implements AutoCloseable {
     public static void main(String[] args) {
         try(MyAutoClosable myAutoClosable = new MyAutoClosable()) {
             myAutoClosable.doIt();
+            double result = 10 / 0;
+
         } catch (Exception e) {
             e.printStackTrace();
         }

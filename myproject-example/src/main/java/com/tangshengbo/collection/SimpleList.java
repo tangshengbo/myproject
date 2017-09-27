@@ -1,8 +1,6 @@
 package com.tangshengbo.collection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by TangShengBo on 2017-07-16.
@@ -72,6 +70,9 @@ public class SimpleList<T> {
         change(sb1, sb2);
         System.out.println(s1 + "\t" + s2);
         System.out.println(sb1 + "\t" + sb2);
+
+        testCollections();
+
     }
 
     private static void change(String s1 , String s2) {
@@ -102,5 +103,26 @@ public class SimpleList<T> {
         for (String str : stringList) {
             System.out.println(str);
         }
+    }
+
+    private static void testCollections() {
+        List<Integer> numbers = new ArrayList<>();
+        numbers.add(1);
+        numbers.add(2);
+        numbers.add(3);
+        numbers.add(4);
+        numbers.add(5);
+
+        Collections.shuffle(numbers);
+        System.out.println(numbers);
+        System.out.println("----------------------------------");
+        Collections.reverse(numbers);
+        System.out.println(numbers);
+        System.out.println("----------------------------------");
+        Collections.sort(numbers);
+        System.out.println(numbers);
+        System.out.println("----------------------------------");
+        Collections.rotate(numbers, 3);
+        System.out.println(numbers);
     }
 }
