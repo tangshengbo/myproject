@@ -20,13 +20,13 @@ public class PersonComparator implements Comparator<Person> {
         List<Person> persons = Lists.newArrayList();
         persons.add(new Person("xujian", 20));
         persons.add(new Person("xiewei", 10));
-        System.out.println("排序前\n");
+        System.out.println("排序前");
         for (Person person : persons) {
             System.out.print(person.getName() + ":" + person.getAge());
         }
         Collections.sort(persons, new PersonComparator());
         System.out.println("------------------------------");
-        System.out.println("排序后");
+        System.out.println("\n排序后");
         for (Person person : persons) {
             System.out.print(person.getName() + ":" + person.getAge());
         }
