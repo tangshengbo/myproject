@@ -14,11 +14,11 @@ public class EveningState implements State {
             return;
         }
         double hour = work.getHour();
-        if (hour < 21) {
+        if (hour < 20) {
             System.out.println(String.format("当前时间:%s点 加班哦,疲惫之极", hour));
             return;
         }
-        work.setCurrent(new SleepingState());
+        work.setCurrent(new ForceOffWorkState());
         work.writeProgram();
     }
 }

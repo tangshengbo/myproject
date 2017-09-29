@@ -15,10 +15,10 @@ public class WorkStateTest {
         work.writeProgram();
         work.setHour(18);
         work.writeProgram();
-        work.setFinish(Boolean.TRUE);
         work.setHour(20);
         work.writeProgram();
-        work.setHour(22);
+        work.setFinish(Boolean.TRUE);
+        work.setHour(9);
         work.writeProgram();
     }
 }
