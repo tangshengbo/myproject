@@ -21,10 +21,12 @@ public class RequestTest {
         Manager commonManager = new CommonManager("经理");
         Manager majordomo = new Majordomo("总监");
         Manager generalManager = new GeneralManager("总经理");
+        Manager boss = new Boss("老板");
 
         //设置上级责任链
         commonManager.setSuperior(majordomo);
         majordomo.setSuperior(generalManager);
+        generalManager.setSuperior(boss);
         return commonManager;
     }
 }

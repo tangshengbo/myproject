@@ -27,8 +27,8 @@ public class GeneralManager extends Manager {
                     request.getNum(), processingTime));
             return;
         }
-        String processingTime = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
-        System.out.println(String.format("审批人:%s 内容:%s 数量%s 以后再说！ 审批时间%s", name, request.getContent(),
-                request.getNum(), processingTime));
+        if (superior != null) {
+            superior.requestApplication(request);
+        }
     }
 }
