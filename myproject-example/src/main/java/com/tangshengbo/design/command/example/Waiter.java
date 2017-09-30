@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class Waiter {
 
-
     private List<Command> commands = Lists.newArrayList();
 
     public void setOrder(Command command) {
@@ -21,14 +20,14 @@ public class Waiter {
         }
         commands.add(command);
         Date current = new Date();
-        System.out.println(String.format("增加订单：%s 时间: %tF %tT", command.name, current, current));
+        System.out.println(String.format("增加订单：%s 时间: %tF %tT", command.getName(), current, current));
     }
 
     public void cancelOrder(Command command) {
         if (commands.contains(command)) {
             commands.remove(command);
             String processingTime = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(new Date());
-            System.out.println(String.format("取消订单：%s 时间: %s", command.name, processingTime));
+            System.out.println(String.format("取消订单：%s 时间: %s", command.getName(), processingTime));
         }
     }
 
