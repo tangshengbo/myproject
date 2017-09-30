@@ -29,6 +29,14 @@ public class Person implements Comparable<Person> {
         return this.getAge() - o.getAge();
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public static void main(String[] args) {
         Person[] people = new Person[]{new Person("xujian", 20), new Person("xiewei", 10), new Person("xujian", 5)};
         System.out.println("排序前");
