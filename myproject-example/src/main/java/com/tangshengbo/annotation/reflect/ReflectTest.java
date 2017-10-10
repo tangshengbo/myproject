@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -12,22 +13,37 @@ import java.util.Properties;
  */
 public class ReflectTest {
 
+    private static final String DB_NAME_KEY = "db_server_name";
+
+    private static final String DB_CONFIG_FILE = "/db.properties";
+
     public static void main(String[] args) {
+        ReflectTest reflectTest = new ReflectTest();
         String s = "oracle";
         DBServer server;
-        server = getDbServerByStatic(s);
+        server = reflectTest.getDbServerByStatic(s);
         System.out.println(server);
-        server = getDbServerByDynamic();
-        System.out.println(server);
+        while (true) {
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            server = reflectTest.getDbServerByDynamic();
+            System.out.println(server);
+        }
     }
 
-    private static DBServer getDbServerByDynamic() {
+    private DBServer getDbServerByDynamic() {
+        Properties properties = new Properties();
         try {
-            Properties properties = new Properties();
-            String path = ReflectTest.class.getResource("/db.properties").getPath();
-            InputStream is = new FileInputStream(path);
+            InputStream is;
+            String path = this.getClass().getResource(DB_CONFIG_FILE).getPath();
+            is = new FileInputStream(path);
+//            is = ReflectTest.class.getResourceAsStream("/db.properties");
+            System.out.println(path);
             properties.load(is);
-            return (DBServer) Class.forName(properties.getProperty("db_server_name")).newInstance();
+            return (DBServer) Class.forName(properties.getProperty(DB_NAME_KEY)).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -42,7 +58,7 @@ public class ReflectTest {
         return null;
     }
 
-    private static DBServer getDbServerByStatic(String s) {
+    private DBServer getDbServerByStatic(String s) {
         DBServer server = null;
         switch (s) {
             case "oracle":
