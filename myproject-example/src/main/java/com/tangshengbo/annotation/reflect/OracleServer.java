@@ -1,0 +1,9 @@
+package com.tangshengbo.annotation.reflect;
+
+/**
+ * Created by Tangshengbo on 2017/10/10.
+ */
+public class OracleServer implements DBServer {
+
+
+}
