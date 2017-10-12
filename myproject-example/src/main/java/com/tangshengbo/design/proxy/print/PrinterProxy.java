@@ -9,8 +9,11 @@ public class PrinterProxy implements Printable {
 
     private Printer realPrinter;
 
-    public PrinterProxy(String name) {
+    private String className;
+
+    public PrinterProxy(String name, String className) {
         this.name = name;
+        this.className = className;
     }
 
     @Override
@@ -32,9 +35,19 @@ public class PrinterProxy implements Printable {
         realPrinter.print(string);
     }
 
-    private synchronized void realize() {
+    private void realize() {
         if (realPrinter == null) {
-            realPrinter = new Printer(name);
+            synchronized (this) {
+                try {
+                    realPrinter = (Printer) Class.forName(className).newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
