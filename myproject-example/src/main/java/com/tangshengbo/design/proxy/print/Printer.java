@@ -14,6 +14,10 @@ public class Printer implements Printable {
         heavyJob(name);
     }
 
+    public Printer() {
+        heavyJob(name);
+    }
+
     @Override
     public void setPrinterName(String name) {
         this.name = name;
