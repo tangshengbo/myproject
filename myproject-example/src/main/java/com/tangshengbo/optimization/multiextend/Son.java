@@ -19,7 +19,7 @@ public class Son extends FatherImpl implements Mother {
 
         @Override
         public int kind() {
-            return super.kind() - 1;
+            return super.kind() - 2;
         }
     }
 }
