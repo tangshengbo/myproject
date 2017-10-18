@@ -13,9 +13,11 @@ public class UNSecurityCouncil implements UnitedNations {
     public void declare(String message, Country country) {
         if (country == usa) {
             iraq.getMessage(message);
+            return;
         }
         if (country == iraq) {
             usa.getMessage(message);
+            return;
         }
     }
 
