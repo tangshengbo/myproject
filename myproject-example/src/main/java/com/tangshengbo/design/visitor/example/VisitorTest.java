@@ -21,5 +21,6 @@ public class VisitorTest {
         objectStructure.display(failAction);
         objectStructure.display(loveAction);
         objectStructure.display(marriageAction);
+        System.out.println(10 + (10 << 2));
     }
 }

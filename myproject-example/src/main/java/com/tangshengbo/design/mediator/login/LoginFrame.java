@@ -1,5 +1,7 @@
 package com.tangshengbo.design.mediator.login;
 
+import org.apache.commons.lang.time.FastDateFormat;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,6 +99,7 @@ public class LoginFrame extends Frame implements ActionListener, Mediator {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println(FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss").format(e.getWhen()));
         System.out.println(e.toString());
         System.exit(0);
     }
