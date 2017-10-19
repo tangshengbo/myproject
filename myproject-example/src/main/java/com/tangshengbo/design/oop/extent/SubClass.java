@@ -7,6 +7,8 @@ public class SubClass extends ParentClass {
 
     public void init() {
 //        this.i = 100;
+        this.string = "234234";
+        System.out.println(super.string + "\t" + this.string);
     }
 
 }
