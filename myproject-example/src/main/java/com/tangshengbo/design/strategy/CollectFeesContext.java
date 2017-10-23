@@ -11,7 +11,7 @@ public class CollectFeesContext {
         this.collectFees = collectFees;
     }
 
-    public double acceptCash(double moeny) {
-        return collectFees.acceptCash(moeny);
+    public double acceptCash(double money) {
+        return collectFees.acceptCash(money);
     }
 }
