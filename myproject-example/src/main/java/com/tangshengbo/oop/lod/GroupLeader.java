@@ -1,7 +1,5 @@
 package com.tangshengbo.oop.lod;
 
-import com.google.common.collect.Lists;
-
 import java.util.List;
 
 /**
@@ -9,7 +7,7 @@ import java.util.List;
  */
 public class GroupLeader {
 
-    private List<Girl> girls = Lists.newArrayList();
+    private List<Girl> girls;
 
     public GroupLeader(List<Girl> girls) {
         this.girls = girls;
