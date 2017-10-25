@@ -26,7 +26,6 @@ public class ObjectService {
     public void serviceMethod() {
         try {
             System.out.println(Thread.currentThread().getName() + " begin time：" + System.currentTimeMillis());
-            System.out.println(Thread.currentThread().getName() + " begin time：" + System.currentTimeMillis());
             TimeUnit.SECONDS.sleep(2);
             System.out.println(Thread.currentThread().getName() + " end time:" + System.currentTimeMillis());
             synchronized (ObjectService.class) {
