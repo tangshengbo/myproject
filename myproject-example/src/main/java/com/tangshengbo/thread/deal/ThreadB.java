@@ -5,7 +5,6 @@ package com.tangshengbo.thread.deal;
  */
 public class ThreadB extends Thread {
 
-
     private Service service;
 
     public ThreadB(Service service) {
