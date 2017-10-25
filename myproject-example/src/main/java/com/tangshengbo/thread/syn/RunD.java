@@ -1,5 +1,9 @@
 package com.tangshengbo.thread.syn;
 
+import jodd.util.StringUtil;
+import jodd.util.SystemUtil;
+import jodd.util.ThreadUtil;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,23 +49,18 @@ public class RunD implements Runnable {
     }
 
     public static void main(String[] args) {
-        String string = "3242*23432";
-        try {
-
-            System.out.println(string.split("*"));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("非法参数异常", e);
-        }
+//        String string = "3242*23432";
+//        try {
+//            System.out.println(string.split("*"));
+//        } catch (Exception e) {
+//            throw new IllegalArgumentException("非法参数异常", e);
+//        }
         RunD runD = new RunD();
         Thread threadA = new Thread(runD, "threadA");
-        try {
-            threadA.start();
-            threadA.join();
-            runD.methodB();
-            TimeUnit.SECONDS.sleep(5);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        threadA.start();
+        ThreadUtil.join(threadA);
+        runD.methodB();
+        ThreadUtil.sleep(5000);
         System.out.println(Thread.currentThread().getName() + "\t:" + runD.getNum());
     }
 }
