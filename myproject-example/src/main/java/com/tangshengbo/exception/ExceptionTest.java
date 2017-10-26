@@ -1,9 +1,6 @@
 package com.tangshengbo.exception;
 
-import com.google.common.collect.Lists;
-
-import java.math.BigDecimal;
-import java.util.List;
+import java.io.IOException;
 
 /**
  * Created by tangshengbo on 2017/2/14.
@@ -14,22 +11,15 @@ public class ExceptionTest {
         ExceptionTest test = new ExceptionTest();
         String result = test.testFinally();
         System.out.println(result);
-        BigDecimal bigDecimal = BigDecimal.valueOf(0.0);
-        if (bigDecimal.doubleValue() <= 0) {
-            System.out.println(bigDecimal.intValue());
-        }
-        String str = String.format("Hi,%s", "王力");
-        List<String> names = Lists.newArrayList();
-        names.add("tang");
-        names.add("sheng");
-        names.add("bo");
-        System.out.println(String.join("-", names));
-        System.out.println(str);
-        test.calc();
+//        test.calc();
+        System.out.println(test.test1());
+        System.out.println(test.test2());
+        test.test3();
+
 
     }
 
-    public String testFinally() {
+    private String testFinally() {
         try {
             return "try";
         } catch (Exception e) {
@@ -49,5 +39,45 @@ public class ExceptionTest {
             System.out.println(e.getMessage());
         }
     }
+
+    private int test1() {
+        int ret = 0;
+        try {
+            return ret;
+        } finally {
+            ret = 2;
+        }
+    }
+
+    private int test2() {
+        int ret = 0;
+        try {
+            int a = 5 / 0;
+            return ret;
+        } finally {
+            return 2;
+        }
+    }
+
+    private void test3() {
+        try {
+            int a = 5 / 0;
+        } finally {
+            throw new RuntimeException("除数不能为0");
+        }
+    }
+
+    public void func() throws IOException {
+
+    }
+
+    public void invokeFunc() {
+        try {
+            func();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
 }
 

@@ -1,5 +1,6 @@
 package com.tangshengbo.arithmetic;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -127,5 +128,12 @@ public class TestString {
             return "不支持编码格式";
         }
         return newStr;
+    }
+    private static void joinStr() {
+        List<String> names = Lists.newArrayList();
+        names.add("tang");
+        names.add("sheng");
+        names.add("bo");
+        System.out.println(String.join("-", names));
     }
 }
