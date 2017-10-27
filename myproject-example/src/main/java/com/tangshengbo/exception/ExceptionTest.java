@@ -1,6 +1,10 @@
 package com.tangshengbo.exception;
 
+import com.google.common.collect.Maps;
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by tangshengbo on 2017/2/14.
@@ -9,12 +13,13 @@ public class ExceptionTest {
 
     public static void main(String[] args) {
         ExceptionTest test = new ExceptionTest();
-        String result = test.testFinally();
+/*        String result = test.testFinally();
         System.out.println(result);
 //        test.calc();
         System.out.println(test.test1());
         System.out.println(test.test2());
-        test.test3();
+        test.test3();*/
+        System.out.println(test.test4());
 
 
     }
@@ -77,6 +82,22 @@ public class ExceptionTest {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    public Map<String, Object> test4() {
+        Map<String, Object> resultMap = Maps.newHashMap();
+        System.out.println("test4 开始.............");
+        try {
+            resultMap.put("0000", "成功");
+            int num = 2312 / 0;
+        } catch (Exception e) {
+            System.out.println(ExceptionUtils.getStackTrace(e));
+            throw new RuntimeException("运行异常", e);
+        } finally {
+            System.out.println("finally");
+        }
+        System.out.println("test4 结束.............");
+        return resultMap;
     }
 }
 
