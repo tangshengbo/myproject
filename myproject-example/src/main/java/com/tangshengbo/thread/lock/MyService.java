@@ -16,7 +16,7 @@ public class MyService {
     public void methodA() {
         try {
             if (lock.tryLock(5, TimeUnit.SECONDS)) {
-                System.out.println(Thread.currentThread().getName() + "得到了锁");
+                System.out.println(Thread.currentThread().getName() + " 得到了锁");
                 try {
                     System.out.println(Thread.currentThread().getName() + " :methodA begin time：" + System.currentTimeMillis());
                     for (int i = 0; i < 5; i++) {
