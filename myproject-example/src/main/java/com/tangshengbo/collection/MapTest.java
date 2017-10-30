@@ -13,20 +13,6 @@ public class MapTest {
         MapTest mapTest = new MapTest();
         //mapTest.calculate(10);
         mapTest.testCopyArray();
-//        mapTest.hashMap();
-        // mapTest.linkedMap();
-        //mapTest.treeMap();
-        //mapTest.testRedis();
-        //mapTest.testRedisPool();
-        // mapTest.testRedisPools();
-        /*byte[] b = new byte[0x16];
-        System.out.println(b);
-		String temp = new String(b);
-		System.out.println(temp);
-		System.out.println(Integer.SIZE);
-		
-		System.out.println(111%4);
-		*/
 
 
     }

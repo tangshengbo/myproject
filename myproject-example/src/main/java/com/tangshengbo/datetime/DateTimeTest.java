@@ -16,26 +16,27 @@ import java.util.List;
 public class DateTimeTest {
 
     public static void main(String[] args) {
-        try {
-            Date begin = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
-            Date end = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
-            List<String> dates = formatDate(begin, end);
-            int count = 0;
-            for (String date : dates) {
-                System.out.println(date);
-                count++;
-            }
-            System.out.println(count);
-
-            Date date = DateUtils.parseDate("2017-08-27", new String[]{"yyyy-MM-dd"});
-            String formatDate = formatDate(DateUtils.addDays(new Date(), -5));
-            System.out.println(formatDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-//        DateTimeTest dateTimeTest = new DateTimeTest();
-         dateDiff("2015-11-25 10:12", "2017-9-6 20:52", "yyyy-MM-dd HH:mm");
+//        try {
+//            Date begin = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
+//            Date end = DateUtils.parseDate("2016-08-22", new String[]{"yyyy-MM-dd"});
+//            List<String> dates = formatDate(begin, end);
+//            int count = 0;
+//            for (String date : dates) {
+//                System.out.println(date);
+//                count++;
+//            }
+//            System.out.println(count);
+//
+//            Date date = DateUtils.parseDate("2017-08-27", new String[]{"yyyy-MM-dd"});
+//            String formatDate = formatDate(DateUtils.addDays(new Date(), -5));
+//            System.out.println(formatDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+////        DateTimeTest dateTimeTest = new DateTimeTest();
+//        dateDiff("2015-11-25 10:12", "2017-9-6 20:52", "yyyy-MM-dd HH:mm");
+        isSameDay();
     }
 
     public static void dateDiff(String startTime, String endTime, String format) {
@@ -92,5 +93,15 @@ public class DateTimeTest {
         }
         return FastDateFormat.getInstance("yyyyMMdd")
                 .format(new Date(time));
+    }
+
+    private static void isSameDay() {
+        try {
+            Date date1 = DateUtils.parseDate("2017-10-20 00:00:00", new String[]{"yyyy-MM-dd HH:mm:ss"});
+            Date date2 = DateUtils.parseDate("2017-10-20 0:33:12", new String[]{"yyyy-MM-dd HH:mm:ss"});
+            System.out.println(DateUtils.isSameDay(date1, date2));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

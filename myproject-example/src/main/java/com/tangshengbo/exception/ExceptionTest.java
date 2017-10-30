@@ -13,12 +13,12 @@ public class ExceptionTest {
 
     public static void main(String[] args) {
         ExceptionTest test = new ExceptionTest();
-/*        String result = test.testFinally();
+        String result = test.testFinally();
         System.out.println(result);
-//        test.calc();
-        System.out.println(test.test1());
-        System.out.println(test.test2());
-        test.test3();*/
+        test.calc();
+//        System.out.println(test.test1());
+//        System.out.println(test.test2());
+//        test.test3();
         System.out.println(test.test4());
 
 
@@ -41,6 +41,7 @@ public class ExceptionTest {
             Calc calc = new Calc();
             calc.calc(0);
         } catch (MyException e) {
+            System.out.println(ExceptionUtils.getMessage(e));
             System.out.println(e.getMessage());
         }
     }
