@@ -18,8 +18,8 @@ public class LockThread implements Runnable {
 
     @Override
     public void run() {
-        testLock();
-//        testTryLock();
+//        testLock();
+        testTryLock();
     }
 
     private void testLock() {
