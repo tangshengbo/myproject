@@ -8,5 +8,6 @@ public class SqlSessionImpl implements SqlSession {
     @Override
     public void select() {
         System.out.println("SqlSessionImpl select * from table...................");
+        int i = 100 / 0;
     }
 }

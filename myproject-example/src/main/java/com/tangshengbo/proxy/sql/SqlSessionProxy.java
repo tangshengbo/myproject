@@ -20,8 +20,11 @@ public class SqlSessionProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("open session");
-        method.invoke(object, args);
-        System.out.println("close session");
+        try {
+            method.invoke(object, args);
+        } finally {
+            System.out.println("close session");
+        }
         return null;
     }
 }
