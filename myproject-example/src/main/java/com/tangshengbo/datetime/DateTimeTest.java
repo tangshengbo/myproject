@@ -1,14 +1,17 @@
 package com.tangshengbo.datetime;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Administrator on 2016/11/30.
@@ -37,6 +40,15 @@ public class DateTimeTest {
 ////        DateTimeTest dateTimeTest = new DateTimeTest();
 //        dateDiff("2015-11-25 10:12", "2017-9-6 20:52", "yyyy-MM-dd HH:mm");
         isSameDay();
+
+    }
+
+    public static Date defaultDateFormat(String dateStr) {
+        Date date = dateFormat(dateStr, "yyyyMMddHHmmss");
+        if (Objects.isNull(date)) {
+            date = dateFormat(dateStr, "yyyyMMdd");
+        }
+        return date;
     }
 
     public static void dateDiff(String startTime, String endTime, String format) {
@@ -103,5 +115,19 @@ public class DateTimeTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Date dateFormat(String dateStr, String format) {
+        if (StringUtils.isBlank(dateStr)) {
+            return null;
+        }
+        DateFormat dateFormat = new SimpleDateFormat(format);
+        Date date;
+        try {
+            date = dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+        return date;
     }
 }
