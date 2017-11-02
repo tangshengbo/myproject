@@ -3,7 +3,6 @@ package com.tangshengbo.thread.lock;
 import jodd.util.ThreadUtil;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -11,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class MyService {
 
-    private Lock lock = new ReentrantLock(true);
+    private ReentrantLock lock = new ReentrantLock(true);
 
     public void methodA() {
         try {
@@ -48,5 +47,18 @@ public class MyService {
 //        } finally {
 //            lock.unlock();
 //        }
+    }
+
+    public void methodC() {
+        try {
+            System.out.println(lock.isHeldByCurrentThread());
+            lock.lock();
+            System.out.println(lock.isHeldByCurrentThread());
+            ThreadUtil.sleep(3000);
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
     }
 }
