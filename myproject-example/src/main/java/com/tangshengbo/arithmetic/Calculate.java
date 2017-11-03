@@ -1,9 +1,12 @@
 package com.tangshengbo.arithmetic;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -11,29 +14,24 @@ import java.util.Scanner;
  */
 public class Calculate {
 
+    private static final String DEFAULT_NUMBER_PATTERN = "#,##0.00";
     private static double num;
     private static Scanner in;
 
-    public static void main(String[] args) {
-        calcNum();
-        BigDecimal old = new BigDecimal(8030.86);
-        BigDecimal newNum = new BigDecimal(8030.86000);
-        System.out.println(old.equals(newNum));
+    public static void main(String[] args) throws ParseException {
+//        calcNum();
+//        BigDecimal old = new BigDecimal(8030.86);
+//        BigDecimal newNum = new BigDecimal(8030.86000);
+//        System.out.println(old.equals(newNum));
+//        parse();
+        System.out.println(parse("123,122,459.12"));
     }
 
     private static void calcNum() {
-//        in = new Scanner(System.in);
-//        System.out.print("请输入一个浮点数：");
-//        num = in.nextDouble();
-//        new MathRound(num).invoke();
-//        Person person = new Person();
-        List<String> names = Lists.newArrayList();
-        names.add("tang");
-        names.add("shengbo");
-        names.add("tangshengbo");
-//        for (String name : names) {
-//            names.remove(name);
-//        }
+        in = new Scanner(System.in);
+        System.out.print("请输入一个浮点数：");
+        num = in.nextDouble();
+        new MathRound(num).invoke();
         int positiveNumber = 0;
         int negativeNumber = 0;
         int zero = 0;
@@ -60,7 +58,6 @@ public class Calculate {
             }
         }
         System.out.println("输入的正数" + positiveNumber + "\t 负数" + negativeNumber + "\t 零" + zero);
-
 //        calc();
     }
 
@@ -89,4 +86,47 @@ public class Calculate {
         int sum = a + b;
         System.out.println("a:\t" + a + "\t+ b:\t" + b + "=" + sum);
     }
+
+    private static void parse() {
+        // 本地格式的解析
+        NumberFormat numberFormat1 = NumberFormat.getNumberInstance();
+        Number numb1;
+        String result = "";
+        try {
+            numb1 = numberFormat1.parse("122,123,12.23");
+            result = String.valueOf(numb1);
+            System.out.println(BigDecimal.valueOf(Double.valueOf(result))
+                    .divide(BigDecimal.valueOf(100))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP));
+        } catch (ParseException e1) {
+            System.out.println(e1);
+
+        }
+        System.out.println(result);
+    }
+
+    /**
+     * 按标准化的数字表现方式格式化浮点型数字样式,默认格式（"#,##0.00")
+     *
+     * @param source 被格式化的字符
+     */
+    public static String parse(String source) throws ParseException {
+        return parse(source, DEFAULT_NUMBER_PATTERN);
+    }
+
+    /**
+     * 按标准化的数字表现方式格式化浮点型数字样式
+     *
+     * @param source  被格式化的字符
+     * @param pattern 格式化的模板
+     */
+    public static String parse(String source, String pattern) throws ParseException {
+        if (Objects.isNull(source) || StringUtils.isBlank(pattern)) {
+            return null;
+        } else {
+            DecimalFormat df = new DecimalFormat(pattern);
+            return String.valueOf(df.parse(source));
+        }
+    }
+
 }
