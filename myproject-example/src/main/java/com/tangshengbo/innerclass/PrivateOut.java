@@ -7,6 +7,10 @@ public class PrivateOut {
 
     private int age = 12;
 
+    public void print() {
+        new In().print();
+    }
+
     private class In {
 
         public void print() {

@@ -18,6 +18,7 @@ public class InnerClassTest {
 
         {
             PrivateOut out = new PrivateOut();
+            out.print();
             //只能外部类使用
         }
 
