@@ -1,5 +1,6 @@
 package com.tangshengbo.arithmetic;
 
+import jodd.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.math.BigDecimal;
@@ -15,16 +16,18 @@ import java.util.Scanner;
 public class Calculate {
 
     private static final String DEFAULT_NUMBER_PATTERN = "#,##0.00";
+
     private static double num;
     private static Scanner in;
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws Exception {
 //        calcNum();
 //        BigDecimal old = new BigDecimal(8030.86);
 //        BigDecimal newNum = new BigDecimal(8030.86000);
 //        System.out.println(old.equals(newNum));
-//        parse();
-        System.out.println(parse("123,122,459.12"));
+        double amount = parse("352,977");
+        System.out.println(amount);
+        System.out.println(changeF2Y(amount));
     }
 
     private static void calcNum() {
@@ -110,7 +113,7 @@ public class Calculate {
      *
      * @param source 被格式化的字符
      */
-    public static String parse(String source) throws ParseException {
+    public static Double parse(String source) throws ParseException {
         return parse(source, DEFAULT_NUMBER_PATTERN);
     }
 
@@ -120,13 +123,34 @@ public class Calculate {
      * @param source  被格式化的字符
      * @param pattern 格式化的模板
      */
-    public static String parse(String source, String pattern) throws ParseException {
+    public static Double parse(String source, String pattern) throws ParseException {
         if (Objects.isNull(source) || StringUtils.isBlank(pattern)) {
             return null;
         } else {
             DecimalFormat df = new DecimalFormat(pattern);
-            return String.valueOf(df.parse(source));
+            return Double.valueOf(String.valueOf(df.parse(source)));
         }
     }
 
+    /**
+     * 将分为单位的转换为元 （除100）
+     *
+     * @param amount
+     * @return
+     */
+    public static double changeF2Y(long amount){
+        BigDecimal decimal = BigDecimal.valueOf(amount).divide(new BigDecimal(100));
+        return decimal.doubleValue();
+    }
+
+    /**
+     * 将分为单位的转换为元 （除100）
+     *
+     * @param amount
+     * @return
+     */
+    public static double changeF2Y(double amount){
+        BigDecimal decimal = BigDecimal.valueOf(amount).divide(new BigDecimal(100));
+        return decimal.doubleValue();
+    }
 }
