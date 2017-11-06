@@ -1,10 +1,12 @@
 package com.tangshengbo.arithmetic;
 
 import com.google.common.collect.Lists;
+import jodd.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,6 +17,11 @@ public class TestString {
     private static final int size = 50000;
 
     public static void main(String[] args) {
+//        testPlusStr();
+        spiltStr();
+    }
+
+    private static void testPlusStr() {
         TestString testString = new TestString();
         testString.testPlus();
         testString.testConcat();
@@ -129,6 +136,7 @@ public class TestString {
         }
         return newStr;
     }
+
     private static void joinStr() {
         List<String> names = Lists.newArrayList();
         names.add("tang");
@@ -136,4 +144,14 @@ public class TestString {
         names.add("bo");
         System.out.println(String.join("-", names));
     }
+
+    private static void spiltStr() {
+        String str = "20170906,3000000182,1001215854,HB_TZR_3261041,433.00,CNY,,,,,,,";
+        System.out.println(Arrays.toString(str.split(",", -1)));
+        System.out.println(Arrays.toString(StringUtils.split(str, ",")));
+        System.out.println(Arrays.toString(StringUtil.split(str, ",")));
+        System.out.println(StringUtil.removeChars(str, ',', '.'));
+    }
 }
+
+
