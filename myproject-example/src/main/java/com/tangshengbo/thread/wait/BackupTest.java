@@ -11,10 +11,10 @@ public class BackupTest {
         DBTools dbTools = new DBTools();
         BackupA backupA = new BackupA(dbTools);
         BackupB backupB = new BackupB(dbTools);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             ThreadUtil.sleep(500);
-            new Thread(backupA).start();
-            new Thread(backupB).start();
+            new Thread(backupA, "ThreadA-" + (i + 1)).start();
+            new Thread(backupB, "ThreadB-" + (i + 1)).start();
         }
     }
 }
