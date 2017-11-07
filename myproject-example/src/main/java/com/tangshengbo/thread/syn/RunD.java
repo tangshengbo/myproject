@@ -1,7 +1,5 @@
 package com.tangshengbo.thread.syn;
 
-import jodd.util.StringUtil;
-import jodd.util.SystemUtil;
 import jodd.util.ThreadUtil;
 
 import java.util.concurrent.TimeUnit;
