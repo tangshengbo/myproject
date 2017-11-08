@@ -16,12 +16,12 @@ public class LockInterruptThread implements Runnable {
     public void run() {
         try {
             lock.lockInterruptibly();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             System.out.println(Thread.currentThread().getName() + " 中断了锁");
         }
         try {
             System.out.println(Thread.currentThread().getName() + " 得到了锁");
-            ThreadUtil.sleep(10000);
+            ThreadUtil.sleep(2000);
         } finally {
             lock.unlock();
             System.out.println(Thread.currentThread().getName() + " 释放了锁");
@@ -33,9 +33,8 @@ public class LockInterruptThread implements Runnable {
         Thread threadA = new Thread(interruptThread, "threadA");
         Thread threadB = new Thread(interruptThread, "ThreadB");
         threadA.start();
-        threadB.start();
-
         ThreadUtil.sleep(5000);
-//        threadA.interrupt();
+        threadB.start();
+        threadB.interrupt();
     }
 }

@@ -20,10 +20,10 @@ public class MyRunA implements Runnable {
 
     public static void main(String[] args) {
         MyService service = new MyService();
-        MyRunA myRunA = new MyRunA(new MyService());
+        MyRunA myRunA = new MyRunA(service);
         Thread threadA = new Thread(myRunA, "threadA");
         threadA.start();
-        ThreadUtil.sleep(3000);
-        service.signal();
+        ThreadUtil.sleep(2000);
+//        service.signal();
     }
 }

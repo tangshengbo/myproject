@@ -51,13 +51,14 @@ public class MyService {
 
     public void methodC() {
         try {
-            System.out.println(lock.isHeldByCurrentThread());
+            System.out.println(Thread.currentThread().getName() + "　" + lock.isHeldByCurrentThread());
             lock.lock();
-            System.out.println(lock.isHeldByCurrentThread());
+            System.out.println(Thread.currentThread().getName() + "　" + lock.isHeldByCurrentThread());
             ThreadUtil.sleep(3000);
         } finally {
             if (lock.isHeldByCurrentThread()) {
                 lock.unlock();
+                System.out.println(Thread.currentThread().getName() + "释放了锁");
             }
         }
     }

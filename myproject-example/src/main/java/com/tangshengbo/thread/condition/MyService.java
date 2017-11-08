@@ -1,5 +1,8 @@
 package com.tangshengbo.thread.condition;
 
+import org.apache.commons.lang.time.DateUtils;
+
+import java.util.Date;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,12 +19,14 @@ public class MyService {
     public void await() {
         try {
             lock.lock();
+            System.out.println(Thread.currentThread().getName() + " 得到了锁");
             System.out.println("await时间为 " + System.currentTimeMillis());
-            condition.await();
+            condition.awaitUntil(DateUtils.addSeconds(new Date(), 5));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
+            System.out.println(Thread.currentThread().getName() + " 释放了锁");
         }
     }
 
