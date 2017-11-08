@@ -24,6 +24,7 @@ public class MyRunA implements Runnable {
         Thread threadA = new Thread(myRunA, "threadA");
         threadA.start();
         ThreadUtil.sleep(2000);
+//        threadA.interrupt();
 //        service.signal();
     }
 }

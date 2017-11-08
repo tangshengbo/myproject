@@ -22,7 +22,8 @@ public class MyService {
             System.out.println(Thread.currentThread().getName() + " 得到了锁");
             System.out.println("await时间为 " + System.currentTimeMillis());
             condition.awaitUntil(DateUtils.addSeconds(new Date(), 5));
-        } catch (InterruptedException e) {
+//            condition.awaitUninterruptibly();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
