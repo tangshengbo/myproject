@@ -1,10 +1,14 @@
 package com.tangshengbo.design.singleton;
 
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+
 /**
  * Created by tangshengbo on 2017/2/22.
  * 双检锁
  */
-public class DoubleCheckedSingleton {
+public class DoubleCheckedSingleton implements Serializable {
 
     private volatile static DoubleCheckedSingleton singleton;
 
@@ -25,4 +29,18 @@ public class DoubleCheckedSingleton {
     public void showMsg() {
         System.out.println("DoubleCheckedSingleton Pattern");
     }
+
+    public void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
+        //
+    }
+
+    /**
+     * 严格单例,确保remote instance不会干扰单例模式,避免在发序列化过程中对单例的影响.
+     * @return
+     * @throws ObjectStreamException
+     */
+    public Object readResolve() throws ObjectStreamException {
+        return singleton;
+    }
+
 }

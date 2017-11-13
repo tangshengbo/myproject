@@ -18,7 +18,8 @@ public class TestString {
 
     public static void main(String[] args) {
 //        testPlusStr();
-        spiltStr();
+//        spiltStr();
+        replaceStr();
     }
 
     private static void testPlusStr() {
@@ -151,6 +152,13 @@ public class TestString {
         System.out.println(Arrays.toString(StringUtils.split(str, ",")));
         System.out.println(Arrays.toString(StringUtil.split(str, ",")));
         System.out.println(StringUtil.removeChars(str, ',', '.'));
+    }
+
+    private static void replaceStr() {
+        String str = "20170906,3000000182,1001215854,HB_TZR_3261041,433.00,CNY,,,,,,,";
+        System.out.println(str.replace("20170906", "201701113"));
+        System.out.println(StringUtils.join(str.split(",", -1), "-"));
+        System.out.println(StringUtils.replace(str, "20170906", "201701113"));
     }
 }
 
