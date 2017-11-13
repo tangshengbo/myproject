@@ -47,11 +47,12 @@ public class BankWaterService implements Runnable {
         int result = 0;
         // 汇总每个sheet计算出的结果
         for (Map.Entry<String, Integer> sheet : sheetBankWaterCount.entrySet()) {
+            System.out.println(sheet.getKey() + "\t" + sheet.getValue());
             result += sheet.getValue();
         }
         // 将结果输出
         sheetBankWaterCount.put("result", result);
-        System.out.println(result);
+        System.out.println("总计" + result);
     }
 
     public static void main(String[] args) {
