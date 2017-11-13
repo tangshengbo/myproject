@@ -17,7 +17,7 @@ public class SemaphoreTest {
     private static ExecutorService threadPool = Executors
             .newFixedThreadPool(THREAD_COUNT);
 
-    private static Semaphore s = new Semaphore(5);
+    private static Semaphore s = new Semaphore(3);
 
     public static void main(String[] args) {
         for (int i = 0; i < THREAD_COUNT; i++) {
@@ -26,8 +26,8 @@ public class SemaphoreTest {
                 public void run() {
                     try {
                         s.acquire();
-                    System.out.println("save data");
-                    ThreadUtil.sleep(2000);
+                        System.out.println("save data");
+                        ThreadUtil.sleep(1000);
                         s.release();
                     } catch (InterruptedException e) {
                         System.out.println(ExceptionUtils.getStackTrace(e));
