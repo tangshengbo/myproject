@@ -1,4 +1,4 @@
-package com.tangshengbo.scheduled;
+package com.tangshengbo.thread.pool;
 
 import java.util.concurrent.TimeUnit;
 
