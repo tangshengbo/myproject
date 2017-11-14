@@ -21,8 +21,8 @@ public class FutureTaskTest {
             }
         };
 
-        FutureTask futureTask1 = new FutureTask(myCallable1);
-        FutureTask futureTask2 = new FutureTask(runnable, "唐波");
+        FutureTask<Integer> futureTask1 = new FutureTask<Integer>(myCallable1);
+        FutureTask<String> futureTask2 = new FutureTask<String>(runnable, "唐波");
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         executor.execute(futureTask1);
