@@ -3,6 +3,8 @@ package com.tangshengbo.thread.lock;
 import jodd.util.ThreadUtil;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -43,6 +45,23 @@ public class LockReadWriteThread implements Runnable {
     }
 
     public static void main(String[] args) {
+//        testReadWriteLock();
+        testReadWriteCache();
+    }
+
+    private static void testReadWriteCache() {
+        MyService service = new MyService();
+        MyRunD read = new MyRunD(service);
+        MyRunE write = new MyRunE(service);
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        for (int i = 0; i < 10; i++) {
+            executorService.execute(read);
+            executorService.submit(write);
+        }
+    }
+
+    private static void testReadWriteLock() {
         LockReadWriteThread lt = new LockReadWriteThread();
         for (int i = 0; i < 5; i++) {
             Thread t = new Thread(lt, "Write" + i);

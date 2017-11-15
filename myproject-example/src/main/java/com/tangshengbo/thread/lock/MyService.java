@@ -62,4 +62,13 @@ public class MyService {
             }
         }
     }
+
+    public Object readByCache(String key) {
+        return MyCache.get(key);
+    }
+
+    public Object writeByCache(String key, Object value) {
+        return MyCache.put(key, value);
+    }
+
 }

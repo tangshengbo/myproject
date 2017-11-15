@@ -9,12 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MapTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-
-        MapTest mapTest = new MapTest();
-        //mapTest.calculate(10);
-        mapTest.testCopyArray();
-
-
+        testPutIfAbsent();
     }
 
     public void hashMap() {
@@ -106,6 +101,16 @@ public class MapTest {
         if (max == 100) {
             String charset = "UTF-8";
             charsets.add(charset);
+        }
+    }
+
+    private static void testPutIfAbsent() {
+        ConcurrentHashMap<String, String> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put("task", "runA");
+        concurrentHashMap.putIfAbsent("task", "run");
+        for (Map.Entry<String, String> entry : concurrentHashMap.entrySet()) {
+            System.out.println("key= " + entry.getKey() + " and value= "
+                    + entry.getValue());
         }
     }
 }

@@ -2,17 +2,21 @@ package com.tangshengbo.scheduled.callback;
 
 import com.tangshengbo.scheduled.MyCallable;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 /**
  * Created by Tangshengbo on 2017/8/21.
  */
 public class FutureTaskTest {
 
+    private final static ConcurrentMap<Object, Future<String>> taskCache = new ConcurrentHashMap<>();
+
     public static void main(String[] args) {
+//        testFutureTask();
+        executionTask("task");
+    }
+
+    private static void testFutureTask() {
         MyCallable myCallable1 = new MyCallable(100);
         Runnable runnable = new Runnable() {
             @Override
@@ -41,6 +45,39 @@ public class FutureTaskTest {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void executionTask(final String taskName) {
+        while (true) {
+            Future<String> future = taskCache.get(taskName); // 1.1,2.1
+            if (future == null) {
+                Callable<String> task = new Callable<String>() {
+                    public String call() throws InterruptedException {
+                        System.out.println("call taskName");
+                        return taskName;
+                    }
+                };
+                FutureTask<String> futureTask = new FutureTask<>(task);
+                future = taskCache.putIfAbsent(taskName, futureTask); // 1.3
+                if (future == null) {
+                    future = futureTask;
+                    futureTask.run(); // 1.4执行任务
+                }
+            }
+            try {
+                String result = future.get(); // 1.5,
+                if (result != null) {
+                    System.out.println(result);
+                    break;
+                }
+            } catch (CancellationException e) {
+                taskCache.remove(taskName, future);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
