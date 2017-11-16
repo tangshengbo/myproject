@@ -1,12 +1,12 @@
 package com.tangshengbo.collection;
 
+import com.google.common.collect.Maps;
 import jodd.util.ReflectUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public final class ConvertUtils {
      */
     public static <T> Map<String, T> convertMap(List<T> list, String fieldName) {
         String keyMethodName = parGetName(fieldName);
-        Map<String, T> map = new HashMap<>(list.size());
+        Map<String, T> map = Maps.newHashMapWithExpectedSize(list.size());
         try {
             for (T t : list) {
                 Method method = ReflectUtil.findMethod(t.getClass(), keyMethodName);
