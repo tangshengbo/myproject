@@ -9,7 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MapTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        testPutIfAbsent();
+//        testPutIfAbsent();
+        testConvertMap();
     }
 
     public void hashMap() {
@@ -112,5 +113,15 @@ public class MapTest {
             System.out.println("key= " + entry.getKey() + " and value= "
                     + entry.getValue());
         }
+    }
+
+    private static void testConvertMap() {
+        List<String> strings = Lists.newArrayList();
+        strings.add("1");
+        strings.add("2");
+        strings.add("3");
+        strings.add("4");
+        Map<String, String> stringMap = ConvertUtils.convertMap(strings, "");
+        System.out.println(stringMap);
     }
 }

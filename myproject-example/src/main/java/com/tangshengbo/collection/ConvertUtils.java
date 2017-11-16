@@ -3,8 +3,6 @@ package com.tangshengbo.collection;
 import com.google.common.collect.Maps;
 import jodd.util.ReflectUtil;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -14,8 +12,6 @@ import java.util.Map;
  * Created by Tangshengbo on 2017/11/16.
  */
 public final class ConvertUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConvertUtils.class);
 
     /**
      * 将List转换成Map 使用String作为key
@@ -30,12 +26,16 @@ public final class ConvertUtils {
         Map<String, T> map = Maps.newHashMapWithExpectedSize(list.size());
         try {
             for (T t : list) {
-                Method method = ReflectUtil.findMethod(t.getClass(), keyMethodName);
-                String key = (String) method.invoke(t);
-                map.put(key, t);
+                if (t instanceof String) {
+                    map.put((String) t, t);
+                } else {
+                    Method method = ReflectUtil.findMethod(t.getClass(), keyMethodName);
+                    String key = (String) method.invoke(t);
+                    map.put(key, t);
+                }
             }
         } catch (Exception e) {
-            logger.error("List转换成Map 出现异常: {}", e);
+            System.out.println(String.format("List转换成Map 出现异常: %s", e));
         }
         return map;
     }
