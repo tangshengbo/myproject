@@ -59,17 +59,17 @@ public class BlockQueueTest {
 
     private static void linkedTransferQueue() {
         LinkedTransferQueue<String> linkedTransferQueue = new LinkedTransferQueue<>();
-        try {
-            linkedTransferQueue.transfer("LinkedTransferQueue");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        linkedTransferQueue.tryTransfer("LinkedTransferQueue");
         System.out.println(linkedTransferQueue.poll());
     }
 
     private static void linkedBlockingDeque() {
         LinkedBlockingDeque<String> linkedBlockingDeque = new LinkedBlockingDeque<>();
-        linkedBlockingDeque.offer("LinkedBlockingDeque");
-        System.out.println(linkedBlockingDeque.peek());
+        try {
+            linkedBlockingDeque.putLast("linkedBlockingDeque");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(linkedBlockingDeque.peekLast());
     }
 }
