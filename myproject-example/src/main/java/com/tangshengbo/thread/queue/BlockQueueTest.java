@@ -59,8 +59,12 @@ public class BlockQueueTest {
 
     private static void linkedTransferQueue() {
         LinkedTransferQueue<String> linkedTransferQueue = new LinkedTransferQueue<>();
-        linkedTransferQueue.tryTransfer("LinkedTransferQueue");
-        System.out.println(linkedTransferQueue.poll());
+        try {
+            linkedTransferQueue.tryTransfer("LinkedTransferQueue", 1000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(linkedTransferQueue.poll() + "-->");
     }
 
     private static void linkedBlockingDeque() {
