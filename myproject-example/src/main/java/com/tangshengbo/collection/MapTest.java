@@ -11,8 +11,8 @@ public class MapTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        testPutIfAbsent();
-//        testConvertMap();
-        testDealLoop();
+        testConvertMap();
+//        testDealLoop();
     }
 
     public void hashMap() {
@@ -123,7 +123,7 @@ public class MapTest {
         strings.add("2");
         strings.add("3");
         strings.add("4");
-        Map<String, String> stringMap = ConvertUtils.convertMap(strings, "");
+        Map<String, String> stringMap = ConvertUtils.convertMap(strings, null);
         stringMap.put(null, "");
         System.out.println(stringMap);
         System.out.println(stringMap.get(null));
