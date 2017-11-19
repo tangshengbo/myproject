@@ -12,25 +12,20 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LockThread implements Runnable {
 
     private Integer key = 0;
-
     // 锁对象
-    private Lock lock = new ReentrantLock();
+    private static final Lock lock = new ReentrantLock();
 
     @Override
     public void run() {
-//        testLock();
-        testTryLock();
+        testLock();
+//        testTryLock();
     }
 
     private void testLock() {
         // 需要结果是key实现自增长，如果没有同步块，则可能会出现重复key值的现象
         try {
-            lock.lockInterruptibly();
-//            Thread.currentThread().interrupt();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
+            lock.lock();
+            lock.lock();
             key++;
             System.out.println(Thread.currentThread().getName() + ":" + key);
             ThreadUtil.sleep(100);
@@ -38,6 +33,7 @@ public class LockThread implements Runnable {
             // 上述代码实现功能与使用sychronized同步代码块一样。
             // sychronized同步代码块或同步方法在代码执行完之后锁自动释放；而用Lock则需要手工释放锁。
             // 为了保证锁最终被释放，释放锁代码放在finally块内。
+            lock.unlock();
             lock.unlock();
         }
     }

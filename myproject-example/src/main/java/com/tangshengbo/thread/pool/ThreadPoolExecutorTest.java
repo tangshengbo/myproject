@@ -3,6 +3,7 @@ package com.tangshengbo.thread.pool;
 import jodd.util.ThreadUtil;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by TangShengBo on 2017-11-13.
@@ -11,7 +12,15 @@ import java.util.concurrent.*;
 public class ThreadPoolExecutorTest {
 
     private final static ThreadPoolExecutor executor = new MyThreadPoolExecutor(10, 20, 20, TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>());
+            new LinkedBlockingQueue<>(),new ThreadFactory(){
+        private final AtomicInteger threadNumber = new AtomicInteger(1);
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r);
+            thread.setName("MyThread-" + threadNumber.getAndIncrement());
+            return thread;
+        }
+    });
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         System.out.println(Runtime.getRuntime().availableProcessors());

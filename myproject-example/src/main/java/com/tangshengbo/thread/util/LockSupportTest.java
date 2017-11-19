@@ -1,4 +1,4 @@
-package com.tangshengbo.thread.wait;
+package com.tangshengbo.thread.util;
 
 import jodd.util.ThreadUtil;
 

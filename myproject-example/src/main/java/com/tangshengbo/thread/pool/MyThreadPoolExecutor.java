@@ -1,6 +1,7 @@
 package com.tangshengbo.thread.pool;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -13,9 +14,14 @@ public class MyThreadPoolExecutor extends ThreadPoolExecutor {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
 
+    public MyThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
+        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
+    }
+
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
         System.out.println("===================beforeExecute:==============");
+        System.out.println(t.getName() + "开始执行");
         printThreadPoolInfo();
     }
 

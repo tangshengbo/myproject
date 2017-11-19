@@ -1,7 +1,6 @@
 package com.tangshengbo.annotation.reflect;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -44,15 +43,7 @@ public class ReflectTest {
             System.out.println(path);
             properties.load(is);
             return (DBServer) Class.forName(properties.getProperty(DB_NAME_KEY)).newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ReflectiveOperationException | IOException e) {
             e.printStackTrace();
         }
         return null;
