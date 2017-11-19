@@ -1,6 +1,7 @@
 package com.tangshengbo.collection;
 
 import com.google.common.collect.Lists;
+import jodd.util.ThreadUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -10,7 +11,8 @@ public class MapTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        testPutIfAbsent();
-        testConvertMap();
+//        testConvertMap();
+        testDealLoop();
     }
 
     public void hashMap() {
@@ -122,6 +124,27 @@ public class MapTest {
         strings.add("3");
         strings.add("4");
         Map<String, String> stringMap = ConvertUtils.convertMap(strings, "");
+        stringMap.put(null, "");
         System.out.println(stringMap);
+        System.out.println(stringMap.get(null));
+    }
+
+    private static void testDealLoop() {
+        final HashMap<String, String> map = new HashMap<String, String>(2);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 100000; i++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            map.put(UUID.randomUUID().toString(), "");
+                        }
+                    }, "ftf" + i).start();
+                }
+            }
+        }, "ftf");
+        t.start();
+        ThreadUtil.join(t);
     }
 }

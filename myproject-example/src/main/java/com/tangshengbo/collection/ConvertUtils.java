@@ -13,6 +13,10 @@ import java.util.Map;
  */
 public final class ConvertUtils {
 
+    private ConvertUtils() {
+        throw new UnsupportedOperationException("该对象不支持实例化");
+    }
+
     /**
      * 将List转换成Map 使用String作为key
      *
@@ -22,7 +26,7 @@ public final class ConvertUtils {
      * @return
      */
     public static <T> Map<String, T> convertMap(List<T> list, String fieldName) {
-        String keyMethodName = parGetName(fieldName);
+        String keyMethodName = getMethodName(fieldName);
         Map<String, T> map = Maps.newHashMapWithExpectedSize(list.size());
         try {
             for (T t : list) {
@@ -30,7 +34,7 @@ public final class ConvertUtils {
                     map.put((String) t, t);
                 } else {
                     Method method = ReflectUtil.findMethod(t.getClass(), keyMethodName);
-                    String key = (String) method.invoke(t);
+                    String key = (String) (method != null ? method.invoke(t) : null);
                     map.put(key, t);
                 }
             }
@@ -46,7 +50,7 @@ public final class ConvertUtils {
      * @param fieldName
      * @return String
      */
-    private static String parGetName(String fieldName) {
+    private static String getMethodName(String fieldName) {
         if (StringUtils.isEmpty(fieldName)) {
             return null;
         }
