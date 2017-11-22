@@ -1,11 +1,14 @@
 package com.tangshengbo.collection;
 
 import com.google.common.collect.Lists;
+import com.tangshengbo.thread.Student;
 import jodd.util.ThreadUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.tangshengbo.collection.ConvertUtils.toMap;
 
 public class MapTest {
 
@@ -123,10 +126,17 @@ public class MapTest {
         strings.add("2");
         strings.add("3");
         strings.add("4");
-        Map<String, String> stringMap = ConvertUtils.convertMap(strings, null);
+        Map<String, String> stringMap = toMap(strings, null);
         stringMap.put(null, "");
         System.out.println(stringMap);
         System.out.println(stringMap.get(null));
+        System.out.println("==================================================");
+        List<Student> students = Lists.newArrayList();
+        students.add(new Student(12, "tang"));
+        students.add(new Student(13, "sheng"));
+        students.add(new Student(14, "bo"));
+        Map<String, Student> studentMap = ConvertUtils.toMap(students, "name");
+        System.out.println(studentMap.get("bo"));
     }
 
     private static void testDealLoop() {

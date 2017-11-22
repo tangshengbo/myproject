@@ -1,10 +1,8 @@
 package com.tangshengbo.collection;
 
 import com.google.common.collect.Maps;
-import jodd.util.ReflectUtil;
 import org.apache.commons.lang.StringUtils;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ public final class ConvertUtils {
      * @param <T>       目标数据
      * @return
      */
-    public static <T> Map<String, T> convertMap(List<T> list, String fieldName) {
+    public static <T> Map<String, T> toMap(List<T> list, String fieldName) {
         String keyMethodName = getMethodName(fieldName);
         Map<String, T> map = Maps.newHashMapWithExpectedSize(list.size());
         try {
@@ -33,9 +31,10 @@ public final class ConvertUtils {
                 if (t instanceof String) {
                     map.put((String) t, t);
                 } else {
-                    Method method = ReflectUtil.findMethod(t.getClass(), keyMethodName);
-                    String key = (String) (method != null ? method.invoke(t) : null);
-                    map.put(key, t);
+                    if (keyMethodName != null) {
+                        String key = (String) t.getClass().getMethod(keyMethodName).invoke(t);
+                        map.put(key, t);
+                    }
                 }
             }
         } catch (Exception e) {
