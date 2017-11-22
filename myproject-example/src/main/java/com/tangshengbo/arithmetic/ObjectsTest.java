@@ -1,7 +1,7 @@
 package com.tangshengbo.arithmetic;
 
-import com.tangshengbo.oop.ocp.Book;
-import com.tangshengbo.oop.ocp.ComputerBookImpl;
+import com.tangshengbo.design.oop.ocp.Book;
+import com.tangshengbo.design.oop.ocp.ComputerBookImpl;
 
 import java.util.Objects;
 
