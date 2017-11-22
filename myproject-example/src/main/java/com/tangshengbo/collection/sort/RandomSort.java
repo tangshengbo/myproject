@@ -14,7 +14,7 @@ public class RandomSort {
 
     private static void printRandomBySort() {
         Random random = new Random();
-        List<Integer> numbers = new ArrayList();
+        List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             //0~9的随机数
             numbers.add(random.nextInt(10));

@@ -30,27 +30,19 @@ public class GsonTest {
             }
         });
         builder.setDateFormat("yyyy-MM-dd");
-
         Gson gson = builder.create();
         System.out.println(gson.toJson(account));
-
         GsonTest gsonTest = new GsonTest();
         gsonTest.readFileByGson();
-
     }
 
     public void readFileByGson() throws IOException {
-
         String url = JsonTest.class.getResource("/folder/user.json").getFile();
         System.out.println(url);
         File userJson = new File(url);
-
         String content = FileUtils.readFileToString(userJson, "UTF-8");
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Account account = gson.fromJson(content, Account.class);
         System.out.println(account.toString());
-
     }
-
-
 }

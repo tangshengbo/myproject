@@ -24,7 +24,7 @@ public class MyComparator implements Comparator<String> {
                 return 0;
             }
         };
-        TreeMap<String, String> treeMap = new TreeMap(comparator);
+        TreeMap<String, String> treeMap = new TreeMap<>(comparator);
         treeMap.put(str2, str2);
         treeMap.put(str1, str1);
         for (Map.Entry<String, String> entry : treeMap.entrySet()) {

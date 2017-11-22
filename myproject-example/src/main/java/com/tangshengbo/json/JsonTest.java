@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.HashMap;
 
 
@@ -27,13 +26,8 @@ public class JsonTest {
         String url = JsonTest.class.getResource("/folder/user.json").getFile();
         System.out.println(url);
         File userJson = new File(url);
-        SecureRandom secureRandom = SecureRandom.getInstance("");
-        secureRandom.nextLong();
-
         String content = FileUtils.readFileToString(userJson, "UTF-8");
         System.out.println(content);
         System.out.println(new JSONObject(content).toString(2));
-
-
     }
 }

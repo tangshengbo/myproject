@@ -1,4 +1,4 @@
-package com.tangshengbo.arithmetic;
+package com.tangshengbo.arithmetic.encrypt;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import sun.misc.BASE64Decoder;
@@ -69,7 +69,7 @@ public final class EncryptUtil {
         MessageDigest mdInst = null;
         // 把密文转换成十六进制的字符串形式
         // 单线程用StringBuilder，速度快 多线程用stringbuffer，安全
-        StringBuilder dstr = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
         try {
             // 获得MD5摘要算法的 MessageDigest对象
             mdInst = MessageDigest.getInstance(method);
@@ -83,13 +83,13 @@ public final class EncryptUtil {
                     tmp += 256;
                 }
                 if (tmp < 16) {
-                    dstr.append("0");
+                    sb.append("0");
                 }
-                dstr.append(Integer.toHexString(tmp));
+                sb.append(Integer.toHexString(tmp));
             }
         } catch (NoSuchAlgorithmException e) {
             System.out.println(ExceptionUtils.getStackTrace(e));
         }
-        return dstr.toString();
+        return sb.toString();
     }
 }
