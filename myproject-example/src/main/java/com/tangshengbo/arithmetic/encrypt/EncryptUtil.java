@@ -1,12 +1,11 @@
 package com.tangshengbo.arithmetic.encrypt;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 /**
  * Created by Tangshengbo on 2017/11/22.
@@ -49,8 +48,7 @@ public final class EncryptUtil {
      * @return base64加密后的结果
      */
     public static String encodeBase64String(String str) {
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(str.getBytes());
+        return new String(Base64.getEncoder().encode(str.getBytes()));
     }
 
     /**
@@ -61,8 +59,7 @@ public final class EncryptUtil {
      * @throws IOException
      */
     public static String decodeBase64String(String str) throws IOException {
-        BASE64Decoder encoder = new BASE64Decoder();
-        return new String(encoder.decodeBuffer(str));
+        return new String(Base64.getDecoder().decode(str));
     }
 
     private static String encode(String str, String method) {

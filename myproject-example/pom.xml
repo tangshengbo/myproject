@@ -46,10 +46,11 @@
             <version>1.9</version>
         </dependency>
         <!-- activemq 相关maven依赖 -->
+        <!-- https://mvnrepository.com/artifact/javax.jms/javax.jms-api -->
         <dependency>
             <groupId>javax.jms</groupId>
-            <artifactId>jms</artifactId>
-            <version>1.1</version>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
