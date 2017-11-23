@@ -68,8 +68,5 @@ public class Student {
         System.out.println(result);
         long te = System.currentTimeMillis();
         System.out.println(String.format("耗时: %s ms", te - ts));
-        long d = Integer.MAX_VALUE;
-        Integer num = 1;
-        int i = num.intValue();
     }
 }
