@@ -136,7 +136,7 @@ public class MapTest {
         students.add(new Student(13, "sheng"));
         students.add(new Student(14, "bo"));
         try {
-            Map<String, Student> studentMap = ConvertUtils.toMap(students, "name");
+            Map<String, Student> studentMap = ConvertUtils.toMap(students, "age");
             System.out.println(studentMap.get("tang"));
         } catch (Exception e) {
             System.out.println(ExceptionUtils.getStackTrace(e));

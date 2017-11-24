@@ -2,8 +2,6 @@ package com.tangshengbo.collection;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -12,8 +10,6 @@ import java.util.Map;
  * Created by Tangshengbo on 2017/11/16.
  */
 public final class ConvertUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConvertUtils.class);
 
     private ConvertUtils() {}
 
@@ -38,7 +34,7 @@ public final class ConvertUtils {
                 }
             }
         } catch (Exception e) {
-            logger.error("List转换成Map 出现异常: {}", e);
+            System.out.println(String.format("List转换成Map 出现异常: %s", e));
             throw new RuntimeException("List转换成Map 出现异常", e);
         }
         return map;
