@@ -3,12 +3,12 @@ package com.tangshengbo.collection;
 import com.google.common.collect.Lists;
 import com.tangshengbo.thread.Student;
 import jodd.util.ThreadUtil;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.tangshengbo.collection.ConvertUtils.toMap;
 
 public class MapTest {
 
@@ -126,7 +126,7 @@ public class MapTest {
         strings.add("2");
         strings.add("3");
         strings.add("4");
-        Map<String, String> stringMap = toMap(strings, null);
+        Map<String, String> stringMap = ConvertUtils.toMap(strings, "");
         stringMap.put(null, "");
         System.out.println(stringMap);
         System.out.println(stringMap.get(null));
@@ -135,8 +135,12 @@ public class MapTest {
         students.add(new Student(12, "tang"));
         students.add(new Student(13, "sheng"));
         students.add(new Student(14, "bo"));
-        Map<String, Student> studentMap = ConvertUtils.toMap(students, "name");
-        System.out.println(studentMap.get("bo"));
+        try {
+            Map<String, Student> studentMap = ConvertUtils.toMap(students, "name");
+            System.out.println(studentMap.get("tang"));
+        } catch (Exception e) {
+            System.out.println(ExceptionUtils.getStackTrace(e));
+        }
     }
 
     private static void testDealLoop() {

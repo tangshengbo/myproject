@@ -2,6 +2,8 @@ package com.tangshengbo.collection;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -11,9 +13,9 @@ import java.util.Map;
  */
 public final class ConvertUtils {
 
-    private ConvertUtils() {
-        throw new UnsupportedOperationException("该对象不支持实例化");
-    }
+    private static final Logger logger = LoggerFactory.getLogger(ConvertUtils.class);
+
+    private ConvertUtils() {}
 
     /**
      * 将List转换成Map 使用String作为key
@@ -24,21 +26,20 @@ public final class ConvertUtils {
      * @return
      */
     public static <T> Map<String, T> toMap(List<T> list, String fieldName) {
-        String keyMethodName = getMethodName(fieldName);
         Map<String, T> map = Maps.newHashMapWithExpectedSize(list.size());
+        String keyMethodName = getMethodName(fieldName);
         try {
             for (T t : list) {
                 if (t instanceof String) {
                     map.put((String) t, t);
                 } else {
-                    if (keyMethodName != null) {
-                        String key = (String) t.getClass().getMethod(keyMethodName).invoke(t);
-                        map.put(key, t);
-                    }
+                    String key = (String) t.getClass().getMethod(keyMethodName).invoke(t);
+                    map.put(key, t);
                 }
             }
         } catch (Exception e) {
-            System.out.println(String.format("List转换成Map 出现异常: %s", e));
+            logger.error("List转换成Map 出现异常: {}", e);
+            throw new RuntimeException("List转换成Map 出现异常", e);
         }
         return map;
     }
@@ -51,7 +52,7 @@ public final class ConvertUtils {
      */
     private static String getMethodName(String fieldName) {
         if (StringUtils.isEmpty(fieldName)) {
-            return null;
+            return "";
         }
         int startIndex = 0;
         if (fieldName.charAt(0) == '_')
