@@ -57,4 +57,67 @@ public final class ConvertUtils {
                 + fieldName.substring(startIndex, startIndex + 1).toUpperCase()
                 + fieldName.substring(startIndex + 1);
     }
+
+    /**
+     * 判断是否是大写字母
+     *
+     * @param c
+     * @return
+     */
+    private static Boolean isUp(char c) {
+        if (c >= 'A' && c <= 'Z') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * java对象属性转换为数据库字段，如userName-->user_name
+     *
+     * @param field
+     * @return
+     */
+    public static String fieldToColumn(String field) {
+        if (StringUtils.isEmpty(field)) {
+            return "";
+        }
+        char[] chars = field.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (char c : chars) {
+            if (isUp(c)) {
+                sb.append("_").append(String.valueOf(c).toLowerCase());
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString().toUpperCase();
+    }
+
+    /**
+     * 将数据库字段转换为java属性，如user_name-->userName
+     *
+     * @param column 字段名
+     * @return
+     */
+    public static String columnToField(String column) {
+        if (StringUtils.isEmpty(column)) {
+            return "";
+        }
+        column = column.toLowerCase();
+        char[] chars = column.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            if (c == '_') {
+                int j = i + 1;
+                if (j < chars.length) {
+                    sb.append(String.valueOf(chars[j]).toUpperCase());
+                    i++;
+                }
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 }

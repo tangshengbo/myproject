@@ -14,8 +14,9 @@ public class MapTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        testPutIfAbsent();
-        testConvertMap();
+//        testConvertMap();
 //        testDealLoop();
+        System.out.println(ConvertUtils.fieldToColumn("userName"));
     }
 
     public void hashMap() {
