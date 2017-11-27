@@ -8,15 +8,16 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 
 public class MapTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        testPutIfAbsent();
-//        testConvertMap();
+        testConvertMap();
 //        testDealLoop();
-        System.out.println(ConvertUtils.fieldToColumn("userName"));
+//        System.out.println(ConvertUtils.fieldToColumn("userName"));
     }
 
     public void hashMap() {
@@ -81,13 +82,9 @@ public class MapTest {
     }
 
     private void calculate(int number) {
-
         int calcResult = number << 2;
-
         String str = "" + 'a';
-
         System.out.println(calcResult);
-
         boolean isDone = false;
         int value = 0;
        /* if(isDone){
@@ -95,8 +92,7 @@ public class MapTest {
         }else{
             value = 10;
         }*/
-        value = isDone ? 0 : 10;
-
+        value = 10;
         System.out.println(value);
         int max = 100;
         StringBuffer sb = new StringBuffer(0);
@@ -127,18 +123,16 @@ public class MapTest {
         strings.add("2");
         strings.add("3");
         strings.add("4");
-        Map<String, String> stringMap = ConvertUtils.toMap(strings, "");
-        stringMap.put(null, "");
-        System.out.println(stringMap);
-        System.out.println(stringMap.get(null));
+        Map<String, String> stringMap = ConvertUtils.toMapByLambda(strings, "");
+        stringMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         System.out.println("==================================================");
         List<Student> students = Lists.newArrayList();
         students.add(new Student(12, "tang"));
         students.add(new Student(13, "sheng"));
         students.add(new Student(14, "bo"));
         try {
-            Map<String, Student> studentMap = ConvertUtils.toMap(students, "age");
-            System.out.println(studentMap.get("tang"));
+            Map<String, Student> studentMap = ConvertUtils.toMapByLambda(students, "name");
+            studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         } catch (Exception e) {
             System.out.println(ExceptionUtils.getStackTrace(e));
         }
@@ -161,5 +155,28 @@ public class MapTest {
         }, "ftf");
         t.start();
         ThreadUtil.join(t);
+    }
+
+    private static void testLambdaCollect() {
+        List<String> strings = Lists.newArrayList();
+        strings.add("1");
+        strings.add("2");
+        strings.add("3");
+        strings.add("4");
+        Map<String, String> stringMap = strings.stream().collect(Collectors.toMap(s -> s, s -> s));
+        stringMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
+        System.out.println("==================================================");
+        List<Student> students = Lists.newArrayList();
+        students.add(new Student(12, "tang"));
+        students.add(new Student(13, "tang"));
+        students.add(new Student(14, "bo"));
+        Map<String, Student> studentMap;
+
+//        studentMap = students.stream().collect(HashMap<String, Student>::new,
+//                (m, c) -> m.put(c.getName(), c),
+//                (m, u) -> {
+//                });
+        studentMap = students.stream().collect(Collectors.toMap(Student::getName, Student -> Student));
+        studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
     }
 }

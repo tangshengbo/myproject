@@ -3,6 +3,7 @@ package com.tangshengbo.collection;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,8 @@ import java.util.Map;
  */
 public final class ConvertUtils {
 
-    private ConvertUtils() {}
+    private ConvertUtils() {
+    }
 
     /**
      * 将List转换成Map 使用String作为key
@@ -33,6 +35,29 @@ public final class ConvertUtils {
                     map.put(key, t);
                 }
             }
+        } catch (Exception e) {
+            System.out.println(String.format("List转换成Map 出现异常: %s", e));
+            throw new RuntimeException("List转换成Map 出现异常", e);
+        }
+        return map;
+    }
+
+    public static <T> Map<String, T> toMapByLambda(List<T> list, String fieldName) {
+        Map<String, T> map;
+        String keyMethodName = getMethodName(fieldName);
+        try {
+            map = list.stream().collect(HashMap<String, T>::new, (m, c) -> {
+                try {
+                    if (c instanceof String) {
+                        m.put((String) c, c);
+                    } else {
+                        m.put((String) c.getClass().getMethod(keyMethodName).invoke(c), c);
+                    }
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException("List转换成Map 出现异常", e);
+                }
+            }, (m, u) -> {
+            });
         } catch (Exception e) {
             System.out.println(String.format("List转换成Map 出现异常: %s", e));
             throw new RuntimeException("List转换成Map 出现异常", e);
@@ -64,7 +89,7 @@ public final class ConvertUtils {
      * @param c
      * @return
      */
-    private static Boolean isUp(char c) {
+    private static boolean isUp(char c) {
         if (c >= 'A' && c <= 'Z') {
             return true;
         }
