@@ -8,6 +8,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -16,6 +17,7 @@ public class MapTest {
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        testPutIfAbsent();
         testConvertMap();
+//        testLambdaCollect();
 //        testDealLoop();
 //        System.out.println(ConvertUtils.fieldToColumn("userName"));
     }
@@ -123,7 +125,8 @@ public class MapTest {
         strings.add("2");
         strings.add("3");
         strings.add("4");
-        Map<String, String> stringMap = ConvertUtils.toMapByLambda(strings, "");
+        Map<String, String> stringMap = ConvertUtils.toMap(strings, "");
+        System.out.println(stringMap.get("4"));
         stringMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         System.out.println("==================================================");
         List<Student> students = Lists.newArrayList();
@@ -163,12 +166,12 @@ public class MapTest {
         strings.add("2");
         strings.add("3");
         strings.add("4");
-        Map<String, String> stringMap = strings.stream().collect(Collectors.toMap(s -> s, s -> s));
+        Map<String, String> stringMap = strings.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
         stringMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
-        System.out.println("==================================================");
+        System.out.println("=================================================================");
         List<Student> students = Lists.newArrayList();
         students.add(new Student(12, "tang"));
-        students.add(new Student(13, "tang"));
+        students.add(new Student(13, "sheng"));
         students.add(new Student(14, "bo"));
         Map<String, Student> studentMap;
 
@@ -176,7 +179,7 @@ public class MapTest {
 //                (m, c) -> m.put(c.getName(), c),
 //                (m, u) -> {
 //                });
-        studentMap = students.stream().collect(Collectors.toMap(Student::getName, Student -> Student));
+        studentMap = students.stream().collect(Collectors.toMap(Student::getName, Function.identity()));
         studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
     }
 }

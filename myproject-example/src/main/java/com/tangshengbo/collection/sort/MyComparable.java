@@ -1,7 +1,7 @@
 package com.tangshengbo.collection.sort;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -11,11 +11,26 @@ public class MyComparable implements Comparable<MyComparable> {
 
     private int count;
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public MyComparable(int count) {
         this.count = count;
     }
 
     public MyComparable() {
+    }
+
+    public MyComparable(int count, String name) {
+        this.count = count;
+        this.name = name;
     }
 
     public int getCount() {
@@ -28,16 +43,24 @@ public class MyComparable implements Comparable<MyComparable> {
 
     @Override
     public int compareTo(MyComparable o) {
-        return o.getCount() - this.getCount();
+        return this.getCount() - o.getCount();
+    }
+
+    @Override
+    public String toString() {
+        return "MyComparable{" +
+                "count=" + count +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     public static void main(String[] args) {
         List<MyComparable> comparables = new ArrayList<>();
-        MyComparable comparable = new MyComparable(1);
-        MyComparable comparable2 = new MyComparable(2);
-        MyComparable comparable3 = new MyComparable(3);
-        MyComparable comparable4 = new MyComparable(4);
-        MyComparable comparable5 = new MyComparable(5);
+        MyComparable comparable = new MyComparable(1, "z");
+        MyComparable comparable2 = new MyComparable(2, "n");
+        MyComparable comparable3 = new MyComparable(3, "l");
+        MyComparable comparable4 = new MyComparable(4, "r");
+        MyComparable comparable5 = new MyComparable(5, "a");
         comparables.add(comparable);
         comparables.add(comparable4);
         comparables.add(comparable3);
@@ -49,10 +72,16 @@ public class MyComparable implements Comparable<MyComparable> {
             System.out.println(myComparable.getCount());
         }
 
-        Collections.sort(comparables);
-        System.out.println("Collections sort ========================================");
+        comparables.sort(Comparator.naturalOrder());
+        System.out.println("Collections asc sort ========================================");
         for (MyComparable myComparable : comparables) {
             System.out.println(myComparable.getCount());
         }
+        comparables.sort(Comparator.reverseOrder());
+        System.out.println("Collections desc sort ========================================");
+        comparables.forEach(myComparable -> System.out.println(myComparable.getCount()));
+        System.out.println("Collections name sort ========================================");
+        comparables.sort(Comparator.comparing(MyComparable::getName));
+        comparables.forEach(System.out::println);
     }
 }
