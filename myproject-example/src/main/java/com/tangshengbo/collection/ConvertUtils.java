@@ -3,9 +3,10 @@ package com.tangshengbo.collection;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Created by Tangshengbo on 2017/11/16.
@@ -42,27 +43,13 @@ public final class ConvertUtils {
         return map;
     }
 
-    public static <T> Map<String, T> toMapByLambda(List<T> list, String fieldName) {
-        Map<String, T> map;
-        String keyMethodName = getMethodName(fieldName);
-        try {
-            map = list.stream().collect(HashMap<String, T>::new, (m, c) -> {
-                try {
-                    if (c instanceof String) {
-                        m.put((String) c, c);
-                    } else {
-                        m.put((String) c.getClass().getMethod(keyMethodName).invoke(c), c);
-                    }
-                } catch (ReflectiveOperationException e) {
-                    throw new RuntimeException("List转换成Map 出现异常", e);
-                }
-            }, (m, u) -> {
-            });
-        } catch (Exception e) {
-            System.out.println(String.format("List转换成Map 出现异常: %s", e));
-            throw new RuntimeException("List转换成Map 出现异常", e);
-        }
-        return map;
+    public static <T> Map<String, T> toMapByLambda(List<T> list, Function<T, String> f) {
+        return list.stream()
+                .collect(LinkedHashMap<String, T>::new,
+                        (m, c) ->
+                                m.put(f.apply(c), c),
+                        (m, u) -> {
+                        });
     }
 
     /**

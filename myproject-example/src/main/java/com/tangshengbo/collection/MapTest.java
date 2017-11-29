@@ -122,19 +122,23 @@ public class MapTest {
     private static void testConvertMap() {
         List<String> strings = Lists.newArrayList();
         strings.add("1");
-        strings.add("2");
+        strings.add("3");
         strings.add("3");
         strings.add("4");
         Map<String, String> stringMap = ConvertUtils.toMap(strings, "");
         System.out.println(stringMap.get("4"));
         stringMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         System.out.println("==================================================");
-        List<Student> students = Lists.newArrayList();
-        students.add(new Student(12, "tang"));
-        students.add(new Student(13, "sheng"));
-        students.add(new Student(14, "bo"));
+        int size = 100000;
+        List<Student> students = Lists.newArrayListWithExpectedSize(size);
+        for (int i = 0; i < size; i++) {
+            students.add(new Student(i, "tang".concat(String.valueOf(i))));
+        }
         try {
-            Map<String, Student> studentMap = ConvertUtils.toMapByLambda(students, "name");
+            long ts = System.currentTimeMillis();
+            Map<String, Student> studentMap = ConvertUtils.toMapByLambda(students, Student::getName);
+            long te = System.currentTimeMillis();
+            System.out.println(String.format("+ cost %s ms size %s", (te - ts) / 1000.0, studentMap.size()));
             studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         } catch (Exception e) {
             System.out.println(ExceptionUtils.getStackTrace(e));
@@ -171,7 +175,7 @@ public class MapTest {
         System.out.println("=================================================================");
         List<Student> students = Lists.newArrayList();
         students.add(new Student(12, "tang"));
-        students.add(new Student(13, "sheng"));
+        students.add(new Student(13, "tang"));
         students.add(new Student(14, "bo"));
         Map<String, Student> studentMap;
 
@@ -179,7 +183,7 @@ public class MapTest {
 //                (m, c) -> m.put(c.getName(), c),
 //                (m, u) -> {
 //                });
-        studentMap = students.stream().collect(Collectors.toMap(Student::getName, Function.identity()));
+        studentMap = students.stream().collect(Collectors.toMap(Student::getName, Function.identity(), (key1, key2) -> key2));
         studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
     }
 }
