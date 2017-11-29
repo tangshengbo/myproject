@@ -19,25 +19,22 @@ public class MapTest {
         testConvertMap();
 //        testLambdaCollect();
 //        testDealLoop();
-//        System.out.println(ConvertUtils.fieldToColumn("userName"));
     }
 
     public void hashMap() {
-        Map map = new ConcurrentHashMap();
+        Map<String, String> map = new ConcurrentHashMap<>();
         map.containsValue("");
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");
         map.put("n", "n");
 
+        Iterator it = map.values().iterator();
+        while (it.hasNext()) {
+            map.remove(it.next());
+            System.out.println("没有报错");
 
-//        Iterator it = map.values().iterator();
-//        while (it.hasNext()) {
-//            map.remove(it.next());
-//            System.out.println("没有报错");
-//
-//        }
-
+        }
        /* Set keys = map.keySet();
         Iterator it = keys.iterator();
         while (it.hasNext()) {
@@ -47,29 +44,19 @@ public class MapTest {
     }
 
     public void linkedMap() {
-        Map map = new HashMap();
+        Map<String, String> map = new LinkedHashMap<>();
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");
-        Iterator it = map.values().iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
+        map.forEach((k, v) -> System.out.println(String.format("key %s  value %s", k, v)));
     }
 
     public void treeMap() {
-        Map map = new TreeMap(new Comparator<Object>() {
-            public int compare(Object o1, Object o2) {
-                return o2.toString().compareTo(o1.toString());
-            }
-        });
+        Map<String, String> map = new TreeMap<>(String::compareTo);
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");
-        Iterator it = map.values().iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
+        map.forEach((k, v) -> System.out.println(String.format("key %s  value %s", k, v)));
     }
 
     private void testCopyArray() {
@@ -81,32 +68,6 @@ public class MapTest {
         int[] destArray = new int[1000];
         System.arraycopy(srcArray, 0, destArray, 0, 1000);
         System.out.println(Arrays.toString(destArray));
-    }
-
-    private void calculate(int number) {
-        int calcResult = number << 2;
-        String str = "" + 'a';
-        System.out.println(calcResult);
-        boolean isDone = false;
-        int value = 0;
-       /* if(isDone){
-            value = 1;
-        }else{
-            value = 10;
-        }*/
-        value = 10;
-        System.out.println(value);
-        int max = 100;
-        StringBuffer sb = new StringBuffer(0);
-        for (int i = 0; i < max + 10000; i++) {
-            sb.append("" + i);
-        }
-        System.out.println(sb.toString());
-        List charsets = Lists.newArrayList();
-        if (max == 100) {
-            String charset = "UTF-8";
-            charsets.add(charset);
-        }
     }
 
     private static void testPutIfAbsent() {
@@ -129,17 +90,19 @@ public class MapTest {
         System.out.println(stringMap.get("4"));
         stringMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         System.out.println("==================================================");
-        int size = 100000;
+        int size = 20000000;
         List<Student> students = Lists.newArrayListWithExpectedSize(size);
         for (int i = 0; i < size; i++) {
             students.add(new Student(i, "tang".concat(String.valueOf(i))));
         }
         try {
             long ts = System.currentTimeMillis();
-            Map<String, Student> studentMap = ConvertUtils.toMapByLambda(students, Student::getName);
+            Map<String, Student> studentMap;
+//            studentMap = ConvertUtils.toMapByLambda(students, Student::getName);
+            studentMap = ConvertUtils.toMap(students, "name");
             long te = System.currentTimeMillis();
             System.out.println(String.format("+ cost %s ms size %s", (te - ts) / 1000.0, studentMap.size()));
-            studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
+//            studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
         } catch (Exception e) {
             System.out.println(ExceptionUtils.getStackTrace(e));
         }

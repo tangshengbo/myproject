@@ -3,9 +3,11 @@ package com.tangshengbo.collection;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 
+import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -24,15 +26,29 @@ public final class ConvertUtils {
      * @param <T>       目标数据
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> Map<String, T> toMap(List<T> list, String fieldName) {
         Map<String, T> map = Maps.newHashMapWithExpectedSize(list.size());
         String keyMethodName = getMethodName(fieldName);
+        Method method = null;
+        Class c;
+        try {
+            c = list.get(0).getClass();
+            if (!Objects.equals(c, String.class) && c != null) {
+                method = c.getMethod(keyMethodName);
+                method.setAccessible(true);
+            }
+
+        } catch (NoSuchMethodException e) {
+            System.out.println(String.format("List转换成Map 出现异常: %s", e));
+        }
         try {
             for (T t : list) {
                 if (t instanceof String) {
                     map.put((String) t, t);
                 } else {
-                    String key = (String) t.getClass().getMethod(keyMethodName).invoke(t);
+                    assert method != null;
+                    String key = (String) method.invoke(t);
                     map.put(key, t);
                 }
             }
