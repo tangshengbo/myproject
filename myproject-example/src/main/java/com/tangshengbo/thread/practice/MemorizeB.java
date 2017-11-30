@@ -47,7 +47,7 @@ public class MemorizeB<A, V> implements Computable<A, V> {
             return new FutureTask<>(eval);
         };
 
-        MemorizeB memorizeB = new MemorizeB<>(computable);
+        MemorizeB<String,Future<Integer>> memorizeB = new MemorizeB<>(computable);
         Runnable r1 = () -> {
             try {
                 memorizeB.compute(RandomStringUtil.randomAlphaNumeric(10));
