@@ -88,8 +88,5 @@ public class MyComparable implements Comparable<MyComparable> {
         System.out.println("Collections count sort ========================================");
         comparables.sort((MyComparable m1, MyComparable m2) -> m1.getCount() - m2.getCount());
         comparables.forEach(System.out::println);
-        System.out.println("Collections comparing sort ========================================");
-        comparables.sort(comparing(MyComparable::getName));
-        comparables.forEach(System.out::println);
     }
 }
