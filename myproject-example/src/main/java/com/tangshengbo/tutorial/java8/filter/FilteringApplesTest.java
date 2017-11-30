@@ -16,8 +16,14 @@ public class FilteringApplesTest {
         List<Apple> inventory = Arrays.asList(new Apple(80, "green"),
                 new Apple(155, "green"),
                 new Apple(120, "red"));
-//        lambdaModel(inventory);
+        lambdaModel(inventory);
         customModel(inventory);
+        Runnable r = () -> System.out.println("Lambda example");
+        new Thread(r, "Lambda").start();
+
+        int portNumber = 1337;
+        Runnable r2 = () -> System.out.println(portNumber);
+        new Thread(r2, "Lambda").start();
     }
 
     private static void lambdaModel(List<Apple> inventory) {

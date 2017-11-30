@@ -1,8 +1,10 @@
 package com.tangshengbo.loadclass;
 
-import org.apache.commons.lang.StringUtils;
+import com.tangshengbo.thread.Student;
 
-import java.io.UnsupportedEncodingException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Created by tangshengbo on 2017/3/1.
@@ -11,19 +13,7 @@ public class LoadClassTest {
 
     public static void main(String[] args) throws ClassNotFoundException {
         //Class clazz = Class.forName("");
-
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        //LoadClassTest.class.getClass();
-        Thread.currentThread().isInterrupted();
-
-        //Class clazz = getClass().getClassLoader().loadClass("");
-        int count = StringUtils.countMatches("lllslslllslllsllsllls", "s");
-        System.out.println(count);
-        LoadClassTest classTest = new LoadClassTest();
-        Person person = new Person("lls", 123);
-        Person newPerson = classTest.transmitObject();
-        System.out.println(person.hashCode() + "\t" + newPerson.hashCode());
-        System.out.println(person.toString());
+        getActualType();
     }
 
     public Person transmitObject() {
@@ -31,5 +21,11 @@ public class LoadClassTest {
         person.setAge(10);
         person.setName("3322324234");
         return person;
+    }
+
+    private static void getActualType() {
+        Type type = new ArrayList<Student>(){}.getClass().getGenericSuperclass();
+        Type paramType = ((ParameterizedType) type).getActualTypeArguments()[0];
+        System.out.println(paramType);
     }
 }
