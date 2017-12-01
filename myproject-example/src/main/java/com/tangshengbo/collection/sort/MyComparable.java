@@ -59,9 +59,9 @@ public class MyComparable implements Comparable<MyComparable> {
     public static void main(String[] args) {
         List<MyComparable> comparables = new ArrayList<>();
         MyComparable comparable = new MyComparable(1, "z");
-        MyComparable comparable2 = new MyComparable(2, "n");
+        MyComparable comparable2 = new MyComparable(2, "a");
         MyComparable comparable3 = new MyComparable(3, "l");
-        MyComparable comparable4 = new MyComparable(4, "r");
+        MyComparable comparable4 = new MyComparable(4, "v");
         MyComparable comparable5 = new MyComparable(5, "a");
         comparables.add(comparable);
         comparables.add(comparable4);
@@ -82,11 +82,23 @@ public class MyComparable implements Comparable<MyComparable> {
         comparables.sort(Comparator.reverseOrder());
         System.out.println("Collections desc sort ========================================");
         comparables.forEach(myComparable -> System.out.println(myComparable.getCount()));
+
         System.out.println("Collections name sort ========================================");
         comparables.sort(comparing(MyComparable::getName));
         comparables.forEach(System.out::println);
+
         System.out.println("Collections count sort ========================================");
         comparables.sort((MyComparable m1, MyComparable m2) -> m1.getCount() - m2.getCount());
+        comparables.forEach(System.out::println);
+
+        System.out.println("Collections desc name sort ========================================");
+        comparables.sort(comparing(MyComparable::getName).reversed());
+        comparables.forEach(System.out::println);
+
+        System.out.println("Collections desc name and count sort ========================================");
+        comparables.sort(comparing(MyComparable::getName)
+                .reversed()
+                .thenComparingInt(MyComparable::getCount));
         comparables.forEach(System.out::println);
     }
 }
