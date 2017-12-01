@@ -11,15 +11,18 @@ import java.util.List;
  */
 public class FileListTest {
 
-    private List<File> fileList = Lists.newArrayListWithExpectedSize(100000);
+    private List<File> fileList = Lists.newArrayListWithExpectedSize(1000000);
 
     public static void main(String[] args) {
-        File file = new File("E:/");
+        File file = new File("C:/");
         FileListTest fileListTest = new FileListTest();
         System.out.println(file.getName());
         fileListTest.tree(file, 0);
-        File maxFile = fileListTest.fileList.stream().max((f1, f2)
+        long ts = System.currentTimeMillis();
+        File maxFile = fileListTest.fileList.parallelStream().max((f1, f2)
                 -> Long.compare(f1.length(), f2.length())).get();
+        long te = System.currentTimeMillis();
+        System.out.println(String.format("+ cost %s ms", (te - ts) / 1000.0));
         System.out.println(maxFile + "\tsize:" + formatFileSize(maxFile.length())
                 + "\t total:" + fileListTest.fileList.size() + "个");
     }
@@ -30,7 +33,6 @@ public class FileListTest {
         for (int i = 0; i <= level; i++) {
             preStr += "\t";
         }
-
         //获取该目录下所有子文件
         File[] files = file.listFiles();
         if (files != null) {
@@ -47,7 +49,8 @@ public class FileListTest {
         }
     }
 
-    private static String formatFileSize(long fileSize) {//转换文件大小
+    //转换文件大小
+    private static String formatFileSize(long fileSize) {
         DecimalFormat df = new DecimalFormat("#.00");
         String fileSizeString;
         if (fileSize < 1024) {
