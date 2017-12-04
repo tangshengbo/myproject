@@ -14,8 +14,9 @@ public class TimeBudget {
     public List<TravelQuote> getRankedTravelQuotes(TravelInfo travelInfo, Set<TravelCompany> companies,
                                                    Comparator<TravelQuote> ranking, long time, TimeUnit unit)
             throws InterruptedException {
-
-        List<QuoteTask> tasks = companies.stream().map(company -> new QuoteTask(company, travelInfo)).collect(Collectors.toList());
+        List<QuoteTask> tasks = companies.stream()
+                .map(company -> new QuoteTask(company, travelInfo))
+                .collect(Collectors.toList());
         List<Future<TravelQuote>> futures = exec.invokeAll(tasks, time, unit);
 
         List<TravelQuote> quotes = new ArrayList<>(tasks.size());
