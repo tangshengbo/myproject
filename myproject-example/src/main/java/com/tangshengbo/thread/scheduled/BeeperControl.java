@@ -15,27 +15,23 @@ public class BeeperControl {
 
     public void beepForAnHour() {
 
-        final Runnable beeper = new Runnable() {
-            public void run() {
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("beep............." + Thread.currentThread().getName());
-
+        final Runnable beeper = () -> {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            System.out.println("beep............." + Thread.currentThread().getName());
+
         };
 
         final ScheduledFuture<?> beeperHandle =
                 scheduler.scheduleAtFixedRate(beeper, 2, 2, TimeUnit.SECONDS);
 
-        scheduler.schedule(new Runnable() {
-            public void run() {
-                beeperHandle.cancel(true);
-                System.out.println("stop schedule.......");
-                System.exit(0);
-            }
+        scheduler.schedule((Runnable) () -> {
+            beeperHandle.cancel(true);
+            System.out.println("stop schedule.......");
+            System.exit(0);
         }, 10, TimeUnit.SECONDS);
     }
 

@@ -1,6 +1,8 @@
 package com.tangshengbo.thread.scheduled.callback;
 
 import com.tangshengbo.thread.scheduled.MyCallable;
+import jodd.util.ThreadUtil;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 import java.util.concurrent.*;
 
@@ -18,12 +20,7 @@ public class FutureTaskTest {
 
     private static void testFutureTask() {
         MyCallable myCallable1 = new MyCallable(100);
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Runnable........");
-            }
-        };
+        Runnable runnable = () -> System.out.println("Runnable........");
 
         FutureTask<Integer> futureTask1 = new FutureTask<>(myCallable1);
         FutureTask<String> futureTask2 = new FutureTask<>(runnable, "唐波");
@@ -41,9 +38,7 @@ public class FutureTaskTest {
                     break;
                 }
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
@@ -52,11 +47,10 @@ public class FutureTaskTest {
         while (true) {
             Future<String> future = taskCache.get(taskName); // 1.1,2.1
             if (future == null) {
-                Callable<String> task = new Callable<String>() {
-                    public String call() throws InterruptedException {
-                        System.out.println("call taskName");
-                        return taskName;
-                    }
+                Callable<String> task = () -> {
+                    ThreadUtil.sleep(3000);
+                    System.out.println("call taskName");
+                    return taskName;
                 };
                 FutureTask<String> futureTask = new FutureTask<>(task);
                 future = taskCache.putIfAbsent(taskName, futureTask); // 1.3
@@ -66,17 +60,18 @@ public class FutureTaskTest {
                 }
             }
             try {
-                String result = future.get(); // 1.5,
+                String result = future.get(10, TimeUnit.NANOSECONDS);
                 if (result != null) {
                     System.out.println(result);
                     break;
                 }
             } catch (CancellationException e) {
                 taskCache.remove(taskName, future);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                if (e instanceof TimeoutException) {
+                    System.out.println(ExceptionUtils.getStackTrace(e));
+                    future.cancel(true);
+                }
             }
         }
     }

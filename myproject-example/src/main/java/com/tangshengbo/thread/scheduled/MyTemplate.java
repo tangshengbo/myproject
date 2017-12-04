@@ -12,7 +12,7 @@ public class MyTemplate {
     public <T> T execute(MyCallback<T> myCallback) {
         System.out.println("execute start.....................");
         T result = null;
-        JmsTemplate jmsTemplate = null;
+        JmsTemplate jmsTemplate;
         try {
             TimeUnit.SECONDS.sleep(3);
             jmsTemplate = new JmsTemplate();

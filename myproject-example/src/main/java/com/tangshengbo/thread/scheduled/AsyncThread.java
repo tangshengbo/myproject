@@ -69,13 +69,10 @@ public class AsyncThread {
      */
     public Callable<String> getJob(final int i) {
         final int time = new Random().nextInt(10);
-        return new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Thread.sleep(1000 * time);
-                System.out.println("thread-" + time);
-                return "thread-" + time;
-            }
+        return () -> {
+            Thread.sleep(1000 * time);
+            System.out.println("thread-" + time);
+            return "thread-" + time;
         };
     }
 
@@ -86,25 +83,22 @@ public class AsyncThread {
      * @return
      */
     public Runnable getCollectJob(final List<Future<String>> fList) {
-        return new Runnable() {
-            public void run() {
-                for (Future<String> future : fList) {
-                    try {
-                        while (true) {
-                            if (future.isDone() && !future.isCancelled()) {
-                                System.out.println("Future:" + future
-                                        + ",Result:" + future.get());
-                                break;
-                            } else {
-                                Thread.sleep(1000);
-                            }
+        return () -> {
+            for (Future<String> future : fList) {
+                try {
+                    while (true) {
+                        if (future.isDone() && !future.isCancelled()) {
+                            System.out.println("Future:" + future
+                                    + ",Result:" + future.get());
+                            break;
+                        } else {
+                            Thread.sleep(1000);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         };
     }
-
 }

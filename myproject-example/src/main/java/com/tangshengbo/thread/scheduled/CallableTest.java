@@ -1,5 +1,7 @@
 package com.tangshengbo.thread.scheduled;
 
+import jodd.util.ThreadUtil;
+
 import java.util.Random;
 import java.util.concurrent.*;
 
@@ -11,18 +13,8 @@ public class CallableTest {
     public static void main(String[] args) {
         try {
             completionServiceCount();
-            Callable callable = Executors.callable(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            }, "tangshengbo");
-
+            Callable callable = Executors.callable(() -> {}, "callable");
             System.out.println(callable.call());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,17 +28,22 @@ public class CallableTest {
      */
     public static void completionServiceCount() throws InterruptedException, ExecutionException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        CompletionService<Integer> completionService = new ExecutorCompletionService<Integer>(
+        CompletionService<Integer> completionService = new ExecutorCompletionService<>(
                 executorService);
         int threadNum = 10;
         for (int i = 0; i < threadNum; i++) {
             completionService.submit(getTask(i));
         }
         int sum = 0;
-        int temp;
+        int temp = 0;
         for (int i = 0; i < threadNum; i++) {
             //拿到一个已经完成的Callable并返回结果
-            temp = completionService.take().get();
+            Future<Integer> future = completionService.take();
+            try {
+                temp = future.get(1, TimeUnit.MILLISECONDS);
+            } catch (TimeoutException e) {
+                future.cancel(true);
+            }
             sum += temp;
             System.out.print(temp + "\t");
         }
@@ -56,15 +53,11 @@ public class CallableTest {
 
     public static Callable<Integer> getTask(final int no) {
         final Random rand = new Random();
-        Callable<Integer> task = new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                int time = rand.nextInt(100) * 100;
-                System.out.println("Thread:" + no + " time is:" + time);
-                Thread.sleep(time);
-                return no;
-            }
+        return () -> {
+            int time = rand.nextInt(100) * 100;
+            System.out.println("Thread:" + no + " time is:" + time);
+            ThreadUtil.sleep(time);
+            return no;
         };
-        return task;
     }
 }
