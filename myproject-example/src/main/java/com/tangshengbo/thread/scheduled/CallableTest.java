@@ -28,8 +28,7 @@ public class CallableTest {
      */
     public static void completionServiceCount() throws InterruptedException, ExecutionException {
         ExecutorService executorService = Executors.newCachedThreadPool();
-        CompletionService<Integer> completionService = new ExecutorCompletionService<>(
-                executorService);
+        CompletionService<Integer> completionService = new ExecutorCompletionService<>(executorService);
         int threadNum = 10;
         for (int i = 0; i < threadNum; i++) {
             completionService.submit(getTask(i));
