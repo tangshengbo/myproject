@@ -23,7 +23,7 @@ public class BuildingStreamsTest {
         System.out.println("===================================================");
         iterate();
         System.out.println("===================================================");
-        random();
+        generateByRandom();
         System.out.println("===================================================");
         generate();
         System.out.println("===================================================");
@@ -65,8 +65,8 @@ public class BuildingStreamsTest {
                 .forEach(System.out::println);
     }
 
-    private static void random() {
-        // random stream of doubles with Stream.generate
+    private static void generateByRandom() {
+        // generateByRandom stream of doubles with Stream.generate
         Stream.generate(Math::random)
                 .limit(10)
                 .forEach(System.out::println);
@@ -77,7 +77,7 @@ public class BuildingStreamsTest {
         IntStream.generate(() -> 1)
                 .limit(5)
                 .forEach(System.out::println);
-
+        System.out.println("===================================================");
         IntStream.generate(() -> 2).limit(5).forEach(System.out::println);
         IntSupplier fib = new IntSupplier() {
             private int previous = 0;
