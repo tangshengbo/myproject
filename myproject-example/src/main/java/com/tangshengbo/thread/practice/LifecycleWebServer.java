@@ -20,12 +20,13 @@ public class LifecycleWebServer {
     private final ExecutorService exec = Executors.newCachedThreadPool();
 
     public void start() throws IOException {
-        ServerSocket socket = new ServerSocket(80);
+        ServerSocket socket = new ServerSocket(8085);
         System.out.println("服务器启动...........");
         while (!exec.isShutdown()) {
             try {
-                final Socket conn = socket.accept();
-                exec.execute(() -> handleRequest(conn));
+//                final Socket conn = socket.accept();
+//                exec.execute(() -> handleRequest(conn));
+                ThreadUtil.sleep(1000);
             } catch (RejectedExecutionException e) {
                 if (!exec.isShutdown())
                     log("task submission rejected", e);
@@ -34,6 +35,7 @@ public class LifecycleWebServer {
     }
 
     private void stop() {
+        System.out.println("服务器关闭...........");
         exec.shutdown();
     }
 

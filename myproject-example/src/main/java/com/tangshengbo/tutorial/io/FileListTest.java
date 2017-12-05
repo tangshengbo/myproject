@@ -1,10 +1,12 @@
 package com.tangshengbo.tutorial.io;
 
+
 import com.google.common.collect.Lists;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by TangShengBo on 2017-07-23.
@@ -19,11 +21,20 @@ public class FileListTest {
         System.out.println(file.getName());
         fileListTest.tree(file, 0);
         long ts = System.currentTimeMillis();
-        File maxFile = fileListTest.fileList.parallelStream().max((f1, f2)
-                -> Long.compare(f1.length(), f2.length())).get();
+        Optional<File> maxFile = fileListTest
+                .fileList.parallelStream()
+                .max((f1, f2)
+                -> Long.compare(f1.length(), f2.length()));
+        System.out.println("===================================================");
+        long maxSize = fileListTest.fileList.parallelStream()
+                .map(File::length)
+                .reduce(0L, Long::max);
         long te = System.currentTimeMillis();
+        System.out.println("===================================================");
         System.out.println(String.format("+ cost %s ms", (te - ts) / 1000.0));
-        System.out.println(maxFile + "\tsize:" + formatFileSize(maxFile.length())
+        System.out.println("maxSize:" + formatFileSize(maxSize));
+        System.out.println(maxFile + "\tsize:"
+                + formatFileSize(maxFile.isPresent()? maxFile.get().length():0L)
                 + "\t total:" + fileListTest.fileList.size() + "个");
     }
 
