@@ -78,7 +78,6 @@ public class BuildingStreamsTest {
                 .limit(5)
                 .forEach(System.out::println);
         System.out.println("===================================================");
-        IntStream.generate(() -> 2).limit(5).forEach(System.out::println);
         IntSupplier fib = new IntSupplier() {
             private int previous = 0;
             private int current = 1;
@@ -94,7 +93,8 @@ public class BuildingStreamsTest {
     }
 
     private static void readFile() throws IOException {
-        long uniqueWords = Files.lines(Paths.get("E:/20171114_3000000255_ALLBALANCE.txt"), Charset.defaultCharset())
+        long uniqueWords = Files.lines(Paths.get("E:/20171114_3000000255_ALLBALANCE.txt"),
+                Charset.defaultCharset())
                 .flatMap(line -> Arrays.stream(line.split(" ")))
                 .distinct()
                 .count();
