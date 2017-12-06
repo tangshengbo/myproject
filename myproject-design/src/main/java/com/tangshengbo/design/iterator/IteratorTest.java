@@ -1,11 +1,14 @@
+/*
 package com.tangshengbo.design.iterator;
 
 
 import com.tangshengbo.collection.Person;
 
+*/
 /**
  * Created by Tangshengbo on 2017/9/30.
- */
+ *//*
+
 public class IteratorTest {
 
     public static void main(String[] args) {
@@ -21,3 +24,4 @@ public class IteratorTest {
         }
     }
 }
+*/
