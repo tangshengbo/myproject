@@ -14,6 +14,7 @@
         <module>myproject-interface</module>
         <module>myproject-mq</module>
         <module>myproject-example</module>
+        <module>myproject-design</module>
     </modules>
     <properties>
         <spring-version>4.1.6.RELEASE</spring-version>
