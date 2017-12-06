@@ -64,8 +64,7 @@ public final class ConvertUtils {
                 .collect(LinkedHashMap<String, T>::new,
                         (m, c) ->
                                 m.put(f.apply(c), c),
-                        (m, u) -> {
-                        });
+                        (m, u) -> {});
     }
 
     /**
@@ -93,10 +92,7 @@ public final class ConvertUtils {
      * @return
      */
     private static boolean isUp(char c) {
-        if (c >= 'A' && c <= 'Z') {
-            return true;
-        }
-        return false;
+        return c >= 'A' && c <= 'Z';
     }
 
     /**
