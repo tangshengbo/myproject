@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadPoolExecutorTest {
 
-    private final static ThreadPoolExecutor executor = new MyThreadPoolExecutor(10, 20, 20, TimeUnit.SECONDS,
+    private final static ThreadPoolExecutor executor = new TimingThreadPool(10, 20, 20, TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(),new ThreadFactory(){
         private final AtomicInteger threadNumber = new AtomicInteger(1);
         @Override

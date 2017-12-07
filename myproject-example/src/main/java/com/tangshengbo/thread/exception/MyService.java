@@ -14,7 +14,11 @@ public class MyService implements Runnable {
     public static void main(String[] args) {
         MyService service = new MyService();
         Thread threadA = new Thread(service, "threadA");
-        threadA.setUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
+        Thread threadB = new Thread(service, "threadB");
+        MyUncaughtExceptionHandler handler = new MyUncaughtExceptionHandler();
+        threadA.setUncaughtExceptionHandler(handler);
+        threadB.setUncaughtExceptionHandler(handler);
         threadA.start();
+        threadB.start();
     }
 }
