@@ -5,9 +5,11 @@ import com.google.common.collect.Lists;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
@@ -24,19 +26,40 @@ public class FileListTest {
         System.out.println(file.getName());
         fileListTest.tree(file, 0);
         long ts = System.currentTimeMillis();
-        Optional<File> maxFile = fileListTest
-                .fileList.parallelStream()
-                .max(comparing(File::length));
-        OptionalDouble maxSize = fileListTest.fileList.parallelStream()
-                .mapToLong(File::length)
-                .average();
+        Optional<File> maxFile;
+        maxFile = getMaxFileB(fileListTest);
+        OptionalDouble maxSize = getMaxFileSize(fileListTest);
         long te = System.currentTimeMillis();
+        print(fileListTest, ts, maxFile, maxSize, te);
+    }
+
+    private static void print(FileListTest fileListTest, long ts, Optional<File> maxFile, OptionalDouble maxSize, long te) {
         System.out.println("===================================================");
         System.out.println(String.format("+ cost %s ms", (te - ts) / 1000.0));
         System.out.println("average:" + formatFileSize(new Double(maxSize.orElse(0.0)).longValue()));
         System.out.println(maxFile + "\tsize:"
                 + formatFileSize(maxFile.isPresent()? maxFile.get().length():0L)
                 + "\t total:" + fileListTest.fileList.size() + "个");
+    }
+
+    private static OptionalDouble getMaxFileSize(FileListTest fileListTest) {
+        return fileListTest.fileList.parallelStream()
+                    .mapToLong(File::length)
+                    .average();
+    }
+
+    private static Optional<File> getMaxFileB(FileListTest fileListTest) {
+        Optional<File> maxFile;Comparator<File> fileComparator = Comparator.comparingLong(File::length);
+        maxFile = fileListTest.fileList
+                .parallelStream()
+                .collect(Collectors.maxBy(fileComparator));
+        return maxFile;
+    }
+
+    private static Optional<File> getMaxFileA(FileListTest fileListTest) {
+        return fileListTest
+                .fileList.parallelStream()
+                .max(comparing(File::length));
     }
 
     private void tree(File file, int level) {
