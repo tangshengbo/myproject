@@ -38,7 +38,6 @@ public final class ConvertUtils {
                 method = c.getMethod(keyMethodName);
                 method.setAccessible(true);
             }
-
         } catch (NoSuchMethodException e) {
             System.out.println(String.format("List转换成Map 出现异常: %s", e));
         }
