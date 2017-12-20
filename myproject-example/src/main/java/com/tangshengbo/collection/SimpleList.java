@@ -51,7 +51,7 @@ public class SimpleList<T> {
 //            arrayList.add(i);
 //        }
 //        System.out.println(10 >> 1);
-        testList();
+//        testList();
 //        testArrayToList();
 //
 //
@@ -65,6 +65,9 @@ public class SimpleList<T> {
 //        System.out.println(sb1 + "\t" + sb2);
 //
 //        testCollections();
+
+//        testSubList();
+        testMerge();
 
     }
 
@@ -133,15 +136,41 @@ public class SimpleList<T> {
         Set set = new HashSet<>(numbers);
         numbers.clear();
         numbers.addAll(set);
-        numbers.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return 01 - 02;
-            }
-        });
+        numbers.sort((o1, o2) -> 01 - 02);
+        numbers.forEach(System.out::println);
+    }
 
-        numbers.forEach(integer -> {
-            System.out.println(integer);
-        });
+    private static void testSubList() {
+        List<String> strings = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            strings.add(String.valueOf(i));
+        }
+        List<String> subStrings = strings.subList(0, 5);
+        subStrings.add("100");
+        subStrings.forEach(System.out::println);
+        subStrings.subList(subStrings.size() - 1, subStrings.size()).clear();
+        strings.forEach(System.out::println);
+        System.out.println(strings.equals(subStrings));
+        strings = Collections.unmodifiableList(strings);
+//        strings.add("3432");
+    }
+
+    private static void testMerge() {
+        List<String> stringsA = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            stringsA.add(String.valueOf(i));
+        }
+        List<String> stringsB = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            stringsB.add(String.valueOf(i));
+        }
+        stringsA.retainAll(stringsB);
+        stringsA.forEach(System.out::println);
+        System.out.println("===================================================");
+        stringsB.removeAll(stringsA);
+        stringsB.forEach(System.out::println);
+        System.out.println("===================================================");
+        stringsA.addAll(stringsB);
+        stringsA.forEach(System.out::println);
     }
 }
