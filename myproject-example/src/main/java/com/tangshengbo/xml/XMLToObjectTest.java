@@ -34,7 +34,7 @@ public class XMLToObjectTest {
         System.out.println("===================================================");
         verify(xml, sign);
         System.out.println("===================================================");
-        Department department = jaxbUtil.unmarshal(Department.class, new FileInputStream("E:/xx.xml"));
+        Department department = jaxbUtil.unMarshall(Department.class, new FileInputStream("E:/xx.xml"));
         System.out.println(department);
     }
 

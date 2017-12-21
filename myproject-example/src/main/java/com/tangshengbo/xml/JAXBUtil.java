@@ -43,7 +43,7 @@ public class JAXBUtil<T> {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public T unmarshal(Class c, String xml) throws JAXBException {
+    public T unMarshall(Class c, String xml) throws JAXBException {
         JAXBContext context;
         context = JAXBContext.newInstance(c);
         Unmarshaller unmoral = context.createUnmarshaller();
@@ -52,7 +52,7 @@ public class JAXBUtil<T> {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public T unmarshal(Class c, InputStream is) throws JAXBException {
+    public T unMarshall(Class c, InputStream is) throws JAXBException {
         JAXBContext context;
         context = JAXBContext.newInstance(c);
         Unmarshaller unmoral = context.createUnmarshaller();
