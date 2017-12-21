@@ -3,6 +3,7 @@ package com.tangshengbo.xml;
 import com.tangshengbo.xml.sign.RSAEncryptUtil;
 import com.tangshengbo.xml.sign.SignUtil;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +26,24 @@ public class XMLToObjectTest {
     }
 
     private static void xmlByJaxb() throws Exception {
-        JAXBUtil<Department> departmentJAXBUtil = new JAXBUtil<>();
-        String xml = departmentJAXBUtil.marshal(getSimpleDepartment(null));
+        JAXBUtil<Department> jaxbUtil = new JAXBUtil<>();
+        String xml = jaxbUtil.marshal(getSimpleDepartment(null));
         System.out.println(xml);
         System.out.println("===================================================");
-        String sign = doSign(departmentJAXBUtil, xml);
+        String sign = doSign(jaxbUtil, xml);
         System.out.println("===================================================");
         verify(xml, sign);
+        System.out.println("===================================================");
+        Department department = jaxbUtil.unmarshal(Department.class, new FileInputStream("E:/xx.xml"));
+        System.out.println(department);
     }
 
-    private static String doSign(JAXBUtil<Department> departmentJAXBUtil, String xml) throws Exception {
+    private static String doSign(JAXBUtil<Department> jaxbUtil, String xml) throws Exception {
         String sign;
         String encryptXml;
         String privateKey = RSAEncryptUtil.loadPrivateKeyByFile("E:/");
         sign = SignUtil.sign(xml, privateKey, "UTF-8");
-        encryptXml = departmentJAXBUtil.marshal(getSimpleDepartment(sign));
+        encryptXml = jaxbUtil.marshal(getSimpleDepartment(sign));
         new FileOutputStream("E:/xx.xml").write(encryptXml.getBytes());
         System.out.println(encryptXml);
         return sign;

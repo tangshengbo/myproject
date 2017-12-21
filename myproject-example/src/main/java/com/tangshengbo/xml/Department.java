@@ -16,6 +16,7 @@ public class Department {
 
     @XStreamAlias("name")
     private String name;
+
     @XStreamAlias("staffs")
     private List<Staff> staffs;
 
@@ -25,8 +26,6 @@ public class Department {
         return sign;
     }
 
-
-
     @XmlAttribute
     public void setName(String name) {
         this.name = name;
@@ -34,14 +33,6 @@ public class Department {
 
     public List<Staff> getStaffs() {
         return staffs;
-    }
-
-    @Override
-    public String toString() {
-        return "Department{" +
-                "name='" + name + '\'' +
-                ", staffs=" + staffs +
-                '}';
     }
 
     @XmlElement(name = "staff")
@@ -56,5 +47,14 @@ public class Department {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "name='" + name + '\'' +
+                ", staffs=" + staffs +
+                ", sign='" + sign + '\'' +
+                '}';
     }
 }

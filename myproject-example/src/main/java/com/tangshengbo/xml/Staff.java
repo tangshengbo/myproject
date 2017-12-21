@@ -12,10 +12,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "staff")
 @XStreamAlias("staff")
 public class Staff {
+
     @XStreamAlias("name")
     private String name;
+
     @XStreamAlias("age")// 职员名称
     private int age;
+
     @XStreamAlias("smoker")// 职员年龄
     private boolean smoker; // 是否为烟民
 
