@@ -313,5 +313,10 @@
             <artifactId>xstream</artifactId>
             <version>1.4.9</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.0</version>
+        </dependency>
     </dependencies>
 </project>
