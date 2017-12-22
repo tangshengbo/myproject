@@ -7,7 +7,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by TangShengBo on 2017-11-12.
  */
-public class JoinCountDownLatchTest {
+public class CountDownLatchTest {
 
     public static void main(String[] args) throws InterruptedException {
 //        join();
