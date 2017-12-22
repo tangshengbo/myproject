@@ -16,6 +16,4 @@ public abstract class CheckFileDownload {
         readFileData();
         writeDB();
     }
-
-
 }

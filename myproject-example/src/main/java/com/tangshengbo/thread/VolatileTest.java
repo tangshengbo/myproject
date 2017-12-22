@@ -16,12 +16,9 @@ public class VolatileTest {
     public static void main(String[] args) {
         Thread[] threads = new Thread[THREAD_COUNT];
         for (Thread thread : threads) {
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 0; i < 1000; i++) {
-                        increase();
-                    }
+            thread = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    increase();
                 }
             });
             thread.start();
