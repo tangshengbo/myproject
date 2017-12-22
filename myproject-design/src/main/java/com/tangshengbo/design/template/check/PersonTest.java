@@ -14,7 +14,7 @@ public class PersonTest {
         System.out.println(person.toString());
         test.changeField(person);
         System.out.println(person.toString());
-        System.out.println(List.class.isAssignableFrom(new ArrayList<Object>().getClass()));
+        System.out.println(List.class.isAssignableFrom(ArrayList.class));
     }
 
     private void change(Person person) {
