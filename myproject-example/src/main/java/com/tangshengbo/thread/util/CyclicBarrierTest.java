@@ -8,23 +8,30 @@ import java.util.concurrent.CyclicBarrier;
  */
 public class CyclicBarrierTest {
 
-    static CyclicBarrier c = new CyclicBarrier(2);
+    private static CyclicBarrier c = new CyclicBarrier(3);
 
     public static void main(String[] args) throws BrokenBarrierException, InterruptedException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    c.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (BrokenBarrierException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
                 System.out.println(1);
+                c.await();
+                System.out.println(Thread.currentThread().getName() + ":结束");
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+        new Thread(() -> {
+            try {
+                System.out.println(2);
+                c.await();
+                System.out.println(Thread.currentThread().getName() + ":结束");
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
             }
         }).start();
         c.await();
-        System.out.println(2);
+        System.out.println(3);
+        System.out.println(Thread.currentThread().getName() + ":结束");
     }
 }
