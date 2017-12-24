@@ -11,7 +11,6 @@ import java.util.Map;
  */
 public class CollectionUtil {
 
-
     // 判断Collection是否为空
     public static boolean isEmpty(Collection<?> collection) {
         return CollectionUtils.isEmpty(collection);
