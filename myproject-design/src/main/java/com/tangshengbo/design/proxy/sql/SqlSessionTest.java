@@ -6,8 +6,8 @@ package com.tangshengbo.design.proxy.sql;
 public class SqlSessionTest {
 
     public static void main(String[] args) {
-        SqlSessionProxy proxy = new SqlSessionProxy();
-        SqlSession sqlSessionProxy = (SqlSession) proxy.getInstance(new SqlSessionImpl());
+        SqlSessionProxy proxy = new SqlSessionProxy(new SqlSessionImpl());
+        SqlSession sqlSessionProxy = proxy.getProxy();
         sqlSessionProxy.select();
     }
 }

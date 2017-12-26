@@ -11,10 +11,8 @@ public class SqlSessionProxy implements InvocationHandler {
 
     private Object object;
 
-    public Object getInstance(Object o) {
-        this.object = o;
-        Class c = o.getClass();
-        return Proxy.newProxyInstance(o.getClass().getClassLoader(), c.getInterfaces(), this);
+    public SqlSessionProxy(Object object) {
+        this.object = object;
     }
 
     @Override
@@ -26,5 +24,11 @@ public class SqlSessionProxy implements InvocationHandler {
             System.out.println("close session");
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T getProxy() {
+        return (T) Proxy.newProxyInstance(object.getClass().getClassLoader(),
+                object.getClass().getInterfaces(), this);
     }
 }
