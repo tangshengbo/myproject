@@ -11,4 +11,10 @@ public class MyException extends RuntimeException {
     public MyException(String msg) {
         super(msg);
     }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        System.out.println("exec fillInStackTrace");
+        return this;
+    }
 }
