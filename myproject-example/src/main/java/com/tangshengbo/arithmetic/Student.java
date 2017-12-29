@@ -1,5 +1,9 @@
 package com.tangshengbo.arithmetic;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * Created by Tangshengbo on 2017/11/23.
  */
@@ -29,6 +33,21 @@ public class Student {
         this.score = s;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+//        return "Student{" +
+//                "name='" + name + '\'' +
+//                ", course='" + course + '\'' +
+//                ", score=" + score +
+//                '}';
+    }
+
     //计算学生总成绩
     public double totalScore(String[] names, String[] courses, double[] scores) {
         int nLen = (null == names) ? 0 : names.length;
@@ -48,25 +67,43 @@ public class Student {
         return total;
     }
 
+   /* @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }*/
+
     public static void main(String[] args) {
-        long ts = System.currentTimeMillis();
+//        long ts = System.currentTimeMillis();
+//        Student student = new Student();
+//        int size = 100000000;
+//        String[] names = new String[size];
+//        for (int i = 0; i < names.length; i++) {
+//            names[i] = "TT";
+//        }
+//        String[] courses = new String[size];
+//        for (int i = 0; i < courses.length; i++) {
+//            courses[i] = "SHU";
+//        }
+//        double[] scores = new double[size];
+//        for (int i = 0; i < scores.length; i++) {
+//            scores[i] = i;
+//        }1267032364	661672156
+//        double result = student.totalScore(names, courses, scores);
+//        System.out.println(result);
+//        long te = System.currentTimeMillis();
+//        System.out.println(String.format("耗时: %s ms", te - ts));
         Student student = new Student();
-        int size = 100000000;
-        String[] names = new String[size];
-        for (int i = 0; i < names.length; i++) {
-            names[i] = "TT";
-        }
-        String[] courses = new String[size];
-        for (int i = 0; i < courses.length; i++) {
-            courses[i] = "SHU";
-        }
-        double[] scores = new double[size];
-        for (int i = 0; i < scores.length; i++) {
-            scores[i] = i;
-        }
-        double result = student.totalScore(names, courses, scores);
-        System.out.println(result);
-        long te = System.currentTimeMillis();
-        System.out.println(String.format("耗时: %s ms", te - ts));
+        student.course = "10";
+        student.name = "323";
+        student.score = 10;
+
+        Student student2 = new Student();
+        student2.course = "10";
+        student2.name = "323";
+        student2.score = 10;
+        System.out.println(student.equals(student2));
+        System.out.println(student2.hashCode() & 10);
+        System.out.println(student.toString());
+        System.out.println(student.hashCode() + "\t" + student2.hashCode());
     }
 }
