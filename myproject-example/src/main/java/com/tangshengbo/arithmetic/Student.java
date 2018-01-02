@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 /**
  * Created by Tangshengbo on 2017/11/23.
  */
-public class Student {
+public class Student implements Cloneable {
 
     private String name;
     private String course;
@@ -31,6 +31,11 @@ public class Student {
         this.name = n;
         this.course = c;
         this.score = s;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override
