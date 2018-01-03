@@ -1,8 +1,7 @@
 package com.tangshengbo.arithmetic;
 
-import com.tangshengbo.design.oop.ocp.Book;
-import com.tangshengbo.design.oop.ocp.ComputerBookImpl;
 
+import java.awt.print.Book;
 import java.util.Objects;
 
 /**
@@ -51,7 +50,7 @@ public class ObjectsTest {
     public void objectToString() {
         Objects.requireNonNull(null, "对象不能为空");
         System.out.println(Objects.toString(null));
-        Book book = new ComputerBookImpl("JavaWeb核心技术", 6700, "许令波", "编程技术");
+        Book book = null;
         book = null;
         System.out.println(book.toString());
         System.out.println(Objects.toString(book, "该对象为空"));
