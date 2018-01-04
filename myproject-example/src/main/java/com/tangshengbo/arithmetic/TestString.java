@@ -1,6 +1,7 @@
 package com.tangshengbo.arithmetic;
 
 import com.google.common.collect.Lists;
+import com.tangshengbo.util.StringHelper;
 import jodd.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 
@@ -8,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * Created by Tangshengbo on 2017/10/19.
@@ -163,22 +165,9 @@ public class TestString {
     }
 
     private static void subStr() {
-        String str = concat("tang", "sheng", "bo");
+        String str = StringHelper.concat("tang", "sheng", "bo");
         int offset = 0;
         System.out.println(str.substring(offset, offset + 4));
-    }
-    /**
-     * 字符串拼接
-     *
-     * @param params
-     * @return
-     */
-    public static String concat(String... params) {
-        StringBuilder sb = new StringBuilder();
-        for (String v : params) {
-            sb.append(v);
-        }
-        return sb.toString();
     }
 }
 
