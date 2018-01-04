@@ -163,9 +163,22 @@ public class TestString {
     }
 
     private static void subStr() {
-        String str = "20170906,3000000182,1001215854,HB_TZR_3261041,433.00,CNY,,,,,,,";
+        String str = concat("tang", "sheng", "bo");
         int offset = 0;
         System.out.println(str.substring(offset, offset + 4));
+    }
+    /**
+     * 字符串拼接
+     *
+     * @param params
+     * @return
+     */
+    public static String concat(String... params) {
+        StringBuilder sb = new StringBuilder();
+        for (String v : params) {
+            sb.append(v);
+        }
+        return sb.toString();
     }
 }
 
