@@ -8,25 +8,8 @@ import java.util.Arrays;
 
 public class FileTest {
 
-
     public static void main(String[] args) throws Exception {
-        FileTest fileTest = new FileTest();
-//		fileTest.operationFile();
-//		fileTest.dataFIleStream();
-//		fileTest.read();
-//		fileTest.buffered();
-        //fileTest.serializeObject();
-//        fileTest.printToDisplay();
-//        fileTest.serializeObject();
-//        fileTest.operationFile();
-        int count = fileTest.countMatchesOfFile("C:/Users/Tangshengbo/Desktop/IOUtils.java", "IO");
-        System.out.println(count);
-        int eachSize = 100 * 1024; // 100k
-        File srcFile = new File("C:/Users/Tangshengbo/Desktop/IOUtils.java");
-        splitFile(srcFile, eachSize);
-        murgeFile("C:/Users/Tangshengbo/Desktop", "IOUtils.java");
-
-
+        copyStream(new FileInputStream("E:/运维.文档.zip"), new FileOutputStream("D:/writer.txt"));
     }
 
     public void operationFile() throws IOException {
@@ -281,4 +264,27 @@ public class FileTest {
         }
     }
 
+    /**
+     * 将输入流复制到输出流
+     *
+     * @param inputStream
+     * @param outputStream
+     */
+    public static void copyStream(InputStream inputStream, OutputStream outputStream) {
+        try (final InputStream is = inputStream;
+             final OutputStream os = outputStream) {
+            int length;
+            byte[] buffer = new byte[4 * 1024];
+            while ((length = is.read(buffer, 0, buffer.length)) != -1) {
+                System.out.printf("缓冲数据组:%s字节", length);
+                System.out.println();
+                os.write(buffer, 0, length);
+            }
+            System.out.println(length);
+            os.flush();
+        } catch (Exception e) {
+            System.out.println("copy stream failure" + e);
+            throw new RuntimeException(e);
+        }
+    }
 }
