@@ -15,6 +15,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -28,10 +29,20 @@ import java.util.concurrent.CountDownLatch;
 public class HttpClient {
 
     public static void main(String[] args) {
+
+//        httpDownload();
 //        jdkURL();
 //        apacheHttp();
-        asyncRequest();
-        encodeURL();
+//        asyncRequest();
+//        encodeURL();
+    }
+
+    private static void httpDownload() {
+        try {
+            NetUtil.downloadFile("https://github.com/oblac/jodd/blob/master/jodd-http/src/main/java/jodd/http/HttpUtil.java", new File("E:/http.java"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void encodeURL() {
