@@ -43,7 +43,7 @@ public class Test {
         long start = System.currentTimeMillis(); // 获取开始时间6588ms
         new Thread() {
             public void run() {
-                // com.tangshengbo.service.get(Thread.currentThread());
+                // com.tangshengbo.service.apacheHttp(Thread.currentThread());
                 test.getByLock(Thread.currentThread());
             };
 
@@ -51,7 +51,7 @@ public class Test {
 
         new Thread() {
             public void run() {
-                // com.tangshengbo.service.get(Thread.currentThread());
+                // com.tangshengbo.service.apacheHttp(Thread.currentThread());
                 test.getByLock(Thread.currentThread());
             };
 

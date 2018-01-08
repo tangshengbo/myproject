@@ -1,8 +1,8 @@
 package com.tangshengbo.tutorial.http;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -12,7 +12,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -21,25 +20,32 @@ import java.net.URL;
 public class HttpClient {
 
     public static void main(String[] args) {
-        try {
-            URL url = new URL("http://localhost:8083/producer/currentDateTime?token=10");
-            String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        get();
-
+        jdkURL();
+//        apacheHttp();
     }
+
+    private static void jdkURL() {
+        try {
+            String[] urls = {"http://localhost:8080/finance/LL-check/recharge",
+                    "http://goldman.houbank.com/finance/xmcg-check/all-balance",
+                    "http://localhost:8080/finance/fy-check/loan"};
+            for (String url : urls) {
+                URL httpUrl = new URL(url);
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpUrl.openStream()));
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
     /**
      * 发送 get请求
      */
-    public static void get() {
+    public static void apacheHttp() {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
             // 创建httpget.
@@ -63,11 +69,7 @@ public class HttpClient {
             } finally {
                 response.close();
             }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         } finally {
             // 关闭连接,释放资源

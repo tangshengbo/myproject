@@ -1,5 +1,6 @@
 package com.tangshengbo.io;
 
+import jodd.io.NetUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
@@ -19,13 +20,14 @@ public class FileTest {
 //        fileTest.printToDisplay();
 //        fileTest.serializeObject();
 //        fileTest.operationFile();
-        int count = fileTest.countMatchesOfFile("C:/Users/Tangshengbo/Desktop/IOUtils.java", "IO");
-        System.out.println(count);
-        int eachSize = 100 * 1024; // 100k
-        File srcFile = new File("C:/Users/Tangshengbo/Desktop/IOUtils.java");
-        splitFile(srcFile, eachSize);
-        murgeFile("C:/Users/Tangshengbo/Desktop", "IOUtils.java");
+//        int count = fileTest.countMatchesOfFile("C:/Users/Tangshengbo/Desktop/IOUtils.java", "IO");
+//        System.out.println(count);
+//        int eachSize = 100 * 1024; // 100k
+//        File srcFile = new File("C:/Users/Tangshengbo/Desktop/IOUtils.java");
+//        splitFile(srcFile, eachSize);
+//        murgeFile("C:/Users/Tangshengbo/Desktop", "IOUtils.java");
 
+        NetUtil.downloadFile("http://down.360safe.com/cpuleak_scan.exe", new File("E:/xx.exe"));
 
     }
 
