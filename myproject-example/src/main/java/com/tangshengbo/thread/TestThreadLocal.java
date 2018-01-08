@@ -27,7 +27,7 @@ public class TestThreadLocal implements Runnable {
         System.out.println("current thread set age " + Thread.currentThread().getName()
                 + ":" + age);
         s.setAge(age);
-        System.out.println("current thread first get age "
+        System.out.println("current thread first apacheHttp age "
                 + Thread.currentThread() + ":" + s.getAge());
         try {
             Thread.sleep(500);
@@ -36,7 +36,7 @@ public class TestThreadLocal implements Runnable {
             e.printStackTrace();
         }
         System.out.println(s + "\t" + Thread.currentThread().getName());
-        System.out.println("current thread second get age "
+        System.out.println("current thread second apacheHttp age "
                 + Thread.currentThread() + ":" + s.getAge());
     }
 
