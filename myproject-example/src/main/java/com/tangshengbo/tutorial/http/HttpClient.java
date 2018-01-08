@@ -29,7 +29,8 @@ import java.util.concurrent.CountDownLatch;
 public class HttpClient {
 
     public static void main(String[] args) {
-
+        System.out.println(NetUtil.resolveIpAddress("www.qq.com"));
+        System.out.println(NetUtil.validateHostIp("180.163.26.00"));
 //        httpDownload();
 //        jdkURL();
 //        apacheHttp();
@@ -39,7 +40,7 @@ public class HttpClient {
 
     private static void httpDownload() {
         try {
-            NetUtil.downloadFile("https://github.com/oblac/jodd/blob/master/jodd-http/src/main/java/jodd/http/HttpUtil.java", new File("E:/http.java"));
+            NetUtil.downloadFile("https://dl.bintray.com/scalamacros/maven/ch/epfl/lamp/scala-library/2.12.3/scala-library-2.12.3.jar", new File("E:/scala.jar"));
         } catch (IOException e) {
             e.printStackTrace();
         }
