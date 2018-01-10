@@ -2,6 +2,7 @@ package com.tangshengbo.arithmetic;
 
 import com.google.common.collect.Lists;
 import com.tangshengbo.util.StringHelper;
+import jodd.util.StringPool;
 import jodd.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 
@@ -20,9 +21,9 @@ public class TestString {
 
     public static void main(String[] args) {
 //        testPlusStr();
-//        spiltStr();
+        spiltStr();
 //        replaceStr();
-        subStr();
+//        subStr();
     }
 
     private static void testPlusStr() {
@@ -151,10 +152,14 @@ public class TestString {
 
     private static void spiltStr() {
         String str = "20170906,3000000182,1001215854,HB_TZR_3261041,433.00,CNY,,,,,,,";
-        System.out.println(Arrays.toString(str.split(",", -1)));
-        System.out.println(Arrays.toString(StringUtils.split(str, ",")));
-        System.out.println(Arrays.toString(StringUtil.split(str, ",")));
-        System.out.println(StringUtil.removeChars(str, ',', '.'));
+        String line = "AP01|HMP|551403582724||011520882503||2017-06-01 15:14:03||2017-06-01 15:20:06|单笔||288000|200|杨娜||||621558*********9129|成功|201706011515471618136836||";
+//        line = "TP01|APS|540803516809|540356516323|021408833313||2017-06-02 14:08:03||2017-06-02 14:08:06|单笔||480000|0|郭艳||||623668*********1550|调用通用转账接口失败外呼CCBS返回错误信息:E3002,账户暂停非柜脇201706021405400832416486||";
+//        line = "AP01|HMP|535817512325||021404817778||2017-06-02 13:58:17||2017-06-02 14:04:53|单笔||1440000|200|文艳||||622262*********5963|成功|201706021400012170193341||";
+        String separator = StringPool.PIPE;
+        System.out.println(Arrays.toString(line.split(separator, -1)));
+        System.out.println(Arrays.toString(StringUtils.split(line, separator)));
+        System.out.println(Arrays.toString(StringUtil.split(line, separator)) + "\t" + StringUtil.split(line, separator).length);
+        System.out.println(StringUtil.removeChars(line, ',', '.'));
     }
 
     private static void replaceStr() {

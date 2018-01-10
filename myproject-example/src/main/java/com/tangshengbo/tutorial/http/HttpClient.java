@@ -32,7 +32,7 @@ public class HttpClient {
         System.out.println(NetUtil.resolveIpAddress("www.qq.com"));
         System.out.println(NetUtil.validateHostIp("180.163.26.00"));
 //        httpDownload();
-//        jdkURL();
+        jdkURL();
 //        apacheHttp();
 //        asyncRequest();
 //        encodeURL();
@@ -40,7 +40,7 @@ public class HttpClient {
 
     private static void httpDownload() {
         try {
-            NetUtil.downloadFile("https://dl.bintray.com/scalamacros/maven/ch/epfl/lamp/scala-library/2.12.3/scala-library-2.12.3.jar", new File("E:/scala.jar"));
+            NetUtil.downloadFile("http://download.12306bypass.com/12306Bypass_1.12.69.zip", new File("E:/12306Bypass_1.12.69.zip"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class HttpClient {
 
     private static void jdkURL() {
         try {
-            String[] urls = {"http://localhost:8080/finance/LL-check/recharge",
+            String[] urls = {/*"http://localhost:8080/finance/LL-check/recharge",*/
                     "http://localhost:8080/finance/fy-check/loan"};
             for (String url : urls) {
                 URL httpUrl = new URL(url);
