@@ -13,6 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +33,6 @@ public class HttpClient {
         System.out.println(NetUtil.resolveIpAddress("www.qq.com"));
         System.out.println(NetUtil.validateHostIp("180.163.26.00"));
 //        httpDownload();
-        jdkURL();
 //        apacheHttp();
 //        asyncRequest();
 //        encodeURL();
@@ -57,9 +57,11 @@ public class HttpClient {
         }
     }
 
-    private static void jdkURL() {
+    @Test
+    public void jdkURL() {
         try {
-            String[] urls = {/*"http://localhost:8080/finance/LL-check/recharge",*/
+            String[] urls = {/*"http://localhost:8080/finance/xmcg-check/recharge",*/
+                    /*"http://localhost:8080/finance/xmcg-check/all-balance",*/
                     "http://localhost:8080/finance/fy-check/loan"};
             for (String url : urls) {
                 URL httpUrl = new URL(url);

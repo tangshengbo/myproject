@@ -1,15 +1,18 @@
 package com.tangshengbo.util;
 
+
 import jodd.util.StringPool;
 import jodd.util.StringUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +28,6 @@ public class FtpUtils {
     private String username;
     private String password;
     private int port;
-    private FTPClient ftp;
 
     public FtpUtils(String host, String username, String password, int port) {
         this.host = host;
@@ -34,6 +36,10 @@ public class FtpUtils {
         this.port = port;
     }
 
+    /**
+     * 获取 FTPClient
+     * @return
+     */
     private FTPClient getFTPClient() {
         if (ftpClientThreadLocal.get() != null && ftpClientThreadLocal.get().isConnected()) {
             return ftpClientThreadLocal.get();
@@ -58,17 +64,9 @@ public class FtpUtils {
             log.error("FTP 打开连接异常 {}", e);
             throw new RuntimeException(e);
         }
+        log.warn("打开连接成功! {}", Thread.currentThread().getName());
         return ftpClient;
     }
-
-    /**
-     * 打开FTP连接
-     */
-    private boolean openConnection() {
-        ftp = new FTPClient();
-        return true;
-    }
-
 
     /**
      * 上传文件 默认使用(UTF-8)
@@ -81,7 +79,6 @@ public class FtpUtils {
         return this.uploadFile(remotePath, localPath, StringPool.UTF_8);
     }
 
-
     /**
      * 上传文件
      *
@@ -91,18 +88,18 @@ public class FtpUtils {
      * @return
      */
     public String uploadFile(String remotePath, String localPath, String encoding) {
-        boolean isOpen = this.openConnection();
+        final FTPClient ftpClient = this.getFTPClient();
         String remote = null;
-        if (isOpen) {
+        if (Objects.nonNull(ftpClient)) {
             File file = FileUtils.getFile(localPath);
             try (BufferedInputStream bis = IOUtils.buffer(FileUtils.openInputStream(file))) {
                 remote = remotePath + file.getName();
-                log.warn("打开连接成功，开始上传! 文件名:{} 线程:{}", remote, Thread.currentThread().getName());
+                log.warn("开始上传! 文件名:{}", remote);
                 //设置上传目录
-                ftp.changeWorkingDirectory(remotePath);
-                ftp.setControlEncoding(encoding);
+                ftpClient.changeWorkingDirectory(remotePath);
+                ftpClient.setControlEncoding(encoding);
                 //上传文件
-                ftp.storeFile(remotePath, bis);
+                ftpClient.storeFile(remotePath, bis);
                 log.info("上传完成!");
             } catch (IOException e) {
                 log.error("FTP文件上传异常:{}", e);
@@ -124,18 +121,29 @@ public class FtpUtils {
         InputStream is = null;
         if (Objects.nonNull(ftpClient)) {
             String remote = remotePath + fileName;
-            log.warn("打开连接成功，开始下载! 文件名:{} 线程:{}", remote, Thread.currentThread().getName());
+            log.warn("开始下载! 文件名:{}", remote);
             try {
-                is = ftpClient.retrieveFileStream(remote);
-                if (Objects.isNull(is)) {
+                if (!existsFile(remote)) {
                     throw new FileNotFoundException(remote);
                 }
+                is = ftpClient.retrieveFileStream(remote);
             } catch (IOException e) {
                 log.error("FTP 文件下载异常:{}", e);
                 throw new RuntimeException(e);
             }
         }
         return is;
+    }
+
+    /**
+     * 文判断文件是否存在
+     *
+     * @param remote
+     * @throws IOException
+     */
+    private boolean existsFile(String remote) throws IOException {
+        FTPFile[] ftpFiles = getFTPClient().listFiles(remote);
+        return ftpFiles.length == 1;
     }
 
     /**
@@ -165,7 +173,7 @@ public class FtpUtils {
                 ftpClient.logout();
                 ftpClient.disconnect();
                 ftpClientThreadLocal.remove();
-                log.info("关闭FTP连接!");
+                log.info("关闭FTP连接! {}", Thread.currentThread().getName());
             } catch (IOException e) {
                 log.error("关闭FTP连接出现异常{}", e);
             }
@@ -179,7 +187,7 @@ public class FtpUtils {
         try {
             getFTPClient().completePendingCommand();
         } catch (IOException e) {
-            log.error("发送完成命令异常:{}", e);
+            log.error("等待服务器返回完成命令出现异常:{}", e);
         }
     }
 
@@ -194,7 +202,7 @@ public class FtpUtils {
                     List<String> stringList = IOUtils.readLines(is, "GBK");
                     log.warn("文件记录数{},线程{}", stringList.size(), Thread.currentThread().getName());
                     for (String s : stringList) {
-                        log.info("富有{}", StringUtil.split(s, StringPool.PIPE)[1]);
+                        log.info("富有{}", Arrays.toString(StringUtil.split(s, StringPool.PIPE)));
                     }
                 } catch (Exception e) {
                     log.error("文件下载异常", e);
@@ -207,7 +215,7 @@ public class FtpUtils {
             }
             ftpUtils.closeConnection();
         };
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 5; i++) {
             new Thread(target, "Thread-" + i).start();
         }
     }

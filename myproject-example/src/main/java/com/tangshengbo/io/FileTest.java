@@ -1,5 +1,6 @@
 package com.tangshengbo.io;
 
+import jodd.io.FileNameUtil;
 import jodd.io.NetUtil;
 import org.apache.commons.lang.StringUtils;
 
@@ -12,6 +13,8 @@ public class FileTest {
 
     public static void main(String[] args) throws Exception {
         FileTest fileTest = new FileTest();
+        String name = "/account/20170605/0002900F0306973_20170605.txt";
+        System.out.println(FileNameUtil.getFullPath(name));
 //		fileTest.operationFile();
 //		fileTest.dataFIleStream();
 //		fileTest.read();

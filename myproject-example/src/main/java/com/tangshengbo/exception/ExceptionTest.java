@@ -2,6 +2,7 @@ package com.tangshengbo.exception;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -13,13 +14,13 @@ public class ExceptionTest {
 
     public static void main(String[] args) {
         ExceptionTest test = new ExceptionTest();
-        String result = test.testFinally();
-        System.out.println(result);
+//        String result = test.testFinally();
+//        System.out.println(result);
         test.calc();
 //        System.out.println(test.test1());
 //        System.out.println(test.test2());
 //        test.test3();
-        System.out.println(test.test4());
+//        System.out.println(test.test4());
 
 
     }
@@ -99,6 +100,18 @@ public class ExceptionTest {
         }
         System.out.println("test4 结束.............");
         return resultMap;
+    }
+
+    @Test
+    public void testGeMessage() {
+        int[] ints = {1, 2};
+        try {
+            int i = ints[3];
+//            Class.forName("324234");
+        } catch (Exception e) {
+            System.out.println(ExceptionUtils.getMessage(e));
+            System.out.println(ExceptionUtils.getRootCauseMessage(e));
+        }
     }
 }
 
