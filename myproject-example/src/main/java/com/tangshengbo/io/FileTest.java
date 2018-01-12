@@ -3,6 +3,9 @@ package com.tangshengbo.io;
 import jodd.io.FileNameUtil;
 import jodd.io.NetUtil;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -10,6 +13,7 @@ import java.util.Arrays;
 
 public class FileTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(FileTest.class);
 
     public static void main(String[] args) throws Exception {
         FileTest fileTest = new FileTest();
@@ -68,17 +72,25 @@ public class FileTest {
 
     }
 
+    @Test
     public void buffered() throws IOException {
-        BufferedInputStream ios = new BufferedInputStream(new FileInputStream("E:\\入职\\junit部署.avi"));
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("D:\\junit部署.avi"));
-        byte[] bytes = new byte[1024];
-        int len;
-        while ((len = ios.read()) != -1) {
-            bos.write(bytes, 0, len);
+        BufferedInputStream ios = new BufferedInputStream(new FileInputStream("E:/SW_DVD5_Visio_Premium_2010_W32_ChnSimp_Std_Pro_Prem_MLF_X16-51022.iso"));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("D:/spring-framework-0.9.iso"));
+        byte[] buffer = new byte[1024 * 16];
+        int read;
+        int count = 0;
+        while (true) {
+            read = ios.read(buffer, 0, buffer.length);
+            if (read == -1) {
+                break;
+            }
+            bos.write(buffer, 0, read);
+            count += read;
         }
         bos.flush();
         bos.close();
         ios.close();
+        logger.info("传输完成！总字节数:{}", count);
     }
 
     public void read() throws IOException {
@@ -292,11 +304,11 @@ public class FileTest {
      * @param inputStream
      * @param outputStream
      */
-    public static void copyStream(InputStream inputStream, OutputStream outputStream) {
+    public void copyStream(InputStream inputStream, OutputStream outputStream) {
         try (final InputStream is = inputStream;
              final OutputStream os = outputStream) {
             int length;
-            byte[] buffer = new byte[4 * 1024];
+            byte[] buffer = new byte[32 * 1024];
             while ((length = is.read(buffer, 0, buffer.length)) != -1) {
                 System.out.printf("缓冲数据组:%s,d字节", length);
                 System.out.println();
@@ -307,6 +319,15 @@ public class FileTest {
         } catch (Exception e) {
             System.out.println("copy stream failure" + e);
             throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void copyFileByStream() {
+        try {
+            copyStream(new FileInputStream("D:\\360极速浏览器下载\\Visio2010\\SW_DVD5_Visio_Premium_2010_W32_ChnSimp_Std_Pro_Prem_MLF_X16-51022.iso"), new FileOutputStream("E:/SW_DVD5_Visio_Premium_2010_W32_ChnSimp_Std_Pro_Prem_MLF_X16-51022.iso"));
+        } catch (FileNotFoundException e) {
+            logger.error("copy file 异常:{}", e);
         }
     }
 }

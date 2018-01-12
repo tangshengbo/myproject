@@ -105,12 +105,14 @@ public class ExceptionTest {
     @Test
     public void testGeMessage() {
         int[] ints = {1, 2};
-        try {
-            int i = ints[3];
+        for (int i = 0; i < 5000; i++) {
+            try {
 //            Class.forName("324234");
-        } catch (Exception e) {
-            System.out.println(ExceptionUtils.getMessage(e));
-            System.out.println(ExceptionUtils.getRootCauseMessage(e));
+                int num = ints[3];
+            } catch (Exception e) {
+                System.out.println(ExceptionUtils.getMessage(e));
+//                System.out.println(ExceptionUtils.getRootCauseMessage(e));
+            }
         }
     }
 }

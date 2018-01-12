@@ -21,7 +21,7 @@ public class FileListTest {
     private List<File> fileList = Lists.newArrayListWithExpectedSize(1000000);
 
     public static void main(String[] args) {
-        File file = new File("C:/");
+        File file = new File("D:/");
         FileListTest fileListTest = new FileListTest();
         System.out.println(file.getName());
         fileListTest.tree(file, 0);

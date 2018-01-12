@@ -37,35 +37,37 @@ public class FtpUtils {
     }
 
     /**
-     * 获取 FTPClient
+     * 从本地线程变量获取实例，没有就创建一个
+     *
      * @return
      */
     private FTPClient getFTPClient() {
-        if (ftpClientThreadLocal.get() != null && ftpClientThreadLocal.get().isConnected()) {
-            return ftpClientThreadLocal.get();
+        FTPClient ftpClient = ftpClientThreadLocal.get();
+        if (Objects.nonNull(ftpClient) && ftpClient.isConnected()) {
+            return ftpClient;
         }
         //构造一个FtpClient实例
-        FTPClient ftpClient = new FTPClient();
+        FTPClient newFtpClient = new FTPClient();
         try {
             //连接登录
-            ftpClient.connect(this.host, this.port);
-            ftpClient.login(this.username, this.password);
+            newFtpClient.connect(this.host, this.port);
+            newFtpClient.login(this.username, this.password);
             //默认为二进制传输
-            ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+            newFtpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
             //设置被动模式
-            ftpClient.enterLocalPassiveMode();
-            int reply = ftpClient.getReplyCode();
+            newFtpClient.enterLocalPassiveMode();
+            int reply = newFtpClient.getReplyCode();
             if (!FTPReply.isPositiveCompletion(reply)) {
-                ftpClient.disconnect();
+                newFtpClient.disconnect();
                 throw new RuntimeException("连接FTP服务器失败，响应码：" + reply);
             }
-            ftpClientThreadLocal.set(ftpClient);
+            ftpClientThreadLocal.set(newFtpClient);
         } catch (IOException e) {
             log.error("FTP 打开连接异常 {}", e);
             throw new RuntimeException(e);
         }
         log.warn("打开连接成功! {}", Thread.currentThread().getName());
-        return ftpClient;
+        return newFtpClient;
     }
 
     /**
