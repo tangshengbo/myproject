@@ -36,12 +36,15 @@ public class FtpUtils {
         this.port = port;
     }
 
+    public FtpUtils() {
+    }
+
     /**
      * 从本地线程变量获取实例，没有就创建一个
      *
      * @return
      */
-    private FTPClient getFTPClient() {
+    protected FTPClient getFTPClient() {
         FTPClient ftpClient = ftpClientThreadLocal.get();
         if (Objects.nonNull(ftpClient) && ftpClient.isConnected()) {
             return ftpClient;
