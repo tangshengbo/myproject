@@ -1,10 +1,12 @@
 package com.tangshengbo.tutorial.http;
 
+import com.tangshengbo.json.Account;
 import jodd.io.NetUtil;
-import jodd.util.StringPool;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.http.*;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -13,21 +15,17 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.*;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -176,17 +174,17 @@ public class HttpClient {
 
     @Test
     public void sendPostRequest() {
-        String url = "http://localhost:8080/portal/account/list";
+        String url = "http://localhost:8080/portal/account/list?name=唐声波&age=11";
         String USER_AGENT = "Mozilla/5.0";
 
-        List<NameValuePair> urlParameters = new ArrayList<>();
-        urlParameters.add(new BasicNameValuePair("name", "唐声波"));
-        urlParameters.add(new BasicNameValuePair("age", "11"));
+//        List<NameValuePair> urlParameters = new ArrayList<>();
+//        urlParameters.add(new BasicNameValuePair("name", "唐声波"));
+//        urlParameters.add(new BasicNameValuePair("age", "11"));
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost post = new HttpPost(url);
             post.setHeader("User-Agent", USER_AGENT);
-            post.setEntity(new UrlEncodedFormEntity(urlParameters, StringPool.UTF_8));
+//            post.setEntity(new UrlEncodedFormEntity(urlParameters, StringPool.UTF_8));
 
             CloseableHttpResponse response = httpClient.execute(post);
             logger.info("Response Code : {}", response.getStatusLine().getStatusCode());
@@ -208,5 +206,18 @@ public class HttpClient {
         } catch (IOException e) {
             logger.error("sendPostRequest 异常:{} ", e);
         }
+    }
+
+    @Test
+    public void restTemplate() {
+        //请求地址
+        String url = "http://localhost:8080/portal/account/search/10";
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            logger.info("{}", restTemplate.optionsForAllow(new URI(url)));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        logger.info("{}", restTemplate.getForObject(url, Account.class));
     }
 }
