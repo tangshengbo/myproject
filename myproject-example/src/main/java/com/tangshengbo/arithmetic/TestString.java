@@ -158,7 +158,8 @@ public class TestString {
         logger.info(Arrays.toString(line.split(separator, -1)));
         logger.info(Arrays.toString(StringUtils.split(line, separator)));
         logger.info(Arrays.toString(StringUtil.split(line, separator)) + "\t" + StringUtil.split(line, separator).length);
-        logger.info(StringUtil.removeChars(line, ',', '.'));
+        System.out.println(StringPool.COMMA.charAt(0));
+        logger.info(StringUtil.removeChars(str, StringPool.COMMA.charAt(0), '.'));
     }
 
     private static void replaceStr() {

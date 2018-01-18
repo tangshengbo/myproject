@@ -1,8 +1,6 @@
 package com.tangshengbo.util;
 
-
 import jodd.util.StringPool;
-import jodd.util.StringUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
@@ -12,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,7 +19,7 @@ public class FtpUtils {
 
     private static final Logger log = LoggerFactory.getLogger(FtpUtils.class);
 
-    private ThreadLocal<FTPClient> ftpClientThreadLocal = new ThreadLocal<>();
+    protected ThreadLocal<FTPClient> ftpClientThreadLocal = new ThreadLocal<>();
     private String host;
     private String username;
     private String password;
@@ -69,7 +65,7 @@ public class FtpUtils {
             log.error("FTP 打开连接异常 {}", e);
             throw new RuntimeException(e);
         }
-        log.warn("打开连接成功! {}", Thread.currentThread().getName());
+        log.info("打开连接成功! {}", Thread.currentThread().getName());
         return newFtpClient;
     }
 
@@ -99,7 +95,7 @@ public class FtpUtils {
             File file = FileUtils.getFile(localPath);
             try (BufferedInputStream bis = IOUtils.buffer(FileUtils.openInputStream(file))) {
                 remote = remotePath + file.getName();
-                log.warn("开始上传! 文件名:{}", remote);
+                log.info("开始上传! 文件名:{}", remote);
                 //设置上传目录
                 ftpClient.changeWorkingDirectory(remotePath);
                 ftpClient.setControlEncoding(encoding);
@@ -126,7 +122,7 @@ public class FtpUtils {
         InputStream is = null;
         if (Objects.nonNull(ftpClient)) {
             String remote = remotePath + fileName;
-            log.warn("开始下载! 文件名:{}", remote);
+            log.info("开始下载! 文件名:{}", remote);
             try {
                 if (!existsFile(remote)) {
                     throw new FileNotFoundException(remote);
@@ -176,11 +172,16 @@ public class FtpUtils {
         if (Objects.nonNull(ftpClient) && ftpClient.isConnected()) {
             try {
                 ftpClient.logout();
-                ftpClient.disconnect();
-                ftpClientThreadLocal.remove();
                 log.info("关闭FTP连接! {}", Thread.currentThread().getName());
             } catch (IOException e) {
                 log.error("关闭FTP连接出现异常{}", e);
+            } finally {
+                try {
+                    ftpClient.disconnect();
+                } catch (IOException e) {
+                    log.error("关闭FTP连接出现异常{}", e);
+                }
+                ftpClientThreadLocal.remove();
             }
         }
     }
@@ -193,35 +194,6 @@ public class FtpUtils {
             getFTPClient().completePendingCommand();
         } catch (IOException e) {
             log.error("等待服务器返回完成命令出现异常:{}", e);
-        }
-    }
-
-    public static void main(String[] args) {
-        FtpUtils ftpUtils = new FtpUtils("ftp.fuiou.com", "DSF306973", "FHu32qasV34Talsk", 21);
-        Runnable target = () -> {
-            String[] paths = {"20170603/0002900F0306973_20170603.txt", "20170602/0002900F0306973_20170602.txt", "20180110/0002900F0306973_20180110.txt"};
-            for (String path : paths) {
-                InputStream is = null;
-                try {
-                    is = ftpUtils.downloadFile("/account/", path);
-                    List<String> stringList = IOUtils.readLines(is, "GBK");
-                    log.warn("文件记录数{},线程{}", stringList.size(), Thread.currentThread().getName());
-                    for (String s : stringList) {
-                        log.info("富有{}", Arrays.toString(StringUtil.split(s, StringPool.PIPE)));
-                    }
-                } catch (Exception e) {
-                    log.error("文件下载异常", e);
-                } finally {
-                    if (Objects.nonNull(is)) {
-                        IOUtils.closeQuietly(is);
-                        ftpUtils.completePendingCommand();
-                    }
-                }
-            }
-            ftpUtils.closeConnection();
-        };
-        for (int i = 0; i < 5; i++) {
-            new Thread(target, "Thread-" + i).start();
         }
     }
 }
