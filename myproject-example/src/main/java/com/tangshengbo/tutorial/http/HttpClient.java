@@ -2,7 +2,6 @@ package com.tangshengbo.tutorial.http;
 
 import jodd.io.NetUtil;
 import jodd.util.StringPool;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -29,7 +28,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -196,16 +194,17 @@ public class HttpClient {
             for (Header header : headers) {
                 logger.info("Key:{} Value:{}", header.getName(), header.getValue());
             }
-
-            BufferedReader buffer = IOUtils.buffer(new InputStreamReader(response.getEntity().getContent()));
-            String line;
-            while (true) {
-                line = buffer.readLine();
-                if (Objects.isNull(line)) {
-                    break;
-                }
-                logger.info("返回:{}", line);
-            }
+            logger.info("------------------------------------------------------------------");
+            logger.info("{}", EntityUtils.toString(response.getEntity()));
+//            BufferedReader buffer = IOUtils.buffer(new InputStreamReader(response.getEntity().getContent()));
+//            String line;
+//            while (true) {
+//                line = buffer.readLine();
+//                if (Objects.isNull(line)) {
+//                    break;
+//                }
+//                logger.info("返回:{}", line);
+//            }
         } catch (IOException e) {
             logger.error("sendPostRequest 异常:{} ", e);
         }
