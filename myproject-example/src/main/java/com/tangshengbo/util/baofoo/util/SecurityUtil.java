@@ -50,8 +50,7 @@ public class SecurityUtil {
 	/**
 	 * 解密
 	 */
-	public static byte[] Base64Decode(String str) throws UnsupportedEncodingException, IOException {
-//		str = str.replaceAll(" ", "+");
+	public static byte[] Base64Decode(String str) throws IOException {
 		return new BASE64Decoder().decodeBuffer(str);
 	}
 
@@ -292,8 +291,5 @@ public class SecurityUtil {
 		for (int i = 0; i < 10000; i++)
 			threeDesDecrypt(str3Des, PWD);
 		System.out.println("3Des:"+(System.currentTimeMillis()-t1));
-
-
 	}
-
 }

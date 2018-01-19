@@ -1,23 +1,10 @@
 package com.tangshengbo.util.baofoo.http;
 
-import java.io.Serializable;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
-/**
- * 项目名称：baofoo-fopay-sdk-java
- * 类名称：表单参数
- * 类描述：
- * 创建人：陈少杰
- * 创建时间：2014-10-22 下午2:58:22
- * 修改人：陈少杰
- * 修改时间：2014-10-22 下午2:58:22
- * @version
- */
-public class SimpleHttpResponse implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+public class SimpleHttpResponse {
 
 	private int statusCode;
 	private String entityString;
@@ -29,7 +16,6 @@ public class SimpleHttpResponse implements Serializable {
 	 */
 	public SimpleHttpResponse(int statusCode, String entityString,
 			String errorMessage) {
-		super();
 		this.statusCode = statusCode;
 		this.entityString = entityString;
 		this.errorMessage = errorMessage;
@@ -65,4 +51,8 @@ public class SimpleHttpResponse implements Serializable {
 		return errorMessage;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
 }

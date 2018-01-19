@@ -1,5 +1,6 @@
 /**
  * @author Administrator
+ * @author Administrator
  */
 /**
  * @author Administrator
@@ -31,22 +32,28 @@ public class TestDemo {
     public static void main(String[] args) throws IOException {
 
 
-        Map<String, String> poststr = new HashMap<String, String>();
+        Map<String, String> poststr = new HashMap<>();
 
-        poststr.put("version", "4.0.0.1");
-        poststr.put("member_id", "100000178");//商户号
-        poststr.put("file_type", "fi");//收款：fi   出款：fo
-        poststr.put("client_ip", "116.236.217.150");//要与服务器IP保持一致
-        poststr.put("settle_date", "2016-01-05");//指定日期的对帐文件（除当天）
+//        poststr.put("version", "4.0.0.1");
+//        poststr.put("member_id", "100000178");//商户号
+//        poststr.put("file_type", "fi");//收款：fi   出款：fo
+//        poststr.put("client_ip", "116.236.217.150");//要与服务器IP保持一致
+//        poststr.put("settle_date", "2016-01-05");//指定日期的对帐文件（除当天）
+        poststr.put("name", "糖果");//指定日期的对帐文件（除当天）
+        poststr.put("age", "11");//指定日期的对帐文件（除当天）
 
         String request_url = "https://tgw.baofoo.com/boas/api/fileLoadRequest";//测试请求地址
-        String PostString = HttpUtil.RequestForm(request_url, poststr);
+        String url = "http://localhost:8085/portal/account/list?name=唐声波&age=11";
+//        String body = HttpUtil.post(url, poststr);
+//        System.out.println(body);
+        String PostString = HttpUtil.post(request_url, poststr);
+
         log("返回：" + PostString);
         String[] splitstr = PostString.split("=");    //解板返回的文件参数
         int StrOf = PostString.indexOf("resp_code=0000");
         if (StrOf < 0) {
             log("下载失败!");
-            return;
+//            return;
         }
         byte[] Restr = SecurityUtil.Base64Decode(splitstr[3]);//进行base64解码，解密后为byte类型
         String filename = "d:/" + getDateDay() + ".zip";    //存在本地的路径（自行设置）
