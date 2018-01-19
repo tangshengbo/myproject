@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
@@ -26,6 +27,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -174,7 +177,7 @@ public class HttpClient {
 
     @Test
     public void sendPostRequest() {
-        String url = "http://localhost:8080/portal/account/list?name=唐声波&age=11";
+        String url = "http://localhost:8085/portal/account/list?name=唐声波&age=11";
         String USER_AGENT = "Mozilla/5.0";
 
 //        List<NameValuePair> urlParameters = new ArrayList<>();
@@ -211,13 +214,17 @@ public class HttpClient {
     @Test
     public void restTemplate() {
         //请求地址
-        String url = "http://localhost:8080/portal/account/search/10";
+        String url = "http://localhost:8085/portal/account/search/{id}";
         RestTemplate restTemplate = new RestTemplate();
         try {
-            logger.info("{}", restTemplate.optionsForAllow(new URI(url)));
-        } catch (URISyntaxException e) {
+//            logger.info("{}", restTemplate.optionsForAllow(new URI(url)));
+            ResponseEntity<Account> responseEntity =  restTemplate.postForEntity(url, "", Account.class, 19);
+            logger.info("{}", responseEntity.getBody());
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("{}", restTemplate.getForObject(url, Account.class));
+        Map<String, String> params = new HashMap<>();
+        params.put("id", "10");
+        logger.info("{}", restTemplate.getForObject(url, Account.class, params));
     }
 }

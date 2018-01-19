@@ -46,7 +46,7 @@ public class TestDemo {
         String url = "http://localhost:8085/portal/account/list?name=唐声波&age=11";
 //        String body = HttpUtil.post(url, poststr);
 //        System.out.println(body);
-        String PostString = HttpUtil.post(request_url, poststr);
+        String PostString = HttpUtil.post(url, poststr);
 
         log("返回：" + PostString);
         String[] splitstr = PostString.split("=");    //解板返回的文件参数
@@ -55,7 +55,7 @@ public class TestDemo {
             log("下载失败!");
 //            return;
         }
-        byte[] Restr = SecurityUtil.Base64Decode(splitstr[3]);//进行base64解码，解密后为byte类型
+        byte[] Restr = SecurityUtil.Base64Decode(splitstr[0]);//进行base64解码，解密后为byte类型
         String filename = "d:/" + getDateDay() + ".zip";    //存在本地的路径（自行设置）
         log("存放路径：" + filename);
         InputStream DateByte = new ByteArrayInputStream(Restr);//把获取的zip文件的byte放入输入流

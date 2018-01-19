@@ -22,10 +22,7 @@
  */
 package com.tangshengbo.util.baofoo.http;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
+import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -67,12 +64,6 @@ public class HttpUtil {
         return response.getErrorMessage();
     }
 
-    /**
-     *
-     * @param httpSendModel
-     * @return
-     * @throws Exception
-     */
     private static SimpleHttpResponse invoke(HttpSendModel httpSendModel) throws Exception {
         // 创建默认的httpClient客户端端
         SimpleHttpClient simpleHttpclient = new SimpleHttpClient(httpSendModel);
@@ -169,6 +160,6 @@ public class HttpUtil {
      * @return
      */
     public static boolean isRequestSuccess(int statusCode) {
-        return statusCode == 200;
+        return statusCode == HttpStatus.SC_OK;
     }
 }
