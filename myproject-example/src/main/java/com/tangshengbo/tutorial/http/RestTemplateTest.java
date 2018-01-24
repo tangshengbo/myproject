@@ -1,6 +1,6 @@
 package com.tangshengbo.tutorial.http;
 
-import com.tangshengbo.util.baofoo.util.ZipUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +76,8 @@ public class RestTemplateTest {
 
     @Test
     public void testDownFile() {
-//        url = "http://localhost:8085/portal/account/download-file/{fileName}";
-        url = "http://localhost:8085/portal/account/download-file-rest/{fileName}";
+        url = "http://localhost:8085/portal/account/download-file/{fileName}";
+//        url = "http://localhost:8085/portal/account/download-file-rest/{fileName}";
         HttpHeaders header = new HttpHeaders();
 //        header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         HttpEntity<String> httpEntity = new HttpEntity<>(header);
@@ -85,7 +86,12 @@ public class RestTemplateTest {
         logger.info("{}", responseEntity.getHeaders());
         byte[] body = responseEntity.getBody();
         logger.info("{}", body);
-        List<String> stringList = ZipUtil.decompress(new ByteArrayInputStream(body));
+        List<String> stringList = null;
+        try {
+            stringList = IOUtils.readLines(new ByteArrayInputStream(body), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         printLog(stringList);
     }
 
