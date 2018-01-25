@@ -15,9 +15,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -45,13 +43,25 @@ public class RestTemplateTest {
     public void testGet() {
         url = "http://localhost:8085/portal/account/search/{id}";
         logger.info("{}", restTemplate.getForObject(url, String.class, 10));
-        url = "http://localhost:8085/portal/account/list";
         Map<String, String> params = new HashMap<>();
         params.put("name", "唐声波");
         params.put("age", "11");
+        params.put("id", "11");
         logger.info("{}", restTemplate.getForObject(url, String.class, params));
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class, "唐声波", 11);
+        url = "http://localhost:8085/portal/account/list";
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class, "唐声波");
+        BufferedWriter fileWriter = null;
+        try {
+            fileWriter = IOUtils.buffer(new FileWriter("E:/string.txt"));
+            fileWriter.write(responseEntity.getBody());
+            fileWriter.flush();
+        } catch (IOException e) {
+            logger.error("{}", ExceptionUtils.getStackTrace(e));
+        } finally {
+            IOUtils.closeQuietly(fileWriter);
+        }
         printLog(responseEntity);
+
     }
 
     @Test
@@ -121,7 +131,7 @@ public class RestTemplateTest {
         } catch (IOException e) {
             logger.error("{}", ExceptionUtils.getStackTrace(e));
         } finally {
-             IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(is);
         }
         ThreadUtil.sleep(100000000);
     }
