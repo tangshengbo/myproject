@@ -1,5 +1,8 @@
 package com.tangshengbo.tutorial.http;
 
+import com.tangshengbo.util.baofoo.util.ZipUtil;
+import jodd.util.StringPool;
+import jodd.util.ThreadUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.junit.Before;
@@ -7,17 +10,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.tangshengbo.util.baofoo.util.ZipUtil.decompress;
 
 /**
  * Created by Tangshengbo on 2018/1/19.
@@ -33,6 +37,8 @@ public class RestTemplateTest {
     @Before
     public void init() {
         restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters()
+                .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
     }
 
     @Test
@@ -55,9 +61,21 @@ public class RestTemplateTest {
 //        logger.info("{}", responseEntity.getStatusCode());
 //        logger.info("{}", responseEntity.getHeaders());
 //        logger.info("{}", responseEntity.getBody());
-        url = "http://localhost:8085/portal/account/list";
+
+        url = "https://vgw.baofoo.com/boas/api/fileLoadNewRequest";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        params.add("version", "4.0.0.2");
+        params.add("member_id", "100000178");//商户号
+        params.add("file_type", "fi");//收款：fi   出款：fo
+        params.add("client_ip", "116.247.102.46");//要与服务器IP保持一致
+        params.add("settle_date", "2018-01-19");//指定日期的对帐文件（除当天）
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
+
         ResponseEntity<String> responseEntity = null;
-        responseEntity = restTemplate.postForEntity(url, "", String.class);
+        responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
         printLog(responseEntity);
     }
 
@@ -66,7 +84,7 @@ public class RestTemplateTest {
         url = "http://localhost:8085/portal/account/search/{id}";
         HttpHeaders header = new HttpHeaders();
 //        header.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        header.setContentType(MediaType.APPLICATION_JSON);
+//        header.setContentType(MediaType);
 //        JSONObject params = new JSONObject();
 //        params.put("id", "10");
         HttpEntity<String> httpEntity = new HttpEntity<>(header);
@@ -76,8 +94,8 @@ public class RestTemplateTest {
 
     @Test
     public void testDownFile() {
-        url = "http://localhost:8085/portal/account/download-file/{fileName}";
-//        url = "http://localhost:8085/portal/account/download-file-rest/{fileName}";
+//        url = "http://localhost:8085/portal/account/download-file/{fileName}";
+        url = "http://localhost:8085/portal/account/download-file-rest/{fileName}";
         HttpHeaders header = new HttpHeaders();
 //        header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         HttpEntity<String> httpEntity = new HttpEntity<>(header);
@@ -86,23 +104,26 @@ public class RestTemplateTest {
         logger.info("{}", responseEntity.getHeaders());
         byte[] body = responseEntity.getBody();
         logger.info("{}", body);
-        List<String> stringList = null;
-        try {
-            stringList = IOUtils.readLines(new ByteArrayInputStream(body), "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        printLog(stringList);
+//        List<String> stringList = ZipUtil.decompress(new ByteArrayInputStream(body));
+//        printLog(stringList);
     }
 
     @Test
     public void testDecompress() {
+        InputStream is = null;
         try {
-            List<String> stringList = decompress(new FileInputStream("E:/writer.zip"));
+            is = ZipUtil.decompress(new FileInputStream("E:/writer.zip"));
+            List<String> stringList = null;
+            if (is != null) {
+                stringList = IOUtils.readLines(is, StringPool.UTF_8);
+            }
             printLog(stringList);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             logger.error("{}", ExceptionUtils.getStackTrace(e));
+        } finally {
+             IOUtils.closeQuietly(is);
         }
+        ThreadUtil.sleep(100000000);
     }
 
     private void printLog(ResponseEntity<String> responseEntity) {

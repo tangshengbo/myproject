@@ -71,7 +71,8 @@ public class HttpClient {
         try {
             String[] urls = {/*"http://localhost:8080/finance/xmcg-check/recharge",*/
                     /*"http://localhost:8080/finance/xmcg-check/all-balance",*/
-                    "http://localhost:8080/finance/fy-check/loan"};
+//                    "http://localhost:8080/finance/fy-check/loan",
+                    "http://localhost:8080/finance/bf-check/receipt"};
             for (String url : urls) {
                 URL httpUrl = new URL(url);
                 String line;

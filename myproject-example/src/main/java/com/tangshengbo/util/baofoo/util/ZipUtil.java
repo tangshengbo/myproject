@@ -6,7 +6,6 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Objects;
 import java.util.zip.*;
 
@@ -158,23 +157,36 @@ public class ZipUtil {
         }
     }
 
-    public static List<String> decompress(InputStream is) {
+//    public static List<String> decompress(InputStream is) {
+//        ZipArchiveInputStream zis;
+//        zis = new ZipArchiveInputStream(IOUtils.buffer(is));
+//        try {
+//            if (Objects.nonNull(zis.getNextZipEntry())) {
+////                OutputStream os = new FileOutputStream("D:/" + archiveEntry.getName());
+////                IOUtils.copy(zis, os);
+//                return IOUtils.readLines(new InputStreamReader(zis));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            IOUtils.closeQuietly(is);
+//        }
+//        return null;
+//    }
+
+
+    public static InputStream decompress(InputStream bis) {
         ZipArchiveInputStream zis;
-        zis = new ZipArchiveInputStream(IOUtils.buffer(is));
+        zis = new ZipArchiveInputStream(bis);
         try {
             if (Objects.nonNull(zis.getNextZipEntry())) {
-//                OutputStream os = new FileOutputStream("D:/" + archiveEntry.getName());
-//                IOUtils.copy(zis, os);
-                return IOUtils.readLines(new InputStreamReader(zis));
+                return zis;
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(is);
         }
         return null;
     }
-
 
     public static void main(String[] args) throws Exception {
         String targetFolderPath = "E:/kk.txt";

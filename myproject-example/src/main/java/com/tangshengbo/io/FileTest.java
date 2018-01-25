@@ -1,7 +1,6 @@
 package com.tangshengbo.io;
 
 import jodd.io.FileNameUtil;
-import jodd.io.NetUtil;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -15,10 +14,22 @@ public class FileTest {
 
     private static final Logger logger = LoggerFactory.getLogger(FileTest.class);
 
+    @Test
+    public void testFileName() {
+        String fileName = "/account/20170605/0002900F0306973_20170605.txt";
+
+        logger.info("getBaseName:{}", FileNameUtil.getBaseName(fileName));
+        logger.info("getExtension:{}", FileNameUtil.getExtension(fileName));
+        logger.info("getFullPath:{}", FileNameUtil.getFullPath(fileName));
+        logger.info("getFullPathNoEndSeparator:{}", FileNameUtil.getFullPathNoEndSeparator(fileName));
+        logger.info("getName:{}", FileNameUtil.getName(fileName));
+        logger.info("getPath:{}", FileNameUtil.getPath(fileName));
+        logger.info("getPathNoEndSeparator:{}", FileNameUtil.getPathNoEndSeparator(fileName));
+        logger.info("getPrefix:{}", FileNameUtil.getPrefix(fileName));
+        logger.info("getPrefixLength:{}", FileNameUtil.getPrefixLength(fileName));
+    }
+
     public static void main(String[] args) throws Exception {
-        FileTest fileTest = new FileTest();
-        String name = "/account/20170605/0002900F0306973_20170605.txt";
-        System.out.println(FileNameUtil.getFullPath(name));
 //		fileTest.operationFile();
 //		fileTest.dataFIleStream();
 //		fileTest.read();
@@ -34,7 +45,7 @@ public class FileTest {
 //        splitFile(srcFile, eachSize);
 //        murgeFile("C:/Users/Tangshengbo/Desktop", "IOUtils.java");
 
-        NetUtil.downloadFile("http://down.360safe.com/cpuleak_scan.exe", new File("E:/xx.exe"));
+//        NetUtil.downloadFile("http://down.360safe.com/cpuleak_scan.exe", new File("E:/xx.exe"));
 
     }
 
