@@ -1,6 +1,10 @@
 package com.tangshengbo.io;
 
 import jodd.io.FileNameUtil;
+import jodd.util.StringPool;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,6 +31,18 @@ public class FileTest {
         logger.info("getPathNoEndSeparator:{}", FileNameUtil.getPathNoEndSeparator(fileName));
         logger.info("getPrefix:{}", FileNameUtil.getPrefix(fileName));
         logger.info("getPrefixLength:{}", FileNameUtil.getPrefixLength(fileName));
+    }
+
+    @Test
+    public void testReadFileToString() throws Exception {
+
+        String result = FileUtils.readFileToString(new File("E:/string.txt"), StringPool.UTF_8);
+        logger.info("{}", result);
+//        InputStream in = IOUtils.toInputStream(result, StringPool.UTF_8);
+        FileWriterWithEncoding fw =  new FileWriterWithEncoding("D:/string.txt", "GBK");
+        IOUtils.write(result, fw);
+        fw.flush();
+        IOUtils.closeQuietly(fw);
     }
 
     public static void main(String[] args) throws Exception {
