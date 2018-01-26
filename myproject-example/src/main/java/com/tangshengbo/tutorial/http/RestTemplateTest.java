@@ -1,5 +1,7 @@
 package com.tangshengbo.tutorial.http;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tangshengbo.util.baofoo.util.ZipUtil;
 import jodd.util.StringPool;
 import jodd.util.ThreadUtil;
@@ -134,6 +136,15 @@ public class RestTemplateTest {
             IOUtils.closeQuietly(is);
         }
         ThreadUtil.sleep(100000000);
+    }
+
+    @Test
+    public void testGetIP() {
+        String result = restTemplate.getForObject("http://ip.chinaz.com/getip.aspx", String.class);
+        logger.info("result:{}", result);
+        Gson gson = new GsonBuilder().create();
+        IpAddress ipAddress = gson.fromJson(result, IpAddress.class);
+        logger.info("IP:{} - 地址:{}", ipAddress.getIp(), ipAddress.getAddress());
     }
 
     private void printLog(ResponseEntity<String> responseEntity) {
