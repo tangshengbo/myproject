@@ -3,7 +3,6 @@ package com.tangshengbo.tutorial.http;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tangshengbo.util.baofoo.util.ZipUtil;
-import jodd.io.NetUtil;
 import jodd.util.StringPool;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.IOUtils;
@@ -19,7 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.net.URL;
+import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -142,17 +141,38 @@ public class RestTemplateTest {
 
     @Test
     public void testGetIP() throws Exception {
-        url = "http://ip.chinaz.com/getip.aspx";
-        String result;
-        logger.info("==================Rest===================");
-        result = restTemplate.getForObject(url, String.class);
-        printIP(result);
-        logger.info("==================NetUtil.downloadString===================");
-        result = NetUtil.downloadString(url);
-        printIP(result);
-        logger.info("==================IOUtils.toString===================");
-        result = IOUtils.toString(new URL(url), StringPool.UTF_8);
-        printIP(result);
+//        url = "http://ip.chinaz.com/getip.aspx";
+//        String result;
+//        logger.info("==================Rest===================");
+//        result = restTemplate.getForObject(url, String.class);
+//        printIP(result);
+//        logger.info("==================NetUtil.downloadString===================");
+//        result = NetUtil.downloadString(url);
+//        printIP(result);
+//        logger.info("==================IOUtils.toString===================");
+//        result = IOUtils.toString(new URL(url), StringPool.UTF_8);
+//        printIP(result);
+
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        String hostAddress = inetAddress.getHostAddress();
+
+        logger.info("{}:Local host name: ", hostAddress);
+        Runnable r = () -> {
+            logger.info("{}", IpAddressUtil.resolveLocalRealIp());
+        };
+        for (int i = 0; i < 1000; i++) {
+            new Thread(r).start();
+        }
+        ThreadUtil.sleep(2000);
+        for (int i = 0; i < 10; i++) {
+            logger.warn("{}", IpAddressUtil.resolveLocalRealIp());
+        }
+        ThreadUtil.sleep(200000000);
+//        logger.info("{}", NetUtil.resolveIpAddress("localhost"));
+//        Set<String> strings = IpAddressUtil.resolveLocalIps();
+//        strings.stream().forEach(s -> {
+//            logger.info("{}", s);
+//        });
     }
 
     private void printIP(String result) {
