@@ -2,6 +2,8 @@ package com.tangshengbo.tutorial.http;
 
 import com.tangshengbo.json.Account;
 import jodd.io.NetUtil;
+import jodd.util.StringPool;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -22,12 +24,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -72,14 +76,17 @@ public class HttpClient {
             String[] urls = {/*"http://localhost:8080/finance/xmcg-check/recharge",*/
                     /*"http://localhost:8080/finance/xmcg-check/all-balance",*/
 //                    "http://localhost:8080/finance/fy-check/loan",
-                    "http://localhost:8080/finance/bf-check/receipt"};
+                    /*"http://localhost:8080/finance/bf-check/receipt"*/
+                    "http://ip.chinaz.com/getip.aspx"};
             for (String url : urls) {
                 URL httpUrl = new URL(url);
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpUrl.openStream()));
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
+                URLConnection connection = httpUrl.openConnection();
+                String contentType = connection.getContentType();
+                Map<String, List<String>> headerMap = connection.getHeaderFields();
+                String body = IOUtils.toString(connection.getInputStream(), StringPool.UTF_8);
+                logger.info("contentType:{}", contentType);
+                logger.info("headerMap:{}", headerMap);
+                logger.info("body:{}", body);
             }
         } catch (Exception e) {
             System.out.println(ExceptionUtils.getStackTrace(e));
@@ -219,7 +226,7 @@ public class HttpClient {
         RestTemplate restTemplate = new RestTemplate();
         try {
 //            logger.info("{}", restTemplate.optionsForAllow(new URI(url)));
-            ResponseEntity<Account> responseEntity =  restTemplate.postForEntity(url, "", Account.class, 19);
+            ResponseEntity<Account> responseEntity = restTemplate.postForEntity(url, "", Account.class, 19);
             logger.info("{}", responseEntity.getBody());
         } catch (Exception e) {
             e.printStackTrace();

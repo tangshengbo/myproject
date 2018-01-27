@@ -3,6 +3,7 @@ package com.tangshengbo.tutorial.http;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tangshengbo.util.baofoo.util.ZipUtil;
+import jodd.io.NetUtil;
 import jodd.util.StringPool;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.IOUtils;
@@ -18,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -139,9 +141,21 @@ public class RestTemplateTest {
     }
 
     @Test
-    public void testGetIP() {
-        String result = restTemplate.getForObject("http://ip.chinaz.com/getip.aspx", String.class);
-        logger.info("result:{}", result);
+    public void testGetIP() throws Exception {
+        url = "http://ip.chinaz.com/getip.aspx";
+        String result;
+        logger.info("==================Rest===================");
+        result = restTemplate.getForObject(url, String.class);
+        printIP(result);
+        logger.info("==================NetUtil.downloadString===================");
+        result = NetUtil.downloadString(url);
+        printIP(result);
+        logger.info("==================IOUtils.toString===================");
+        result = IOUtils.toString(new URL(url), StringPool.UTF_8);
+        printIP(result);
+    }
+
+    private void printIP(String result) {
         Gson gson = new GsonBuilder().create();
         IpAddress ipAddress = gson.fromJson(result, IpAddress.class);
         logger.info("IP:{} - 地址:{}", ipAddress.getIp(), ipAddress.getAddress());
