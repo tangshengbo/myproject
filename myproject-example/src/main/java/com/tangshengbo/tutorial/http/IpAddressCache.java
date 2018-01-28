@@ -36,7 +36,7 @@ public class IpAddressCache {
                         IP_MAP.put(LOCAL_REAL_IP_KEY, ipAddress);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("获取本机真实IP异常:{}", e);
                 }
             }
         }
