@@ -8,12 +8,15 @@
  */
 package com.tangshengbo.util.baofoo.Demo;
 
+import com.alibaba.dubbo.common.utils.NetUtils;
 import com.tangshengbo.util.baofoo.http.HttpUtil;
 import com.tangshengbo.util.baofoo.util.SecurityUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,13 +39,15 @@ public class TestDemo {
 
         Map<String, String> poststr = new HashMap<>();
 
+
         poststr.put("version", "4.0.0.2");
-        poststr.put("member_id", "100000178");//商户号
+        poststr.put("member_id", "1203634");//商户号
         poststr.put("file_type", "fi");//收款：fi   出款：fo
-        poststr.put("client_ip", "116.247.102.46");//要与服务器IP保持一致
-        poststr.put("settle_date", "2018-01-19");//指定日期的对帐文件（除当天）
+        poststr.put("client_ip", NetUtils.getIpByHost("www.goldman.houbank.com"));//要与服务器IP保持一致
+        poststr.put("settle_date", "2018-01-22");//指定日期的对帐文件（除当天）
 
         String request_url = "https://vgw.baofoo.com/boas/api/fileLoadNewRequest";//测试请求地址
+        request_url = "https://public.baofoo.com/boas/api/fileLoadNewRequest";
 
         String PostString = HttpUtil.post(request_url, poststr);
 
@@ -85,6 +90,16 @@ public class TestDemo {
 
     private static String getDateDay() {
         return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    }
+
+    public static String getIP(){
+        String Ip = null;
+        try {
+            Ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return Ip;
     }
 
 }

@@ -18,7 +18,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -153,19 +152,18 @@ public class RestTemplateTest {
 //        result = IOUtils.toString(new URL(url), StringPool.UTF_8);
 //        printIP(result);
 
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        String hostAddress = inetAddress.getHostAddress();
-
-        logger.info("{}:Local host name: ", hostAddress);
         Runnable r = () -> {
             logger.info("{}", IpAddressUtil.resolveLocalRealIp());
+        };
+
+        Runnable r2 = () -> {
+            logger.info("{}", IpAddressUtil.resolveLocalIp());
         };
         for (int i = 0; i < 1000; i++) {
             new Thread(r).start();
         }
-        ThreadUtil.sleep(2000);
-        for (int i = 0; i < 10; i++) {
-            logger.warn("{}", IpAddressUtil.resolveLocalRealIp());
+        for (int i = 0; i < 1000; i++) {
+            new Thread(r2).start();
         }
         ThreadUtil.sleep(200000000);
 //        logger.info("{}", NetUtil.resolveIpAddress("localhost"));

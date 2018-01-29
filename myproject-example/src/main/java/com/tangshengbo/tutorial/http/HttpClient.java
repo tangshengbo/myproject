@@ -1,5 +1,6 @@
 package com.tangshengbo.tutorial.http;
 
+import com.alibaba.dubbo.common.utils.NetUtils;
 import com.tangshengbo.json.Account;
 import jodd.io.NetUtil;
 import jodd.util.StringPool;
@@ -26,10 +27,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,7 +224,7 @@ public class HttpClient {
         RestTemplate restTemplate = new RestTemplate();
         try {
 //            logger.info("{}", restTemplate.optionsForAllow(new URI(url)));
-            ResponseEntity<Account> responseEntity = restTemplate.postForEntity(url, "", Account.class, 19);
+            ResponseEntity<Account> responseEntity =  restTemplate.postForEntity(url, "", Account.class, 19);
             logger.info("{}", responseEntity.getBody());
         } catch (Exception e) {
             e.printStackTrace();
@@ -235,4 +233,17 @@ public class HttpClient {
         params.put("id", "10");
         logger.info("{}", restTemplate.getForObject(url, Account.class, params));
     }
+
+    @Test
+    public void testGetIp() throws Exception {
+        logger.info("getLocalHost:{}", NetUtils.getIpByHost("goldman.houbank.com"));
+        logger.info("getIpByHost:{}", NetUtils.getLocalHost());
+        logger.info("getLocalAddress:{}", NetUtils.getLocalAddress());
+        logger.info("resolveIpAddress:{}", NetUtil.resolveIpAddress("goldman.houbank.com"));
+
+        InetAddress netAddress = InetAddress.getLocalHost();
+        logger.info("{}", netAddress.getHostAddress());
+
+    }
+
 }
