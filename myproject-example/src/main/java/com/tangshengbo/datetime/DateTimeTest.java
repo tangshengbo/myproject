@@ -4,6 +4,9 @@ package com.tangshengbo.datetime;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -11,12 +14,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Administrator on 2016/11/30.
  */
 public class DateTimeTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(DateTimeTest.class);
+
+    public static final String DATE_PATTERN = "yyyyMMdd";
+    public static final String DEFAULT_DATE_FORMAT = "yyyyMMddHHmmss";
+    public static final String ISO_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String ISO_DATE_PATTERN = "yyyy-MM-dd";
 
     public static void main(String[] args) {
 //        try {
@@ -43,10 +52,21 @@ public class DateTimeTest {
 
     }
 
+    @Test
+    public void testDefaultDateFormat() {
+        logger.info("yyyyMMdd:{}", defaultDateFormat("20171217"));
+        logger.info("yyyyMMddHHmmss:{}", defaultDateFormat("20171217121910"));
+        logger.info("yyyy-MM-dd HH:mm:ss:{}", defaultDateFormat("2017-12-17 12:19:10"));
+        logger.info("yyyy-MM-dd:{}", defaultDateFormat("2017-12-17"));
+    }
+
     public static Date defaultDateFormat(String dateStr) {
-        Date date = dateFormat(dateStr, "yyyyMMddHHmmss");
-        if (Objects.isNull(date)) {
-            date = dateFormat(dateStr, "yyyyMMdd");
+        Date date;
+        try {
+            String[] patterns = new String[]{DEFAULT_DATE_FORMAT, DATE_PATTERN, ISO_DATETIME_PATTERN, ISO_DATE_PATTERN};
+            date = DateUtils.parseDate(dateStr, patterns);
+        } catch (ParseException e) {
+            return null;
         }
         return date;
     }

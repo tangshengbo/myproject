@@ -2,6 +2,9 @@ package com.tangshengbo.datetime;
 
 import org.apache.commons.lang.time.FastDateFormat;
 import org.joda.time.*;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -9,6 +12,8 @@ import java.util.Date;
  * Created by Tangshengbo on 2017/9/6.
  */
 public class JodaTimeTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(JodaTimeTest.class);
 
     public static void main(String[] args) {
 
@@ -53,7 +58,8 @@ public class JodaTimeTest {
         System.out.println("时间相差：" + day + "天" + hour + "小时" + min + "分钟" + sec + "秒。");
     }
 
-    private static void calculate() {
+    @Test
+    public void calculate() {
         DateTime now = new DateTime();
         System.out.println("昨天:" + now.minusDays(1).toString("yyyy-MM-dd"));
         System.out.println("明天:" + now.plusDays(1).toString("yyyy-MM-dd"));
@@ -82,6 +88,11 @@ public class JodaTimeTest {
 
         // 只需要时分秒毫秒的时候
         LocalTime localTime = new LocalTime(13, 30, 26, 0);// 1:30:26PM
+    }
+
+    @Test
+    public void testMinusDays() {
+        logger.info("{}", DateTime.now().minusDays(7).toString("yyyy-MM-dd"));
     }
 
 }
