@@ -21,7 +21,6 @@ public class FileTest {
     @Test
     public void testFileName() {
         String fileName = "/account/20170605/0002900F0306973_20170605.txt";
-
         logger.info("getBaseName:{}", FileNameUtil.getBaseName(fileName));
         logger.info("getExtension:{}", FileNameUtil.getExtension(fileName));
         logger.info("getFullPath:{}", FileNameUtil.getFullPath(fileName));
@@ -35,14 +34,19 @@ public class FileTest {
 
     @Test
     public void testReadFileToString() throws Exception {
-
         String result = FileUtils.readFileToString(new File("E:/string.txt"), StringPool.UTF_8);
         logger.info("{}", result);
 //        InputStream in = IOUtils.toInputStream(result, StringPool.UTF_8);
-        FileWriterWithEncoding fw =  new FileWriterWithEncoding("D:/string.txt", "GBK");
+        FileWriterWithEncoding fw = new FileWriterWithEncoding("D:/string.txt", "GBK");
         IOUtils.write(result, fw);
         fw.flush();
         IOUtils.closeQuietly(fw);
+    }
+
+    @Test
+    public void testReadByte() {
+        logger.info("{}", (byte) - 128 & 0xFF);
+        logger.info("{}", 127 & 0xFF);
     }
 
     public static void main(String[] args) throws Exception {

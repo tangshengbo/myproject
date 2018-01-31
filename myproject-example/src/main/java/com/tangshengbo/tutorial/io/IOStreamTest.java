@@ -1,11 +1,20 @@
 package com.tangshengbo.tutorial.io;
 
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
 
 /**
  * Created by TangShengBo on 2017-06-25.
  */
 public class IOStreamTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(IOStreamTest.class);
 
     public static void main(String[] args) {
 
@@ -38,7 +47,8 @@ public class IOStreamTest {
         }
     }
 
-    public static void testByteArrayStream() {
+    @Test
+    public void testByteArrayStream() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
@@ -58,6 +68,19 @@ public class IOStreamTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testDigest() throws Exception {
+        FileInputStream fis = new FileInputStream("E:/http.java");
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        DigestInputStream is = new DigestInputStream(fis, digest);
+        while (is.read() != -1);
+        is.close();
+        byte[] bytes = digest.digest();
+        logger.info("Base64:{}", DatatypeConverter.printBase64Binary(bytes));
+        logger.info("Base64:{}", DatatypeConverter.printHexBinary(bytes));
+
     }
 
     public static void delFile(String filePathAndName) {
