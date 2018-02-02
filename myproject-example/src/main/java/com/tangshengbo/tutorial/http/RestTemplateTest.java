@@ -152,6 +152,8 @@ public class RestTemplateTest {
 //        result = IOUtils.toString(new URL(url), StringPool.UTF_8);
 //        printIP(result);
 
+        logger.info("{}", IpAddressUtil.getLocalIP());
+
         Runnable r = () -> {
             logger.info("{}", IpAddressUtil.resolveLocalRealIp());
         };

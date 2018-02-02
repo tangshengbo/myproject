@@ -44,7 +44,7 @@ public class TestDemo {
         poststr.put("member_id", "1203634");//商户号
         poststr.put("file_type", "fi");//收款：fi   出款：fo
         poststr.put("client_ip", NetUtils.getIpByHost("www.goldman.houbank.com"));//要与服务器IP保持一致
-        poststr.put("settle_date", "2018-01-22");//指定日期的对帐文件（除当天）
+        poststr.put("settle_date", "2018-01-20");//指定日期的对帐文件（除当天）
 
         String request_url = "https://vgw.baofoo.com/boas/api/fileLoadNewRequest";//测试请求地址
         request_url = "https://public.baofoo.com/boas/api/fileLoadNewRequest";
