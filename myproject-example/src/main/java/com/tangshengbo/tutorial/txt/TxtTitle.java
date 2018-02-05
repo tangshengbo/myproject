@@ -1,4 +1,4 @@
-package com.tangshengbo.tutorial.txt.annotation;
+package com.tangshengbo.tutorial.txt;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,6 +15,4 @@ public @interface TxtTitle {
     String value();
 
     String format() default "yyyy-MM-dd HH:mm:ss";
-
-    String defaultValue() default "";
 }

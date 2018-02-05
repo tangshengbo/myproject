@@ -1,14 +1,11 @@
 package com.tangshengbo.tutorial.txt;
 
-import com.tangshengbo.tutorial.txt.entity.BfTradeEntity;
-import com.tangshengbo.tutorial.txt.entity.ImportParams;
-import com.tangshengbo.tutorial.txt.util.TxtImportUtil;
 import jodd.util.StringPool;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 /**
@@ -19,14 +16,16 @@ public class TxtImportTest {
     private static final Logger logger = LoggerFactory.getLogger(TxtImportTest.class);
 
     @Test
-    public void testImport() {
+    public void testImport() throws Exception {
         ImportParams importParams = new ImportParams(2, "|", StringPool.UTF_8);
-
-        List<BfTradeEntity> bfTradeEntityList = TxtImportUtil.importExcel(new File("E:/BF_FI_1203634_20180129.txt"), BfTradeEntity.class, importParams);
+        TxtImport<BfTradeEntity> bfTradeEntityTxtImport = new TxtImport<>();
+        List<BfTradeEntity> bfTradeEntityList =  bfTradeEntityTxtImport.
+                readFromStream(new FileInputStream("E:/BF_FI_1203634_20180204.txt"), BfTradeEntity.class, importParams);
         if (bfTradeEntityList != null) {
             bfTradeEntityList.forEach(bfTradeEntity -> {
                 logger.info("{}", bfTradeEntity);
             });
+            logger.warn("{}", bfTradeEntityList.size());
         }
     }
 }

@@ -1,11 +1,6 @@
-package com.tangshengbo.tutorial.txt.service;
+package com.tangshengbo.tutorial.txt;
 
 import com.google.common.collect.Maps;
-import com.tangshengbo.tutorial.txt.annotation.TxtTitle;
-import com.tangshengbo.tutorial.txt.entity.ImportParams;
-import com.tangshengbo.tutorial.txt.entity.TxtImportEntity;
-import com.tangshengbo.tutorial.txt.util.ReflectionUtil;
-import jodd.util.ReflectUtil;
 import jodd.util.StringUtil;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -23,72 +18,111 @@ import java.util.Objects;
 /**
  * Created by Tangshengbo on 2018/2/2.
  */
-public class TxtImportService {
+@SuppressWarnings("unchecked")
+public class TxtImport<T> {
 
-    private static final Logger logger = LoggerFactory.getLogger(TxtImportService.class);
+    private static final Logger logger = LoggerFactory.getLogger(TxtImport.class);
 
-    @SuppressWarnings("unchecked")
-    public <T> List<T> importTxtToList(InputStream in, Class<?> entityClass, ImportParams params) {
+    /**
+     * 从流中读取文件内容转换成对象
+     * @param in
+     * @param entityClass
+     * @param params
+     * @return
+     */
+    public List<T> readFromStream(InputStream in, Class<T> entityClass, ImportParams params) {
         List result = new ArrayList();
         try {
             List<String> lines = IOUtils.readLines(in, params.getEncoding());
-            Map<Integer, String> titleMap = getTitleMap(lines, params);
-            Map<String, TxtImportEntity> importEntityMap = getImportEntityMap(entityClass);
-            for (int i = params.getStartIndex(); i < lines.size(); i++) {
-                String[] columns = StringUtil.split(lines.get(i), params.getSeparatorChar());
-                Object object = ReflectUtil.newInstance(entityClass);
-                for (int j = 0; j < titleMap.size(); j++) {
-                    String column = columns[j];
-                    String title = titleMap.get(j);
-                    if (importEntityMap.containsKey(title)) {
-                        TxtImportEntity importEntity = importEntityMap.get(title);
-                        Object value = getValue(column, importEntity);
-                        saveValue(object, value, importEntity.getMethod());
-                        result.add(object);
-                    }
-                }
-            }
+            result = readFromString(lines, entityClass, params);
         } catch (Exception e) {
-            logger.error("导入文本文件异常{}", e);
+            throw new TxtImportException(e);
         } finally {
             IOUtils.closeQuietly(in);
         }
         return result;
     }
 
+    public List<T> readFromString(List<String> lines, Class<T> entityClass, ImportParams params) {
+        List<T> result = new ArrayList<>();
+        try {
+            Map<Integer, String> titleMap = getTitleMap(lines, params);
+            Map<String, TxtImportEntity> importEntityMap = getImportEntityMap(entityClass);
+            int startIndex = params.getHeadRows() + 1;
+            for (int i = startIndex; i < lines.size(); i++) {
+                String[] columns = StringUtil.split(lines.get(i), params.getSeparatorChar());
+                result.add(getObject(entityClass, titleMap, importEntityMap, columns));
+            }
+        } catch (Exception e) {
+            throw new TxtImportException(e);
+        }
+        return result;
+    }
+
     /**
+     * 根据文件字段创建对象并设置字段值
+     *
+     * @param entityClass
+     * @param titleMap
+     * @param importEntityMap
+     * @param columns
+     * @return
+     * @throws Exception
+     */
+    private T getObject(Class<T> entityClass, Map<Integer, String> titleMap, Map<String,
+            TxtImportEntity> importEntityMap, String[] columns) throws Exception {
+        Object object = ReflectionUtil.newInstance(entityClass);
+        for (int j = 0; j < titleMap.size(); j++) {
+            String column = columns[j];
+            String title = titleMap.get(j);
+            if (importEntityMap.containsKey(title)) {
+                TxtImportEntity importEntity = importEntityMap.get(title);
+                Object value = getValue(column, importEntity);
+                saveValue(object, value, importEntity.getMethod());
+            }
+        }
+        return (T) object;
+    }
+
+    /**
+     * 获取所有注解实体
      *
      * @param entityClass
      * @return
      */
-    private Map<String, TxtImportEntity> getImportEntityMap(Class<?> entityClass) {
+    private Map<String, TxtImportEntity> getImportEntityMap(Class<T> entityClass) {
         Map<String, TxtImportEntity> importEntityMap = Maps.newHashMap();
         Field[] fields = ReflectionUtil.getAccessibleFields(entityClass);
         for (Field field : fields) {
             if (!isUseTxtTitle(field)) {
                 continue;
             }
-            addEntityToMap(field, entityClass, importEntityMap);
+            TxtImportEntity txtImportEntity = getImportEntity(field, entityClass);
+            importEntityMap.put(txtImportEntity.getName(), txtImportEntity);
         }
         return importEntityMap;
     }
 
     /**
      * 获取注解实体
+     *
      * @param field
      * @param entityClass
-     * @param importEntityMap
      */
-    private void addEntityToMap(Field field, Class<?> entityClass, Map<String, TxtImportEntity> importEntityMap) {
+    private TxtImportEntity getImportEntity(Field field, Class<T> entityClass) {
         TxtTitle txtTitle = field.getAnnotation(TxtTitle.class);
         TxtImportEntity txtImportEntity = new TxtImportEntity();
         txtImportEntity.setField(field);
         txtImportEntity.setName(txtTitle.value());
-        txtImportEntity.setMethod(ReflectionUtil.getSetMethod(entityClass,field.getName()));
+        Method method = ReflectionUtil.getSetMethod(entityClass, field.getName());
+        if (Objects.isNull(method)) {
+            throw new TxtImportException("没有找到对应的方法：" + ReflectionUtil.getSetMethodName(field.getName()));
+        }
+        txtImportEntity.setMethod(method);
         if (StringUtil.isNotBlank(txtTitle.format())) {
             txtImportEntity.setFormat(txtTitle.format());
         }
-        importEntityMap.put(txtImportEntity.getName(), txtImportEntity);
+        return txtImportEntity;
     }
 
     /**
@@ -103,6 +137,7 @@ public class TxtImportService {
 
     /**
      * 获取标题行
+     *
      * @param lines
      * @param params
      * @return
@@ -120,6 +155,7 @@ public class TxtImportService {
 
     /**
      * 获取文件字段值
+     *
      * @param column
      * @param entity
      * @return
@@ -135,6 +171,7 @@ public class TxtImportService {
 
     /**
      * 设置字段值
+     *
      * @param obj
      * @param value
      * @param method

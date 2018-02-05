@@ -1,4 +1,4 @@
-package com.tangshengbo.tutorial.txt.entity;
+package com.tangshengbo.tutorial.txt;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

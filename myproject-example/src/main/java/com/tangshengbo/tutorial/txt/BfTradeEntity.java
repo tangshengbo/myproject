@@ -1,7 +1,6 @@
-package com.tangshengbo.tutorial.txt.entity;
+package com.tangshengbo.tutorial.txt;
 
 
-import com.tangshengbo.tutorial.txt.annotation.TxtTitle;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -109,7 +108,7 @@ public class BfTradeEntity implements Serializable {
     /**
      * 支付订单创建时间
      */
-    @TxtTitle(value = "支付订单创建时间")
+    @TxtTitle(value = "支付订单创建时间", format = "yyyy-MM-dd HH:mm:ss")
     private Date orderPayDate;
 
     /**
