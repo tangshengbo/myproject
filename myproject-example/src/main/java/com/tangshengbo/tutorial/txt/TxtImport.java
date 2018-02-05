@@ -25,22 +25,21 @@ public class TxtImport<T> {
 
     /**
      * 从流中读取文件内容转换成对象
+     *
      * @param in
      * @param entityClass
      * @param params
      * @return
      */
     public List<T> readFromStream(InputStream in, Class<T> entityClass, ImportParams params) {
-        List result = new ArrayList();
         try {
             List<String> lines = IOUtils.readLines(in, params.getEncoding());
-            result = readFromString(lines, entityClass, params);
+            return readFromString(lines, entityClass, params);
         } catch (Exception e) {
             throw new TxtImportException(e);
         } finally {
             IOUtils.closeQuietly(in);
         }
-        return result;
     }
 
     public List<T> readFromString(List<String> lines, Class<T> entityClass, ImportParams params) {
@@ -49,7 +48,8 @@ public class TxtImport<T> {
             Map<Integer, String> titleMap = getTitleMap(lines, params);
             Map<String, TxtImportEntity> importEntityMap = getImportEntityMap(entityClass);
             int startIndex = params.getHeadRows() + 1;
-            for (int i = startIndex; i < lines.size(); i++) {
+            int size = lines.size();
+            for (int i = startIndex; i < size; i++) {
                 String[] columns = StringUtil.split(lines.get(i), params.getSeparatorChar());
                 result.add(getObject(entityClass, titleMap, importEntityMap, columns));
             }
@@ -72,13 +72,15 @@ public class TxtImport<T> {
     private T getObject(Class<T> entityClass, Map<Integer, String> titleMap, Map<String,
             TxtImportEntity> importEntityMap, String[] columns) throws Exception {
         Object object = ReflectionUtil.newInstance(entityClass);
-        for (int j = 0; j < titleMap.size(); j++) {
+        int size = titleMap.size();
+        for (int j = 0; j < size; j++) {
             String column = columns[j];
             String title = titleMap.get(j);
             if (importEntityMap.containsKey(title)) {
                 TxtImportEntity importEntity = importEntityMap.get(title);
                 Object value = getValue(column, importEntity);
-                saveValue(object, value, importEntity.getMethod());
+                Method setMethod = importEntity.getMethod();
+                saveValue(object, value, setMethod);
             }
         }
         return (T) object;
@@ -94,7 +96,7 @@ public class TxtImport<T> {
         Map<String, TxtImportEntity> importEntityMap = Maps.newHashMap();
         Field[] fields = ReflectionUtil.getAccessibleFields(entityClass);
         for (Field field : fields) {
-            if (!isUseTxtTitle(field)) {
+            if (isUseTxtTitle(field)) {
                 continue;
             }
             TxtImportEntity txtImportEntity = getImportEntity(field, entityClass);
