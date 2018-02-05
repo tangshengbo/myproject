@@ -108,7 +108,7 @@ public class BfTradeEntity implements Serializable {
     /**
      * 支付订单创建时间
      */
-    @TxtTitle(value = "支付订单创建时间", format = "yyyy-MM-dd HH:mm:ss")
+    @TxtTitle(value = "支付订单创建时间")
     private Date orderPayDate;
 
     /**

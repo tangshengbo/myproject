@@ -96,7 +96,7 @@ public class TxtImport<T> {
         Map<String, TxtImportEntity> importEntityMap = Maps.newHashMap();
         Field[] fields = ReflectionUtil.getAccessibleFields(entityClass);
         for (Field field : fields) {
-            if (isUseTxtTitle(field)) {
+            if (!isUseTxtTitle(field)) {
                 continue;
             }
             TxtImportEntity txtImportEntity = getImportEntity(field, entityClass);
