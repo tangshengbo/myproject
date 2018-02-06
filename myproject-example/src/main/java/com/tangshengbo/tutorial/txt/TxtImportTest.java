@@ -1,6 +1,7 @@
 package com.tangshengbo.tutorial.txt;
 
 import jodd.util.StringPool;
+import jodd.util.ThreadUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,9 @@ public class TxtImportTest {
     @Test
     public void testImport() throws Exception {
         ImportParams importParams = new ImportParams(2, "|", StringPool.UTF_8);
-        TxtImport<BfTradeEntity> bfTradeEntityTxtImport = new TxtImport<>();
-        List<BfTradeEntity> bfTradeEntityList =  bfTradeEntityTxtImport.
-                readFromStream(new FileInputStream("E:/BF_FI_1203634_20180204.txt"), BfTradeEntity.class, importParams);
+        List<BfTradeEntity> bfTradeEntityList = TxtUtil.importTxt(new FileInputStream("E:/BF_FI_1203634_20180204.txt"), BfTradeEntity.class, importParams);
         if (bfTradeEntityList != null) {
-            bfTradeEntityList.forEach(bfTradeEntity -> {
+            bfTradeEntityList.stream().forEach(bfTradeEntity -> {
                 logger.info("{}", bfTradeEntity);
             });
             logger.warn("{}", bfTradeEntityList.size());
