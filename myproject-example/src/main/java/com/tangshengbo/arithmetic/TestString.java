@@ -150,7 +150,7 @@ public class TestString {
 
     @Test
     public void spiltStr() {
-        String str = "20170906,3000000182,1001215854,HB_TZR_3261041,433.00,CNY,,,,,,,";
+        String str = "20180204215639,3000000255,BILL99,201802042156208685744129299,67280482,08,1766.00,CNY,1023640565,HB_TZR_2248484,6225880119473735,CMBC,02,1766.00,,,,,,,,,,";
         String line = "AP01|HMP|551403582724||011520882503||2017-06-01 15:14:03||2017-06-01 15:20:06|单笔||288000|200|杨娜||||621558*********9129|成功|201706011515471618136836||";
 //        line = "TP01|APS|540803516809|540356516323|021408833313||2017-06-02 14:08:03||2017-06-02 14:08:06|单笔||480000|0|郭艳||||623668*********1550|调用通用转账接口失败外呼CCBS返回错误信息:E3002,账户暂停非柜脇201706021405400832416486||";
 //        line = "AP01|HMP|535817512325||021404817778||2017-06-02 13:58:17||2017-06-02 14:04:53|单笔||1440000|200|文艳||||622262*********5963|成功|201706021400012170193341||";
@@ -160,6 +160,14 @@ public class TestString {
         logger.info(Arrays.toString(StringUtil.split(line, separator)) + "\t" + StringUtil.split(line, separator).length);
         System.out.println(StringPool.COMMA.charAt(0));
         logger.info(StringUtil.removeChars(str, StringPool.COMMA.charAt(0), '.'));
+
+        printSpilt(str, ",");
+    }
+
+    private void printSpilt(String str, String separator) {
+        logger.info(Arrays.toString(str.split(separator, -1)));
+        logger.info(Arrays.toString(StringUtils.split(str, separator)));
+        logger.info(Arrays.toString(StringUtil.split(str, separator)));
     }
 
     private static void replaceStr() {
