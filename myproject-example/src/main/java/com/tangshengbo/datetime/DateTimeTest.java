@@ -1,14 +1,12 @@
 package com.tangshengbo.datetime;
 
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,19 +133,5 @@ public class DateTimeTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    private static Date dateFormat(String dateStr, String format) {
-        if (StringUtils.isBlank(dateStr)) {
-            return null;
-        }
-        DateFormat dateFormat = new SimpleDateFormat(format);
-        Date date;
-        try {
-            date = dateFormat.parse(dateStr);
-        } catch (ParseException e) {
-            return null;
-        }
-        return date;
     }
 }
