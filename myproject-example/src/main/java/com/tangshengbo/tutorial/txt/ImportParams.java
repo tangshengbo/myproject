@@ -9,14 +9,14 @@ public class ImportParams {
 
     private String encoding = "UTF-8";
 
-    private String separatorChar;
+    private String separator;
 
-    public String getSeparatorChar() {
-        return separatorChar;
+    public String getSeparator() {
+        return separator;
     }
 
-    public void setSeparatorChar(String separatorChar) {
-        this.separatorChar = separatorChar;
+    public void setSeparator(String separator) {
+        this.separator = separator;
     }
 
     public int getHeadRows() {
@@ -35,18 +35,18 @@ public class ImportParams {
         this.encoding = encoding;
     }
 
-    public ImportParams(int headRows, String separatorChar, String encoding) {
+    public ImportParams(int headRows, String separator, String encoding) {
         this.headRows = headRows;
-        this.separatorChar = separatorChar;
+        this.separator = separator;
         this.encoding = encoding;
     }
 
-    public ImportParams(int headRows, String separatorChar) {
+    public ImportParams(int headRows, String separator) {
         this.headRows = headRows;
-        this.separatorChar = separatorChar;
+        this.separator = separator;
     }
 
-    public ImportParams(String separatorChar) {
-        this.separatorChar = separatorChar;
+    public ImportParams(String separator) {
+        this.separator = separator;
     }
 }

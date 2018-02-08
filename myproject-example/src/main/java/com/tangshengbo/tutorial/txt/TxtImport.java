@@ -50,7 +50,7 @@ public class TxtImport<T> {
             int startIndex = params.getHeadRows() + 1;
             int size = lines.size();
             for (int i = startIndex; i < size; i++) {
-                String[] columns = StringUtil.split(lines.get(i), params.getSeparatorChar());
+                String[] columns = StringUtil.split(lines.get(i), params.getSeparator());
                 result.add(getObject(entityClass, titleMap, importEntityMap, columns));
             }
         } catch (Exception e) {
@@ -146,7 +146,7 @@ public class TxtImport<T> {
      */
     private Map<Integer, String> getTitleMap(List<String> lines, ImportParams params) {
         String title = lines.get(params.getHeadRows());
-        String[] titles = StringUtil.split(title, params.getSeparatorChar());
+        String[] titles = StringUtil.split(title, params.getSeparator());
         Map<Integer, String> titleMap = Maps.newHashMap();
         for (int i = 0; i < titles.length; i++) {
             titleMap.put(i, titles[i]);
