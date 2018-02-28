@@ -2,6 +2,7 @@ package com.tangshengbo.net.url;
 
 import com.tangshengbo.net.address.InetAddressTest;
 import jodd.util.ThreadUtil;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.*;
 
 /**
  * Created by Tangshengbo on 2018/2/27.
@@ -25,13 +27,81 @@ public class URLTest {
 
     @Test
     public void testURL() throws Exception {
+        URL url = new URL("https://www.cnblogs.com/hellochennan/?q=11#sss");
+        logger.info("{}", url.getHost());
+        logger.info("{}", url.getContent());
+        logger.info("{}", url.getFile());
+        logger.info("{}", url.getPath());
+        logger.info("{}", url.getAuthority());
+        logger.info("{}", url.getProtocol());
+        logger.info("{}", url.getPort());
+        logger.info("{}", url.getDefaultPort());
+        logger.info("{}", url.getQuery());
+        logger.info("{}", url.getRef());
+        logger.info("{}", url.getUserInfo());
+        URI uri = url.toURI();
+        logger.info("{}", uri);
+        logger.info("{}", uri.toURL().toExternalForm());
+        URL fileUrl = new URL("file:///E:/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3.html");
+        logger.info("{}", IOUtils.toString(fileUrl.openStream(), "GBK"));
+    }
+
+    @Test
+    public void testURI() throws Exception {
+        URI uri = new URI("https://www.cnblogs.com/hellochennan/?q=唐声波#sss");
+        logger.info("{}", uri.getHost());
+        logger.info("{}", uri.toASCIIString());
+        logger.info("{}", uri);
+    }
+
+    @Test
+    public void testURLEncoder() throws Exception {
+//        urlEncode();
+        QueryString queryString = new QueryString();
+        queryString.add("姓名", "唐声波");
+        queryString.add("id", "123");
+        logger.info("{}", queryString.getQuery());
+        String encode = URLEncoder.encode("新建文本文档", "UTF-8");
+        String decode = URLDecoder.decode(encode, "UTF-8");
+        logger.info("{}, {}", encode, decode);
+    }
+
+    private void urlEncode() throws UnsupportedEncodingException {
+        logger.info("{}", URLEncoder.encode("This string has spaces",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This*string*has*asterisks",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This%string%has%percent%signs",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This+string+has+pluses",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This/string/has/slashes",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This\"string\"has\"quote\"marks",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This:string:has:colons",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This~string~has~tildes",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This(string)has(parentheses)",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This.string.has.periods",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This=string=has=equals=signs",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("This&string&has&ampersands",
+                "UTF-8"));
+        logger.info("{}", URLEncoder.encode("Thiséstringéhasé non-ASCII characters", "UTF-8"));
+    }
+
+    @Test
+    public void downloadURL() throws IOException {
         URL baseUrl = new URL("https", "aecpm.alicdn.com", "");
         URL url = new URL(baseUrl, "/simba/img/TB1W4nPJFXXXXbSXpXXSutbFXXX.jpg");
         BufferedImage img = ImageIO.read(url);
         ImageIO.write(img, "jpg", new File("E:/xx.jpg"));
         new ImageFrame(img).setVisible(true);
         ThreadUtil.sleep(10000);
-
 //        try (BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream(), "UTF-8"))) {
 //            for (String line = br.readLine(); Objects.nonNull(line); line = br.readLine()) {
 //                logger.info("{}", line);

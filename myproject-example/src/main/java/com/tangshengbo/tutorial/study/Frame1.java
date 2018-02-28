@@ -8,13 +8,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 
 /**
  * Created by TangShengBo on 2018/2/11.
  */
 public class Frame1 {
     public static void main(String[] args) {
+        try {
+
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");//Nimbus风格，jdk6 update10版本以后的才会出现
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());//当前系统风格
+//UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");//Motif风格，是蓝黑
+//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());//跨平台的Java风格
+//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");//windows风格
+//UIManager.setLookAndFeel("javax.swing.plaf.windows.WindowsLookAndFeel");//windows风格
+//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");//java风格
+//      UIManager.setLookAndFeel("com.apple.mrj.swing.MacLookAndFeel");//待考察，
+            UIManager.LookAndFeelInfo[] lfs = getAllLAFs();
+            for (UIManager.LookAndFeelInfo feelInfo : lfs) {
+                System.out.println(feelInfo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         new FirstFrame().setVisible(true);
+    }
+
+    public static UIManager.LookAndFeelInfo[] getAllLAFs() {
+        UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
+        int i = lafs.length;
+        UIManager.LookAndFeelInfo[] lafsAll = new UIManager.LookAndFeelInfo[i + 2];
+        System.arraycopy(lafs, 0, lafsAll, 0, i);
+        lafsAll[i++] = new UIManager.LookAndFeelInfo("CrossPlatform", UIManager.getCrossPlatformLookAndFeelClassName());
+        lafsAll[i++] = new UIManager.LookAndFeelInfo("System", UIManager.getSystemLookAndFeelClassName());
+        return lafsAll;
     }
 }
 
@@ -27,7 +55,8 @@ class FirstFrame extends JFrame {
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         JLabel a = new JLabel("姓名:");
-        name = new JTextField("姓   名", 10);
+        Locale locale = new Locale("zh", "CN");
+        name = new JTextField(locale.getDisplayName(), 20);
         //按钮
         JButton b = new JButton("传递");
         //添加按钮事件
