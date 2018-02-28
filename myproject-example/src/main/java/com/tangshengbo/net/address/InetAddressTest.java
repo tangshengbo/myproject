@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.net.InetAddress.getAllByName;
 
 /**
  * Created by Tangshengbo on 2018/2/8.
@@ -26,7 +25,7 @@ public class InetAddressTest {
 
     @Test
     public void testInetAddress() throws Exception {
-        InetAddress[] inetAddresses = getAllByName("www.houbank.com");
+        InetAddress[] inetAddresses = InetAddress.getAllByName("www.houbank.com");
         for (InetAddress inetAddress : inetAddresses) {
             logger.info("{}", inetAddress.getHostAddress());
             logger.info("{}", numericToTextFormat(inetAddress.getAddress()));
@@ -38,6 +37,8 @@ public class InetAddressTest {
 
         byte[] address = {(byte) 180, (byte) 163, 26, 39};
         logger.info("{}", InetAddress.getByAddress(address).getHostName());
+
+        logger.info("{}", InetAddress.getByName("180.163.26.39"));
     }
 
     @Test
@@ -89,6 +90,9 @@ public class InetAddressTest {
     public void testNetWorkInterface() throws Exception {
         logger.info("{}", getLocalIPList());
         logger.info("{}", getLocalIP());
+        NetworkInterface networkInterface = NetworkInterface.getByName("wlan0");
+        logger.info("{}", networkInterface.getDisplayName());
+        logger.info("{}", networkInterface.getInetAddresses().nextElement().getHostAddress());
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.tangshengbo.tutorial.txt;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import jodd.util.StringUtil;
 import org.apache.commons.io.IOUtils;
@@ -10,7 +11,6 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -43,7 +43,7 @@ public class TxtImport<T> {
     }
 
     public List<T> readFromString(List<String> lines, Class<T> entityClass, ImportParams params) {
-        List<T> result = new ArrayList<>();
+        List<T> result = Lists.newArrayListWithExpectedSize(lines.size());
         try {
             Map<Integer, String> titleMap = getTitleMap(lines, params);
             Map<String, TxtImportEntity> importEntityMap = getImportEntityMap(entityClass);

@@ -45,7 +45,7 @@ public class FileTest {
 
     @Test
     public void testReadByte() {
-        logger.info("{}", (byte) - 128 & 0xFF);
+        logger.info("{}", (byte) -128 & 0xFF);
         logger.info("{}", 127 & 0xFF);
     }
 
@@ -84,25 +84,6 @@ public class FileTest {
 
     }
 
-    public void stream() throws FileNotFoundException {
-        InputStream is = new FileInputStream("C:\\Users\\TangShengBo\\Desktop\\55eba12b0001f25b00000000\\New Text Document.txt");
-
-    }
-
-    public void fileStream() throws FileNotFoundException {
-        FileInputStream fInputStream = new FileInputStream("c:\\tang.txt");
-
-    }
-
-    public void dataFIleStream() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("E:\\read.txt");
-        DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-        System.out.println(dataInputStream.read());
-        fileInputStream.close();
-        dataInputStream.close();
-
-    }
-
     @Test
     public void buffered() throws IOException {
         BufferedInputStream ios = new BufferedInputStream(new FileInputStream("E:/SW_DVD5_Visio_Premium_2010_W32_ChnSimp_Std_Pro_Prem_MLF_X16-51022.iso"));
@@ -124,31 +105,17 @@ public class FileTest {
         logger.info("传输完成！总字节数:{}", count);
     }
 
-    public void read() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("E:\\read.txt");
-        InputStreamReader reader = new InputStreamReader(fileInputStream, "GBK");
-        reader.read();
-        int i;
-        while ((i = reader.read()) != -1) {
-            System.out.print((char) i);
-        }
-    }
-
-    public void bufferRead() throws IOException {
-        //BufferReader br = new BufferReader(new InputStreamReader(System.in));
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("E:\\read.txt"), "UTF-8"));
-
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\writer.txt"), "UTF-8"));
-        PrintWriter pw = new PrintWriter(bw);
-        String line;
-        while ((line = br.readLine()) != null) {
-            bw.write(line);
-//            pw.write(line);
-//            pw.println(line);
-
-            bw.newLine();
-            bw.flush();
-//            pw.flush();
+    @Test
+    public void bufferRead() {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("E:/read.txt"), "GBK"));
+             BufferedWriter bw = new BufferedWriter(new FileWriter("E:/write.txt"))) {
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                logger.info("{}", line);
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -162,18 +129,6 @@ public class FileTest {
         student = (Student) in.readObject();
         System.out.println(student.toString());
 
-    }
-
-    public void printToDisplay() {
-        char ch;
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));  //将字节流转为字符流，带缓冲
-        try {
-            while ((ch = (char) in.read()) != -1) {
-                System.out.print(ch);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void printFilesByFolder(String folderName) {
