@@ -1,5 +1,7 @@
 package com.tangshengbo.tutorial.http;
 
+import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.http.HttpUtil;
 import com.alibaba.dubbo.common.utils.NetUtils;
 import com.tangshengbo.json.Account;
 import jodd.io.NetUtil;
@@ -26,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
@@ -69,13 +72,20 @@ public class HttpClient {
     }
 
     @Test
+    public void testHttpTool() throws Exception {
+        logger.info("{}", HttpUtil.get("https://www.baidu.com"));
+        HttpUtil.downloadFile("http://js.down.chinaz.com/201802/trqqjsw_v4.08.rar", "E:/dd.rar");
+        logger.info("{}", FileTypeUtil.getType(new FileInputStream("E:/dd.txt")));
+    }
+
+    @Test
     public void jdkURL() {
         try {
-            String[] urls = {"http://localhost:8080/finance/xmcg-check/recharge",
+            String[] urls = {/*"http://localhost:8080/finance/xmcg-check/recharge",
                     "http://localhost:8080/finance/xmcg-check/all-balance",
                     "http://localhost:8080/finance/fy-check/loan",
-                    "http://localhost:8080/finance/bf-check/receipt",
-                   /* "http://ip.chinaz.com/getip.aspx"*/};
+                    "http://localhost:8080/finance/bf-check/receipt",*/
+                    "http://ip.chinaz.com/getip.aspx"};
             for (String url : urls) {
                 URL httpUrl = new URL(url);
                 URLConnection connection = httpUrl.openConnection();
@@ -224,7 +234,7 @@ public class HttpClient {
         RestTemplate restTemplate = new RestTemplate();
         try {
 //            logger.info("{}", restTemplate.optionsForAllow(new URI(url)));
-            ResponseEntity<Account> responseEntity =  restTemplate.postForEntity(url, "", Account.class, 19);
+            ResponseEntity<Account> responseEntity = restTemplate.postForEntity(url, "", Account.class, 19);
             logger.info("{}", responseEntity.getBody());
         } catch (Exception e) {
             e.printStackTrace();

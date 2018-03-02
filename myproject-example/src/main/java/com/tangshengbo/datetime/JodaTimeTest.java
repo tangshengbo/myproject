@@ -25,7 +25,7 @@ public class JodaTimeTest {
         System.out.println(DateTime.now().minusDays(3).toDate());
         System.out.println(formatDate());
 
-        DateTime begin = new DateTime("2017-09-22");
+        DateTime begin = new DateTime("2015-11-28");
         DateTime end = new DateTime();
         System.out.println("Days:" + Days.daysBetween(begin, end).getDays());
         Duration d = new Duration(new DateTime(), new DateTime());

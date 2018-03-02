@@ -2,6 +2,7 @@ package com.tangshengbo.net.url;
 
 import com.tangshengbo.net.address.InetAddressTest;
 import jodd.util.ThreadUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -13,9 +14,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.*;
 
 /**
@@ -44,6 +43,11 @@ public class URLTest {
         logger.info("{}", uri.toURL().toExternalForm());
         URL fileUrl = new URL("file:///E:/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3.html");
         logger.info("{}", IOUtils.toString(fileUrl.openStream(), "GBK"));
+
+        URL download = new URL("http://localhost:8085/portal/account/download-file/tt");
+        byte[] data = IOUtils.toByteArray(download);
+        FileUtils.writeByteArrayToFile(new File("E:/spring-mvc.xml"), data);
+//        logger.info("{}", IOUtils.toString(download.openStream(), "UTF-8"));
     }
 
     @Test
@@ -178,6 +182,7 @@ public class URLTest {
             this.setLocation(0, 0);
             JPanel pane = new JPanel();
             JLabel httpImg = new JLabel();
+            JLabel createImg = new JLabel();
             //得到源图宽
             int width = image.getWidth(null);
             //得到源图长
@@ -195,4 +200,5 @@ public class URLTest {
             });
         }
     }
+
 }

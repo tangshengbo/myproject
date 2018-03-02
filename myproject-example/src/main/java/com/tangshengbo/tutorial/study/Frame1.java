@@ -1,5 +1,7 @@
 package com.tangshengbo.tutorial.study;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ShearCaptcha;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import javax.swing.*;
@@ -55,6 +57,15 @@ class FirstFrame extends JFrame {
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         JLabel a = new JLabel("姓名:");
+        JLabel createImg = new JLabel();
+        //定义图形验证码的长和宽
+//        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+//        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(200, 100, 4, 20);
+        ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(200, 100, 4, 4);
+        //图形验证码写出，可以写出到文件，也可以写出到流
+        ImageIcon captchaImg = new ImageIcon(captcha.getImage());
+        captchaImg.setImage(captchaImg.getImage().getScaledInstance(70, 30, Image.SCALE_DEFAULT));
+        createImg.setIcon(captchaImg);
         Locale locale = new Locale("zh", "CN");
         name = new JTextField(locale.getDisplayName(), 20);
         //按钮
@@ -63,6 +74,7 @@ class FirstFrame extends JFrame {
         b.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                FirstFrame.this.name.setText(captcha.getCode());
                 new SecondFrame(FirstFrame.this).setVisible(true);
                 FirstFrame.this.setVisible(false);
             }
@@ -71,6 +83,7 @@ class FirstFrame extends JFrame {
         pane.add(a);
         pane.add(name);
         pane.add(b);
+        pane.add(createImg);
         setContentPane(pane);
     }
 }
