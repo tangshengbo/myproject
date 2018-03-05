@@ -253,7 +253,6 @@ public class HttpClient {
 
         InetAddress netAddress = InetAddress.getLocalHost();
         logger.info("{}", netAddress.getHostAddress());
-
     }
 
 }

@@ -93,14 +93,14 @@ public class RestTemplateTest {
 
     @Test
     public void testExchange() {
-        url = "http://localhost:8085/portal/account/search/{id}";
+        url = "http://localhost:8085/portal/account/list";
         HttpHeaders header = new HttpHeaders();
 //        header.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 //        header.setContentType(MediaType);
 //        JSONObject params = new JSONObject();
 //        params.put("id", "10");
         HttpEntity<String> httpEntity = new HttpEntity<>(header);
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class, 10);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
         printLog(responseEntity);
     }
 
