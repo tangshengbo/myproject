@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 
@@ -42,7 +43,10 @@ public class ReflectTest {
 //            is = ReflectTest.class.getResourceAsStream("/db.properties");
             System.out.println(path);
             properties.load(is);
-            return (DBServer) Class.forName(properties.getProperty(DB_NAME_KEY)).newInstance();
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
+            String dbServerName = resourceBundle.getString(DB_NAME_KEY);
+//            dbServerName =  properties.getProperty(DB_NAME_KEY);
+            return (DBServer) Class.forName(dbServerName).newInstance();
         } catch (ReflectiveOperationException | IOException e) {
             e.printStackTrace();
         }

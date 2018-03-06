@@ -255,4 +255,11 @@ public class HttpClient {
         logger.info("{}", netAddress.getHostAddress());
     }
 
+    @Test
+    public void testUserAgent() throws Exception {
+        URL url = new URL("http://47.52.146.64:8080/portal/account/list");
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "iphoneX");
+        logger.info("{}", IOUtils.toString(urlConnection.getInputStream(), "UTF-8"));
+    }
 }
