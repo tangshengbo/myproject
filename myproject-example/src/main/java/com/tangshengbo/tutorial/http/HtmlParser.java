@@ -21,7 +21,7 @@ public class HtmlParser {
     @Test
     public void testJsonp() {
         QueryString queryString = new QueryString();
-        queryString.add("ip", "192.168.20.48");
+        queryString.add("ip", "47.52.146.64");
         queryString.add("action", "1");
         try {
             //Jsoup.connect("http://www.ip138.com/ips1388.asp?" + queryString).get();
