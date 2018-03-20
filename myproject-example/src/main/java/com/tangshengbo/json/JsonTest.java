@@ -2,6 +2,7 @@ package com.tangshengbo.json;
 
 import com.tangshengbo.thread.User;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -28,6 +29,27 @@ public class JsonTest {
         File userJson = new File(url);
         String content = FileUtils.readFileToString(userJson, "UTF-8");
         System.out.println(content);
-        System.out.println(new JSONObject(content).toString(2));
+        System.out.println(new JSONObject(content).get("birthday"));
+
+        System.out.println("=========================================================");
+        System.out.println(jsonObject);
+        createJson();
+    }
+
+    private static void createJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Name", "Apple");
+        jsonObject.put("Expiry", "2007/10/11 13:54");
+        jsonObject.put("Price", 3.9);
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put("Small");
+        jsonArray.put("Medium");
+        jsonArray.put("Large");
+        jsonObject.put("Sizes", jsonArray);
+        jsonObject.getJSONArray("Sizes").put("唐波");
+        System.out.println(jsonObject);
+        System.out.println("=====================================================");
+        jsonObject = new JSONObject("{\"Sizes\":[\"Small\",\"Medium\",\"Large\"],\"Price\":3.9,\"Expiry\":\"2007/10/11 13:54\",\"Name\":\"Apple\"}");
+        System.out.println(jsonObject);
     }
 }
