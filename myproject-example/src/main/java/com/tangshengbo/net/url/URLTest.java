@@ -4,6 +4,7 @@ import com.tangshengbo.net.address.InetAddressTest;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -201,4 +202,30 @@ public class URLTest {
         }
     }
 
+    @Test
+    public void testURLConnection() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", 1);
+        jsonObject.put("name", "JavaWeb糖果");
+        jsonObject.put("money", 11.2);
+        jsonObject.put("createDate", "2017-09-06 11:10:53");
+        logger.info("{}", jsonObject.toString());
+        String body = jsonObject.toString();
+//      body = "id&=1&name=JavaWeb&money=11.2&createDate2017-09-06 11:10:53";
+        String url = "http://localhost:8085/portal/account/save-body";
+//        url = "http://localhost:8085/portal/account/save-urlencoded";
+        sendPostByURLConnection(url, body, "application/json;charset=UTF-8");
+    }
+
+    private void sendPostByURLConnection(String urlStr, String body, String contentType) throws IOException {
+        URL url = new URL(urlStr);
+        URLConnection conn = url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", contentType);
+        BufferedOutputStream os = new BufferedOutputStream(conn.getOutputStream());
+        os.write(body.getBytes());
+        os.flush();
+        logger.info("header {} ", conn.getHeaderFields());
+        logger.info("body {} ", IOUtils.toString(conn.getInputStream(), "UTF-8"));
+    }
 }
