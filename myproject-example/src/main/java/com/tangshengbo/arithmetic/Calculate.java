@@ -20,13 +20,11 @@ public class Calculate {
     private static Scanner in;
 
     public static void main(String[] args) throws Exception {
-//        calcNum();
-//        BigDecimal old = new BigDecimal(8030.86);
-//        BigDecimal newNum = new BigDecimal(8030.86000);
-//        System.out.println(old.equals(newNum));
-        double amount = parse("352,977");
-        System.out.println(amount);
-        System.out.println(changeF2Y(amount));
+        BigDecimal old = new BigDecimal(8030.86);
+        BigDecimal newNum = new BigDecimal(8030);
+        System.out.println(old.equals(newNum));
+        newNum = newNum.multiply(BigDecimal.valueOf(0.5));
+        System.out.println(newNum);
     }
 
     private static void calcNum() {
@@ -137,7 +135,7 @@ public class Calculate {
      * @param amount
      * @return
      */
-    public static double changeF2Y(long amount){
+    public static double changeF2Y(long amount) {
         BigDecimal decimal = BigDecimal.valueOf(amount).divide(new BigDecimal(100));
         return decimal.doubleValue();
     }
@@ -148,7 +146,7 @@ public class Calculate {
      * @param amount
      * @return
      */
-    public static double changeF2Y(double amount){
+    public static double changeF2Y(double amount) {
         BigDecimal decimal = BigDecimal.valueOf(amount).divide(new BigDecimal(100));
         return decimal.doubleValue();
     }
