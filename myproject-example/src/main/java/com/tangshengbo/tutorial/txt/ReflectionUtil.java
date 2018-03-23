@@ -1,7 +1,7 @@
 package com.tangshengbo.tutorial.txt;
 
 
-import com.tangshengbo.util.ReflectUtil;
+import jodd.util.ClassUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -21,15 +21,15 @@ public class ReflectionUtil {
     }
 
     public static Method getSetMethod(Class cls, String field) {
-        return ReflectUtil.findMethod(cls, getSetMethodName(field));
+        return ClassUtil.findMethod(cls, getSetMethodName(field));
     }
 
     public static Object newInstance(Class cls) throws ReflectiveOperationException {
-        return ReflectUtil.newInstance(cls);
+        return ClassUtil.newInstance(cls);
     }
 
     public static Field[] getAccessibleFields(Class cls) {
-        return ReflectUtil.getAccessibleFields(cls);
+        return ClassUtil.getAccessibleFields(cls);
     }
 
     /**
