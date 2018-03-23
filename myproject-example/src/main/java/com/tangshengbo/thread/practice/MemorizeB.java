@@ -1,6 +1,5 @@
 package com.tangshengbo.thread.practice;
 
-import jodd.util.RandomStringUtil;
 import jodd.util.ThreadUtil;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
@@ -50,7 +49,7 @@ public class MemorizeB<A, V> implements Computable<A, V> {
         MemorizeB<String,Future<Integer>> memorizeB = new MemorizeB<>(computable);
         Runnable r1 = () -> {
             try {
-                memorizeB.compute(RandomStringUtil.randomAlphaNumeric(10));
+                memorizeB.compute("");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

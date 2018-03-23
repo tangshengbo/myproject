@@ -10,7 +10,7 @@ public class ExceptionChainTest {
 
     //底层测试函数
     public void func2() throws Exception {
-        ExceptionUtil.throwException(new Exception("func2 exception ...."));
+        ExceptionUtil.throwRuntimeException(new Exception("func2 exception ...."));
     }
 
     //上层测试函数
@@ -18,7 +18,7 @@ public class ExceptionChainTest {
         try {
             func2();
         } catch (Exception ex) {
-            ExceptionUtil.throwException(new CustomException("func1 exception", ex));
+            ExceptionUtil.throwRuntimeException(new CustomException("func1 exception", ex));
         }
     }
 

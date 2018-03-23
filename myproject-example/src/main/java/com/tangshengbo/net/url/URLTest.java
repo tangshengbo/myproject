@@ -1,6 +1,8 @@
 package com.tangshengbo.net.url;
 
 import com.tangshengbo.net.address.InetAddressTest;
+import jodd.http.HttpRequest;
+import jodd.http.HttpResponse;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -15,7 +17,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 
 /**
@@ -209,6 +214,7 @@ public class URLTest {
         jsonObject.put("name", "JavaWeb糖果");
         jsonObject.put("money", 11.2);
         jsonObject.put("createDate", "2017-09-06 11:10:53");
+
         logger.info("{}", jsonObject.toString());
         String body = jsonObject.toString();
         body = "id&=1&name=JavaWeb&money=11.2&createDate=2017-09-06 11:10:53";
@@ -217,6 +223,15 @@ public class URLTest {
         String contentType = "application/json;charset=UTF-8";
         contentType = "application/x-www-form-urlencoded";
         sendPostByURLConnection(url, body, contentType);
+    }
+
+    @Test
+    public void testJoddHttp() {
+        String url;
+        url = "http://localhost:8085/portal/love/upload";
+        HttpRequest httpRequest = HttpRequest.post(url).form("file", new File("E:/bpic5942.jpg"));
+        HttpResponse httpResponse = httpRequest.send();
+        logger.info("{}", httpResponse.body());
     }
 
     private void sendPostByURLConnection(String urlStr, String body, String contentType) throws IOException {

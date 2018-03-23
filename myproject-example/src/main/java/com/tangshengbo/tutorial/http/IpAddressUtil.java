@@ -33,7 +33,7 @@ public class IpAddressUtil {
      * @return String
      */
     public static boolean isWindowsOS() {
-        return SystemUtil.getOsName().contains("windows");
+        return SystemUtil.osName().contains("windows");
     }
 
     /**

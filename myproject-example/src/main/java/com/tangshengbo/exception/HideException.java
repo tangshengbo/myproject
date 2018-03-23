@@ -47,7 +47,7 @@ public class HideException {
         // 检查异常的数目
 
         if (list.size() > 0) {
-            ExceptionUtil.throwException(new CustomException(list));
+            ExceptionUtil.throwRuntimeException(new CustomException(list));
         }
     }
 

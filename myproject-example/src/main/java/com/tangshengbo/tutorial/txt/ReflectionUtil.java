@@ -1,7 +1,7 @@
 package com.tangshengbo.tutorial.txt;
 
 
-import jodd.util.ReflectUtil;
+import com.tangshengbo.util.ReflectUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 

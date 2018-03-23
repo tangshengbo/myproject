@@ -43,6 +43,7 @@ public class IpAddressCache {
                         String result = NetUtil.downloadString(IP_SITE);
 //                        ipAddress = JSON.parseObject(result, new TypeReference<IpAddress>() {});
                         ipAddress = gson.fromJson(result, IpAddress.class);
+//                        ipAddress = new JsonParser().parse(result, IpAddress.class);
                         IP_MAP.put(OUTER_IP_ADDRESS_KEY, ipAddress);
                     }
                 } catch (IOException e) {

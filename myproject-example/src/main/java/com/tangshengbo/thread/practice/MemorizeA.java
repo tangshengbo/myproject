@@ -1,6 +1,5 @@
 package com.tangshengbo.thread.practice;
 
-import jodd.util.RandomStringUtil;
 import jodd.util.ThreadUtil;
 
 import java.util.Map;
@@ -42,7 +41,7 @@ public class MemorizeA<A, V> implements Computable<A, V> {
         MemorizeA<String, Integer> memorizeA = new MemorizeA<>(computable);
         Runnable r1 = () -> {
             try {
-                System.out.println(memorizeA.compute(RandomStringUtil.randomAlpha(5)));
+                System.out.println(memorizeA.compute(""));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

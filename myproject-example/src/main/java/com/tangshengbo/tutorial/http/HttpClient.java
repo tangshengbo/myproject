@@ -45,7 +45,7 @@ public class HttpClient {
 
     public static void main(String[] args) {
         System.out.println(NetUtil.resolveIpAddress("www.qq.com"));
-        System.out.println(NetUtil.validateHostIp("180.163.26.00"));
+        System.out.println(NetUtil.validateAgaintIPAdressV4Format("180.163.26.00"));
 //        httpDownload();
 //        apacheHttp();
 //        asyncRequest();

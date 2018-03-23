@@ -129,7 +129,7 @@ public class InetAddressTest {
 
 
     private boolean validateHostIp(String hostAddress) {
-        return NetUtil.validateHostIp(hostAddress) && !NetUtil.LOCAL_IP.equals(hostAddress);
+        return NetUtil.validateAgaintIPAdressV4Format(hostAddress) && !NetUtil.LOCAL_IP.equals(hostAddress);
     }
 
     /**
