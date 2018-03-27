@@ -54,8 +54,7 @@ public class TxtImport<T> {
             Map<Integer, String> titleMap = getTitleMap(lines, params);
             Map<String, TxtImportEntity> importEntityMap = getImportEntityMap(entityClass);
             int startIndex = params.getHeadRows() + 1;
-            int size = lines.size();
-            for (int i = startIndex; i < size; i++) {
+            for (int i = startIndex, size = lines.size(); i < size; i++) {
                 String[] columns = StringUtil.split(lines.get(i), params.getSeparator());
                 result.add(getObject(entityClass, titleMap, importEntityMap, columns));
             }
@@ -91,7 +90,7 @@ public class TxtImport<T> {
                     @Override
                     public Object convert(Class type, Object value) {
                         try {
-                            return DateUtils.parseDate((String)value, new String[]{importEntity.getFormat()});
+                            return DateUtils.parseDate((String) value, new String[]{importEntity.getFormat()});
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
