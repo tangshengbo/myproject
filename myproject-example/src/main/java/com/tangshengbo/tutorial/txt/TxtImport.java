@@ -3,7 +3,11 @@ package com.tangshengbo.tutorial.txt;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import jodd.util.StringUtil;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.Converter;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +15,8 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -79,8 +85,20 @@ public class TxtImport<T> {
             if (importEntityMap.containsKey(title)) {
                 TxtImportEntity importEntity = importEntityMap.get(title);
                 Object value = getValue(column, importEntity);
-                Method setMethod = importEntity.getMethod();
-                saveValue(object, value, setMethod);
+//                Method setMethod = importEntity.getMethod();
+//                saveValue(object, value, setMethod);
+                ConvertUtils.register(new Converter() {
+                    @Override
+                    public Object convert(Class type, Object value) {
+                        try {
+                            return DateUtils.parseDate((String)value, new String[]{importEntity.getFormat()});
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        return value;
+                    }
+                }, Date.class);
+                BeanUtils.setProperty(object, importEntity.getField().getName(), value);
             }
         }
         return (T) object;
@@ -167,7 +185,8 @@ public class TxtImport<T> {
         String classType;
         Method setMethod = entity.getMethod();
         Type[] ts = setMethod.getGenericParameterTypes();
-        classType = ts[0].toString();
+        logger.info("{}, {}", entity.getField().getGenericType().getTypeName(), entity.getField().toGenericString());
+        classType = ts[0].getTypeName();
         return ReflectionUtil.getValueByType(classType, column, entity);
     }
 
