@@ -6,6 +6,7 @@ import com.alibaba.dubbo.common.utils.NetUtils;
 import com.tangshengbo.json.Account;
 import jodd.io.NetUtil;
 import jodd.util.StringPool;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.Header;
@@ -16,6 +17,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.concurrent.FutureCallback;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
@@ -261,5 +264,18 @@ public class HttpClient {
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "iphoneX");
         logger.info("{}", IOUtils.toString(urlConnection.getInputStream(), "UTF-8"));
+    }
+
+    @Test
+    public void testFileUploadByHttpClient() throws Exception {
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost post = new HttpPost("http://localhost:8085/portal/love/upload");
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        builder.addBinaryBody("file", FileUtils.getFile("E:/bpic5942.jpg"));
+        HttpEntity entity = builder.build();
+        post.setEntity(entity);
+        HttpResponse response = client.execute(post);
+        logger.info("{}", IOUtils.toString(response.getEntity().getContent(), "UTF-8"));
     }
 }
