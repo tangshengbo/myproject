@@ -15,6 +15,8 @@ import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
@@ -32,13 +34,27 @@ public class RestTemplateTest {
 
     private RestTemplate restTemplate;
 
+    private AsyncRestTemplate asyncRestTemplate;
+
     private String url;
 
     @Before
     public void init() {
         restTemplate = new RestTemplate();
+        asyncRestTemplate = new AsyncRestTemplate();
         restTemplate.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+    }
+
+    @Test
+    public void testSyncOrAsync() throws Exception {
+        url = "http://localhost:8085/portal/account/sync_or_async?requestType=2323";
+        Map<String, String> params = new HashMap<>();
+        params.put("requestType", "异步");
+        ListenableFuture<ResponseEntity<String>> responseEntity = asyncRestTemplate.getForEntity(url, String.class, params);
+        logger.info("已经返回");
+        String result = responseEntity.get().getBody();
+        logger.info("AsyncRestTemplate {}", result);
     }
 
     @Test
