@@ -16,8 +16,10 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -48,13 +50,27 @@ public class RestTemplateTest {
 
     @Test
     public void testSyncOrAsync() throws Exception {
-        url = "http://localhost:8085/portal/account/sync_or_async?requestType=2323";
-        Map<String, String> params = new HashMap<>();
-        params.put("requestType", "异步");
-        ListenableFuture<ResponseEntity<String>> responseEntity = asyncRestTemplate.getForEntity(url, String.class, params);
+        url = "http://localhost:8085/portal/account/sync_or_async";
+        url = UriComponentsBuilder.fromHttpUrl(url).queryParam("requestType", "异步").build().toUriString();
+        ListenableFuture<ResponseEntity<String>> responseEntity = asyncRestTemplate.getForEntity(url, String.class);
         logger.info("已经返回");
-        String result = responseEntity.get().getBody();
-        logger.info("AsyncRestTemplate {}", result);
+//        String result = responseEntity.get().getBody();
+//        logger.info("AsyncRestTemplate {}", result);
+        //异步调用后的回调函数
+         responseEntity.addCallback(new ListenableFutureCallback<ResponseEntity<String>>() {
+            //调用失败
+            @Override
+            public void onFailure(Throwable ex) {
+                logger.error("=====rest response faliure======");
+            }
+
+            //调用成功
+            @Override
+            public void onSuccess(ResponseEntity<String> result) {
+                logger.info("--->async rest response success----, result = " + result.getBody());
+            }
+        });
+        ThreadUtil.sleep(20000);
     }
 
     @Test
