@@ -225,8 +225,10 @@ public class URLTest {
 
     private void sendPostByURLConnection(String urlStr, String body, String contentType) throws IOException {
         URL url = new URL(urlStr);
-        URLConnection conn = url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("PUT");
         conn.setDoOutput(true);
+//        conn.setFixedLengthStreamingMode(100000);
         conn.setRequestProperty("Content-Type", contentType);
         BufferedOutputStream os = new BufferedOutputStream(conn.getOutputStream());
         os.write(body.getBytes());
