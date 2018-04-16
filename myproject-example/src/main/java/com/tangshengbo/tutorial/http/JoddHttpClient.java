@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import jodd.http.HttpBrowser;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
+import jodd.util.ThreadUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,13 +41,19 @@ public class JoddHttpClient {
     @Test
     public void testVerificationCode() {
         Gson gson = new Gson();
-        for (int i = 0; i < 100; i++) {
-            HttpResponse response = HttpRequest.get("http://localhost:8085/portal/log/code").send();
+        Runnable run = () -> {
+            HttpResponse response = HttpRequest.get("http://localhost:8085/portal/log/code").header("User-Agent", "Jodd HTTP-" + Thread.currentThread().getId()).send();
             logger.info("FastJson:{}", JSON.parseObject(response.bodyText(), ResultBean.class).getData());
             ResultBean<Integer> resultBean = gson.fromJson(response.bodyText(), new TypeToken<ResultBean<Integer>>() {
             }.getType());
             logger.info("Gson    :{}", resultBean.getData());
+        };
+
+
+        for (int i = 0; i < 5000; i++) {
+            new Thread(run, "Thread-" + i).start();
         }
+        ThreadUtil.sleep(1000000);
     }
 
     private void charToInt() {
