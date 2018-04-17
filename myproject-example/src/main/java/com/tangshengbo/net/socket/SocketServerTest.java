@@ -35,9 +35,20 @@ public class SocketServerTest {
                 Socket socket = serverSocket.accept();
                 service.submit(new DayTimeTask(socket));
             }
-
         } catch (IOException e) {
             logger.error("{}", ExceptionUtils.getStackTrace(e));
+        }
+    }
+
+    @Test
+    public void testServerPort() {
+        for (int i = 1; i < 65535; i++) {
+            try {
+                ServerSocket serverSocket = new ServerSocket(i);
+                logger.info("{}", serverSocket.getReuseAddress());
+            } catch (IOException e) {
+                logger.info("这个端口不可用 {}", i);
+            }
         }
     }
 

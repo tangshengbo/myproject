@@ -20,7 +20,7 @@ public class SocketClientTest {
 
     @Test
     public void testSocket() throws Exception {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
             InetAddress inetAddress = InetAddress.getByName("localhost");
             logger.info("{}", inetAddress);
 //        Socket socket = new Socket("47.52.146.64", 8080);
@@ -29,11 +29,11 @@ public class SocketClientTest {
             socket.connect(socketAddress);
             socket.setSoTimeout(15000);
             OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-            out.write("啦啦啦放松放松");
+            out.write("HTTP");
             out.flush();
             socket.shutdownOutput();
-            logger.info("LocalSocketAddress :{}", socket.getLocalSocketAddress());
-            logger.info("RemoteSocketAddress:{}", socket.getRemoteSocketAddress());
+//            logger.info("LocalSocketAddress :{}", socket.getLocalSocketAddress());
+//            logger.info("RemoteSocketAddress:{}", socket.getRemoteSocketAddress());
             logger.info("{}", IOUtils.toString(socket.getInputStream(), "UTF-8"));
             socket.close();
         }
