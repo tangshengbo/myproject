@@ -1,7 +1,7 @@
-package com.tangshengbo.redis;
+package com.tangshengbo.nosql.redis;
 
-import com.tangshengbo.redis.impl.JedisClientCluster;
-import com.tangshengbo.redis.impl.JedisClientPool;
+import com.tangshengbo.nosql.redis.impl.JedisClientCluster;
+import com.tangshengbo.nosql.redis.impl.JedisClientPool;
 
 public class TestRedis {
 

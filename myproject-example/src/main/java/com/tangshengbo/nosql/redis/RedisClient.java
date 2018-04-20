@@ -1,4 +1,4 @@
-package com.tangshengbo.redis;
+package com.tangshengbo.nosql.redis;
 
 import redis.clients.jedis.*;
 
@@ -192,16 +192,16 @@ public class RedisClient {
         // 删除列表指定的值 ，第二个参数为删除的个数（有重复时），后add进去的值先被删，类似于出栈
         System.out.println("成功删除指定元素个数-stringlists：" + shardedJedis.lrem("stringlists", 2, "vector"));
         System.out.println("删除指定元素之后-stringlists：" + shardedJedis.lrange("stringlists", 0, -1));
-        // 删除区间以外的数据 
+        // 删除区间以外的数据
         System.out.println("删除下标0-3区间之外的元素：" + shardedJedis.ltrim("stringlists", 0, 3));
 
         System.out.println("删除指定区间之外元素后-stringlists：" + shardedJedis.lrange("stringlists", 0, -1));
-        // 列表元素出栈 
+        // 列表元素出栈
         System.out.println("出栈元素：" + shardedJedis.lpop("stringlists"));
         System.out.println("元素出栈后-stringlists：" + shardedJedis.lrange("stringlists", 0, -1));
 
 
-        // 数组长度 
+        // 数组长度
         System.out.println("长度-stringlists：" + shardedJedis.llen("stringlists"));
         System.out.println("长度-numberlists：" + shardedJedis.llen("numberlists"));
 
@@ -215,7 +215,7 @@ public class RedisClient {
         System.out.println("返回排序后的结果-numberlists：" + shardedJedis.sort("numberlists", sortingParameters));
         // 子串：  start为元素下标，end也为元素下标；-1代表倒数一个元素，-2代表倒数第二个元素
         System.out.println("子串-第二个开始到结束：" + shardedJedis.lrange("stringlists", 1, -1));
-        // 获取列表指定下标的值 
+        // 获取列表指定下标的值
         System.out.println("获取下标为2的元素：" + shardedJedis.lindex("stringlists", 2) + "\n");
 
 

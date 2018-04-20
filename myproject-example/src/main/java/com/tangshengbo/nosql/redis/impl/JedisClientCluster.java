@@ -1,6 +1,6 @@
-package com.tangshengbo.redis.impl;
+package com.tangshengbo.nosql.redis.impl;
 
-import com.tangshengbo.redis.JedisClient;
+import com.tangshengbo.nosql.redis.JedisClient;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;

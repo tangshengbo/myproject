@@ -1,4 +1,4 @@
-package com.tangshengbo.redis;
+package com.tangshengbo.nosql.redis;
 
 public interface JedisClient {
 
