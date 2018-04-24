@@ -16,8 +16,9 @@
         <module>myproject-example</module>
     </modules>
     <properties>
-        <spring-version>4.1.6.RELEASE</spring-version>
+        <spring-version>4.3.10.RELEASE</spring-version>
         <spring-security-version>3.2.2.RELEASE</spring-security-version>
+        <spring.data.version>1.10.1.RELEASE</spring.data.version>
     </properties>
     <dependencies>
         <!-- 添加Spring4.1.4的核心包 -->
@@ -389,6 +390,12 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
             <version>3.2.2</version>
+        </dependency>
+        <!-- spring整合MongoDB -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${spring.data.version}</version>
         </dependency>
     </dependencies>
 </project>

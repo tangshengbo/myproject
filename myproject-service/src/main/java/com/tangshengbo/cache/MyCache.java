@@ -5,6 +5,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -18,6 +19,11 @@ public class MyCache implements Cache {
 
     public MyCache() {
 
+    }
+
+    @Override
+    public <T> T get(Object o, Callable<T> callable) {
+        return null;
     }
 
     public void setName(String name) {
