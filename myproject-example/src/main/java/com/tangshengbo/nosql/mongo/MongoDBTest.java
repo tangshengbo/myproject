@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +20,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.StopWatch;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Tangshengbo on 2018/4/20.
@@ -67,7 +70,7 @@ public class MongoDBTest {
 
     @Test
     public void testAddMongoTemplate() {
-        for (int i = 105; i < 200; i++) {
+        for (int i = 1; i < 20000; i++) {
             Account account = new Account();
             account.setName("Mongo-" + i);
             account.setBirthday(new Date());
@@ -83,9 +86,9 @@ public class MongoDBTest {
     public void testQueryMongoTemplate() {
         StopWatch watch = new StopWatch();
         watch.start();
-        for (int i = 0; i < 10000; i++) {
-            long count = mongoTemplate.count(new Query(), "account");
-            logger.info("{}", count);
+        for (int i = 0; i < 10; i++) {
+            Page<Account> accounts = paginationQuery(i);
+            logger.info("{}", accounts.getContent().get(0).getId());
         }
         watch.stop();
         logger.info("{}", watch.prettyPrint());
@@ -108,5 +111,26 @@ public class MongoDBTest {
         update.set("money", 20.11);
         WriteResult writeResult = mongoTemplate.upsert(new Query(criteria), update, "account");
         logger.info("{}", writeResult);
+    }
+
+    private Page<Account> paginationQuery(Integer pageNum) {
+
+        SpringDataPageable pageable = new SpringDataPageable();
+        Query query = new Query();
+//        List<Account> orders = new ArrayList<>();  //排序
+//        Sort sort = new Sort();
+
+        // 开始页
+        pageable.setPagenumber(pageNum);
+        // 每页条数
+        pageable.setPagesize(10);
+        // 排序
+//        pageable.setSort(sort);
+        // 查询出一共的条数
+        Long count = mongoTemplate.count(query, Account.class);
+        // 查询
+        List<Account> list = mongoTemplate.find(query.with(pageable), Account.class);
+        // 将集合与分页结果封装
+        return new PageImpl<>(list, pageable, count);
     }
 }
