@@ -40,7 +40,9 @@ public class RedisTemplateTest {
 
     @Test
     public void testPublish() {
-        redisTemplate.convertAndSend("topic.channel", "Redis");
+        for (int i = 0; i < 100000; i++) {
+            redisTemplate.convertAndSend("topic.channel", "Redis" + i);
+        }
         ThreadUtil.sleep(100000);
     }
 

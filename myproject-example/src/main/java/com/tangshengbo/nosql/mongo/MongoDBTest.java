@@ -63,9 +63,12 @@ public class MongoDBTest {
     @Test
     public void testQuery() {
         FindIterable<Document> documents = collection.find();
+        int size = 0;
         for (Document document : documents) {
             logger.info("{}", document.toJson());
+            size++;
         }
+        logger.info("Size:{}", size);
     }
 
     @Test
