@@ -2,9 +2,9 @@ package com.tangshengbo.nosql.redis.impl;
 
 
 import com.tangshengbo.nosql.redis.JedisClient;
+import com.tangshengbo.nosql.redis.JedisUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * redis单机版客户端
@@ -20,16 +20,7 @@ public class JedisClientPool implements JedisClient {
 
     // 初始化非分片连接池
     public void initJedisPool() {
-        getDefaultJedisPool();
-    }
-
-    private void getDefaultJedisPool() {
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxIdle(20);
-        jedisPoolConfig.setMaxTotal(20 * 50);
-        jedisPoolConfig.setMaxWaitMillis(20 * 100);
-        jedisPoolConfig.setTestOnBorrow(false);
-        jedisPool = new JedisPool(jedisPoolConfig, "localhost", 6379);
+        jedisPool = new JedisPool(JedisUtil.getDefaultPoolConfig(), "localhost", 6379);
     }
 
     @Override

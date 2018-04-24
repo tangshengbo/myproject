@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.util.StopWatch;
 
 import java.util.Date;
 
@@ -66,26 +67,36 @@ public class MongoDBTest {
 
     @Test
     public void testAddMongoTemplate() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 105; i < 200; i++) {
             Account account = new Account();
             account.setName("Mongo-" + i);
             account.setBirthday(new Date());
             account.setId(i);
             account.setMoney(12.22);
+            account.setAge(i);
             mongoTemplate.insert(account);
         }
-
+        logger.info("OK");
     }
 
     @Test
     public void testQueryMongoTemplate() {
-        long count = mongoTemplate.count(new Query(), "account");
-        logger.info("{}", count);
+        StopWatch watch = new StopWatch();
+        watch.start();
+        for (int i = 0; i < 10000; i++) {
+            long count = mongoTemplate.count(new Query(), "account");
+            logger.info("{}", count);
+        }
+        watch.stop();
+        logger.info("{}", watch.prettyPrint());
         Criteria criteria = Criteria.where("name").is("Mongo-1").and("money").is(50.11);
         Account account = mongoTemplate.findOne(new Query(criteria), Account.class);
         logger.info("{}", account);
-//        WriteResult writeResult = mongoTemplate.upsert(new Query(criteria), new Update().set("money", 20.11), "account");
-//        logger.info("{}", writeResult);
+        account = new Account();
+        account.setId(1);
+
+        account = mongoTemplate.findById(account.getId(), Account.class);
+        logger.info("{}", account);
     }
 
     @Test
