@@ -19,8 +19,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.StopWatch;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Tangshengbo on 2018/4/20.
@@ -74,13 +73,23 @@ public class MongoDBTest {
     @Test
     public void testAddMongoTemplate() {
         for (int i = 1; i < 20000; i++) {
+
             Account account = new Account();
             account.setName("Mongo-" + i);
             account.setBirthday(new Date());
             account.setId(i);
             account.setMoney(12.22);
             account.setAge(i);
-            mongoTemplate.insert(account);
+            List<String> titleList = new ArrayList<>();
+            titleList.add("tang");
+            titleList.add("sheng");
+            titleList.add("bo");
+            account.setTitleList(titleList);
+            Map<String, Object> commentMap = new HashMap<>();
+            commentMap.put("user" + i, "YES");
+            commentMap.put("user" + (i + 1), "NO");
+            account.setCommentMap(commentMap);
+            mongoTemplate.save(account);
         }
         logger.info("OK");
     }

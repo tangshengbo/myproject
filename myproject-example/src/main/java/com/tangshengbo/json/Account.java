@@ -2,6 +2,8 @@ package com.tangshengbo.json;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class Account {
 
@@ -18,6 +20,26 @@ public class Account {
 	private Date birthday;
 
 	private int age;
+
+	private List<String> titleList;
+
+	private Map<String, Object> commentMap;
+
+	public Map<String, Object> getCommentMap() {
+		return commentMap;
+	}
+
+	public List<String> getTitleList() {
+		return titleList;
+	}
+
+	public void setTitleList(List<String> titleList) {
+		this.titleList = titleList;
+	}
+
+	public void setCommentMap(Map<String, Object> commentMap) {
+		this.commentMap = commentMap;
+	}
 
 	public int getAge() {
 		return age;
