@@ -73,7 +73,6 @@ public class MongoDBTest {
     @Test
     public void testAddMongoTemplate() {
         for (int i = 1; i < 20000; i++) {
-
             Account account = new Account();
             account.setName("Mongo-" + i);
             account.setBirthday(new Date());

@@ -1,11 +1,14 @@
 package com.tangshengbo.json;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class Account {
+public class Account implements Serializable {
+
+    private static final long serialVersionUID = -5999194121092645042L;
 
     private Integer id;
     // @SerializedName("NAME")
