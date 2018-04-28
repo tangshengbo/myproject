@@ -25,7 +25,7 @@ public class InetAddressTest {
 
     @Test
     public void testInetAddress() throws Exception {
-        InetAddress[] inetAddresses = InetAddress.getAllByName("www.houbank.com");
+        InetAddress[] inetAddresses = InetAddress.getAllByName("www.baidu.com");
         for (InetAddress inetAddress : inetAddresses) {
             logger.info("{}", inetAddress.getHostAddress());
             logger.info("{}", numericToTextFormat(inetAddress.getAddress()));
@@ -38,7 +38,6 @@ public class InetAddressTest {
         byte[] address = {(byte) 180, (byte) 163, 26, 39};
         logger.info("{}", InetAddress.getByAddress(address).getHostName());
 
-        logger.info("{}", InetAddress.getByName("180.163.26.39"));
     }
 
     @Test

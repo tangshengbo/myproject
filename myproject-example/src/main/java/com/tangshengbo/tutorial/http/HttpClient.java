@@ -2,7 +2,6 @@ package com.tangshengbo.tutorial.http;
 
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.http.HttpUtil;
-import com.alibaba.dubbo.common.utils.NetUtils;
 import com.tangshengbo.json.Account;
 import jodd.io.NetUtil;
 import jodd.util.StringPool;
@@ -249,11 +248,6 @@ public class HttpClient {
 
     @Test
     public void testGetIp() throws Exception {
-        logger.info("getLocalHost:{}", NetUtils.getIpByHost("goldman.houbank.com"));
-        logger.info("getIpByHost:{}", NetUtils.getLocalHost());
-        logger.info("getLocalAddress:{}", NetUtils.getLocalAddress());
-        logger.info("resolveIpAddress:{}", NetUtil.resolveIpAddress("goldman.houbank.com"));
-
         InetAddress netAddress = InetAddress.getLocalHost();
         logger.info("{}", netAddress.getHostAddress());
     }
