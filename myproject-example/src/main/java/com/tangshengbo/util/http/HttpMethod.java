@@ -1,4 +1,4 @@
-package com.tangshengbo.util.baofoo.http;
+package com.tangshengbo.util.http;
 
 
 public enum HttpMethod {

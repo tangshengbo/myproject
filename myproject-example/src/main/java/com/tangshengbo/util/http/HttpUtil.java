@@ -20,7 +20,7 @@
  * @author Administrator
  *
  */
-package com.tangshengbo.util.baofoo.http;
+package com.tangshengbo.util.http;
 
 import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;

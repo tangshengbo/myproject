@@ -1,4 +1,4 @@
-package com.tangshengbo.util.baofoo.util;
+package com.tangshengbo.util;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;

@@ -1,4 +1,4 @@
-package com.tangshengbo.util.baofoo.http;
+package com.tangshengbo.util.http;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;

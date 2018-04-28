@@ -2,7 +2,7 @@ package com.tangshengbo.tutorial.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tangshengbo.util.baofoo.util.ZipUtil;
+import com.tangshengbo.util.ZipUtil;
 import jodd.util.StringPool;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.IOUtils;

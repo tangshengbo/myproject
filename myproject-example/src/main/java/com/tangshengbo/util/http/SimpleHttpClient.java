@@ -1,4 +1,4 @@
-package com.tangshengbo.util.baofoo.http;
+package com.tangshengbo.util.http;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
