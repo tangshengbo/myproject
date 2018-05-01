@@ -209,24 +209,24 @@ public class URLTest {
     public void testURLConnection() throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", 1);
-        jsonObject.put("name", "JavaWeb糖果");
+        jsonObject.put("name", "tang");
         jsonObject.put("money", 11.2);
         jsonObject.put("createDate", "2017-09-06 11:10:53");
 
         logger.info("{}", jsonObject.toString());
         String body = jsonObject.toString();
-        body = "id&=1&name=JavaWeb&money=11.2&createDate=2017-09-06 11:10:53";
+//        body = "id&=1&name=JavaWeb&money=11.2&createDate=2017-09-06 11:10:53";
         String url = "http://localhost:8085/portal/account/save-body";
-        url = "http://localhost:8085/portal/account/save-urlencoded";
+//        url = "http://localhost:8085/portal/account/save-urlencoded";
         String contentType = "application/json;charset=UTF-8";
-        contentType = "application/x-www-form-urlencoded";
+       // contentType = "application/x-www-form-urlencoded";
         sendPostByURLConnection(url, body, contentType);
     }
 
     private void sendPostByURLConnection(String urlStr, String body, String contentType) throws IOException {
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestMethod("PUT");
+        conn.setRequestMethod("POST");
         conn.setDoOutput(true);
 //        conn.setFixedLengthStreamingMode(100000);
         conn.setRequestProperty("Content-Type", contentType);
