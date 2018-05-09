@@ -5,7 +5,9 @@ import com.mongodb.WriteResult;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.gridfs.GridFSDBFile;
 import com.tangshengbo.json.Account;
+import org.apache.commons.io.IOUtils;
 import org.bson.Document;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +15,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.util.StopWatch;
 
 import java.util.*;
+
+import static org.springframework.data.mongodb.gridfs.GridFsCriteria.whereFilename;
 
 /**
  * Created by Tangshengbo on 2018/4/20.
@@ -36,14 +47,23 @@ public class MongoDBTest {
 
     private MongoTemplate mongoTemplate;
 
+    private GridFsTemplate gridFsTemplate;
+
     @Before
     public void init() {
         mongo = new MongoClient("127.0.0.1", 27017);
         db = mongo.getDatabase("myproject_portal");
         collection = db.getCollection("Account");
         mongoTemplate = new MongoTemplate(mongo, "myproject_portal");
+        gridFsTemplate = createGridTemplate();
     }
 
+    private GridFsTemplate createGridTemplate() {
+        MongoDbFactory dbFactory = new SimpleMongoDbFactory(mongo, "myproject_portal");
+        MongoMappingContext mongoMappingContext = new MongoMappingContext();
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(dbFactory);
+        return new GridFsTemplate(dbFactory, new MappingMongoConverter(dbRefResolver, mongoMappingContext));
+    }
 
     @Test
     public void testAdd() {
@@ -122,6 +142,13 @@ public class MongoDBTest {
         update.set("money", 20.11);
         WriteResult writeResult = mongoTemplate.upsert(new Query(criteria), update, "account");
         logger.info("{}", writeResult);
+    }
+
+    @Test
+    public void testGridFsTemplate() throws Exception {
+        gridFsTemplate.store(MongoDBTest.class.getResourceAsStream("/log4j.properties"), "唐.txt");
+        GridFSDBFile fsdbFile = gridFsTemplate.findOne(Query.query(whereFilename().is("唐.txt")));
+        logger.info("{}", IOUtils.toString(fsdbFile.getInputStream(), "UTF-8"));
     }
 
     private Page<Account> paginationQuery(Integer pageNum) {
