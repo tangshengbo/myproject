@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class GsonTest {
         gsonTest.readFileByGson();
     }
 
+    @Test
     public void readFileByGson() throws IOException {
         String url = JsonTest.class.getResource("/folder/user.json").getFile();
         System.out.println(url);
