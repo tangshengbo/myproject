@@ -2,27 +2,40 @@ package com.tangshengbo.tutorial.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tangshengbo.json.Weather;
 import com.tangshengbo.util.ZipUtil;
 import jodd.util.StringPool;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.StopWatch;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +54,32 @@ public class RestTemplateTest {
     private String url;
 
     @Before
-    public void init() {
-        restTemplate = new RestTemplate();
+    public void init() throws Exception {
+        restTemplate = new RestTemplate(createFactory());
+
         asyncRestTemplate = new AsyncRestTemplate();
         restTemplate.getMessageConverters()
                 .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+    }
+
+    private ClientHttpRequestFactory createFactory() throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+
+        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
+                .loadTrustMaterial(null, acceptingTrustStrategy)
+                .build();
+
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(csf)
+                .build();
+
+        HttpComponentsClientHttpRequestFactory requestFactory =
+                new HttpComponentsClientHttpRequestFactory();
+
+        requestFactory.setHttpClient(httpClient);
+        return requestFactory;
     }
 
     @Test
@@ -108,27 +142,11 @@ public class RestTemplateTest {
 
     @Test
     public void testPost() {
-//        url = "https://tgw.baofoo.com/boas/api/fileLoadRequest";
 //        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, "", String.class);
 //        logger.info("{}", responseEntity.getStatusCode());
 //        logger.info("{}", responseEntity.getHeaders());
 //        logger.info("{}", responseEntity.getBody());
 
-        url = "https://vgw.baofoo.com/boas/api/fileLoadNewRequest";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-
-        params.add("version", "4.0.0.2");
-        params.add("member_id", "100000178");//商户号
-        params.add("file_type", "fi");//收款：fi   出款：fo
-        params.add("client_ip", "116.247.102.46");//要与服务器IP保持一致
-        params.add("settle_date", "2018-01-19");//指定日期的对帐文件（除当天）
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
-
-        ResponseEntity<String> responseEntity = null;
-        responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
-        printLog(responseEntity);
     }
 
     @Test
@@ -213,6 +231,13 @@ public class RestTemplateTest {
 //        strings.stream().forEach(s -> {
 //            logger.info("{}", s);
 //        });
+    }
+
+    @Test
+    public void testWeather() {
+        url = "https://www.sojson.com/open/api/weather/json.shtml?city=上海";
+        Weather weather = restTemplate.getForObject(url, Weather.class);
+        logger.info("{}", weather);
     }
 
     private void printIP(String result) {

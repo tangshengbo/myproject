@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BfTradeEntity implements Serializable {
+public class TradeEntity implements Serializable {
     /**
      * 唯一主键
      */
@@ -43,9 +43,9 @@ public class BfTradeEntity implements Serializable {
     private String subTradeType;
 
     /**
-     * 宝付订单号
+     * 订单号
      */
-    @TxtTitle("宝付订单号")
+    @TxtTitle("订单号")
     private String bfOrderNo;
 
     /**
@@ -95,9 +95,9 @@ public class BfTradeEntity implements Serializable {
     private String payeeName;
 
     /**
-     * 宝付交易号
+     * 交易号
      */
-    @TxtTitle(value = "宝付交易号")
+    @TxtTitle(value = "交易号")
     private String bfTradeNo;
 
     /**
@@ -243,16 +243,16 @@ public class BfTradeEntity implements Serializable {
     }
 
     /**
-     * 宝付订单号
-     * @return BF_ORDER_NO 宝付订单号
+     * 订单号
+     * @return BF_ORDER_NO 订单号
      */
     public String getBfOrderNo() {
         return bfOrderNo;
     }
 
     /**
-     * 宝付订单号
-     * @param bfOrderNo 宝付订单号
+     * 订单号
+     * @param bfOrderNo 订单号
      */
     public void setBfOrderNo(String bfOrderNo) {
         this.bfOrderNo = bfOrderNo == null ? null : bfOrderNo.trim();
@@ -387,16 +387,16 @@ public class BfTradeEntity implements Serializable {
     }
 
     /**
-     * 宝付交易号
-     * @return BF_TRADE_NO 宝付交易号
+     * 交易号
+     * @return BF_TRADE_NO 交易号
      */
     public String getBfTradeNo() {
         return bfTradeNo;
     }
 
     /**
-     * 宝付交易号
-     * @param bfTradeNo 宝付交易号
+     * 交易号
+     * @param bfTradeNo 交易号
      */
     public void setBfTradeNo(String bfTradeNo) {
         this.bfTradeNo = bfTradeNo == null ? null : bfTradeNo.trim();
