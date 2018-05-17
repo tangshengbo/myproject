@@ -1,22 +1,26 @@
 package com.tangshengbo.datetime;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang.time.FastDateFormat;
 import org.joda.time.DateTime;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Tangshengbo on 2017/8/25.
  */
-public final class DateUtils {
+public final class DateUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
     public static final String DATE_PATTERN = "yyyyMMdd";
     public static final String DEFAULT_DATE_FORMAT = "yyyyMMddHHmmss";
@@ -24,8 +28,6 @@ public final class DateUtils {
     public static final String ISO_DATE_PATTERN = "yyyy-MM-dd";
 
     private static final long ONE_DAY_TIME = 1000 * 60 * 60 * 24L;
-
-
 
     public static List<String> formatDate(Date begin, Date end) {
         List<String> dates = new ArrayList<>();
@@ -51,7 +53,7 @@ public final class DateUtils {
      * @return
      */
     public static String convert(String date, String srcPattern, String destPattern) {
-        return DateUtils.formatDate(DateUtils.dateFormat(date, srcPattern), destPattern);
+        return DateUtil.formatDate(DateUtil.dateFormat(date, srcPattern), destPattern);
     }
 
     public static String formatDate() {
@@ -127,4 +129,32 @@ public final class DateUtils {
         long diff = minuend.getTime() - subtrahend.getTime();
         return TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS);
     }
+
+
+    @Test
+    public void testTruncate() {
+        Date current = new Date();
+        DateUtils.truncate(current, Calendar.YEAR); // 2017-01-01 00:00:00
+        DateUtils.truncate(current, Calendar.MONTH); // 2017-06-01 00:00:00
+        DateUtils.truncate(current, Calendar.HOUR_OF_DAY); // 2017-06-04 00:00:00
+        DateUtils.truncate(current, Calendar.DAY_OF_MONTH); // 2017-06-04 00:00:00
+        DateUtils.truncate(current, Calendar.HOUR); // 2017-06-04 00:00:00
+        DateUtils.truncate(current, Calendar.MINUTE); // 2017-06-04 00:56:00
+        DateUtils.truncate(current, Calendar.SECOND); // 2017-06-04 00:56:05
+        logger.info("{}", DateFormatUtils.format(DateUtils.truncate(current, Calendar.MONTH), ISO_DATETIME_PATTERN));
+    }
+
+    @Test
+    public void testCeiling() {
+        Date current = new Date();
+        DateUtils.ceiling(new Date(), Calendar.YEAR); // 2018-01-01 00:00:00
+        DateUtils.ceiling(new Date(), Calendar.MONTH); // 2017-07-01 00:00:00
+        DateUtils.ceiling(new Date(), Calendar.HOUR_OF_DAY); // 2017-06-04 02:00:00
+        DateUtils.ceiling(new Date(), Calendar.DAY_OF_MONTH); // 2017-06-05 00:00:00
+        DateUtils.ceiling(new Date(), Calendar.HOUR); // 2017-06-04 02:00:00
+        DateUtils.ceiling(new Date(), Calendar.MINUTE); // 2017-06-04 01:03:00
+        DateUtils.ceiling(new Date(), Calendar.SECOND); // 2017-06-04 01:02:32
+        logger.info("{}", DateFormatUtils.format(DateUtils.ceiling(current, Calendar.MINUTE), ISO_DATETIME_PATTERN));
+    }
+
 }
