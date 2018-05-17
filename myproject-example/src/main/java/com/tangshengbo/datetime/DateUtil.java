@@ -141,7 +141,7 @@ public final class DateUtil {
         DateUtils.truncate(current, Calendar.HOUR); // 2017-06-04 00:00:00
         DateUtils.truncate(current, Calendar.MINUTE); // 2017-06-04 00:56:00
         DateUtils.truncate(current, Calendar.SECOND); // 2017-06-04 00:56:05
-        logger.info("{}", DateFormatUtils.format(DateUtils.truncate(current, Calendar.MONTH), ISO_DATETIME_PATTERN));
+        logger.info("{}", DateFormatUtils.format(DateUtils.truncate(current, Calendar.MINUTE), ISO_DATETIME_PATTERN));
     }
 
     @Test
