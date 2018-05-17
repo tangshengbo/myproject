@@ -59,7 +59,7 @@ public class CalenderTest {
         Date todayNow = new Date();//取时间
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(todayNow);
-        calendar.add(calendar.DATE, -1);//把日期往后增加一天.整数往后推,负数往前移动
+        calendar.add(Calendar.DATE, -1);//把日期往后增加一天.整数往后推,负数往前移动
         todayNow = calendar.getTime(); //这个时间就是日期往后推一天的结果
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String yesterdayNow = formatter.format(todayNow);
