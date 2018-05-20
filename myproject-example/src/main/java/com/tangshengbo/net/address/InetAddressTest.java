@@ -34,7 +34,7 @@ public class InetAddressTest {
         logger.info("{}", InetAddress.getByName("www.qq.com").getHostAddress());
         logger.info("{}", InetAddress.getLocalHost());
         logger.info("{}", -255 & 0xff);
-
+        logger.info("{}", 63 & 134654);
         byte[] address = {(byte) 180, (byte) 163, 26, 39};
         logger.info("{}", InetAddress.getByAddress(address).getHostName());
 
