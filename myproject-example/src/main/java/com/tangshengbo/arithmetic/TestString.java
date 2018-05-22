@@ -189,8 +189,10 @@ public class TestString {
     public void testUUID() {
         Runnable r = () -> {
             String s = UUID.randomUUID().toString();
-            logger.info("{}", s);
-            s = s.substring(s.lastIndexOf("-") + 1);
+            String s1 = s.replaceAll("-", "");
+            logger.info("{}", s1);
+//            logger.info("{}", s);
+            s = s.substring(s.lastIndexOf("-") + 1) + ".back";
             logger.info("{}", s);
         };
         for (int i = 0; i < 1000; i++) {
