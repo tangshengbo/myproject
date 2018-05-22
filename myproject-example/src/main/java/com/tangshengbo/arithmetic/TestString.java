@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.tangshengbo.util.StringHelper;
 import jodd.util.StringPool;
 import jodd.util.StringUtil;
+import jodd.util.ThreadUtil;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -181,6 +183,21 @@ public class TestString {
         String str = StringHelper.concat("tang", "sheng", "bo");
         int offset = 0;
         System.out.println(str.substring(offset, offset + 4));
+    }
+
+    @Test
+    public void testUUID() {
+        Runnable r = () -> {
+            String s = UUID.randomUUID().toString();
+            logger.info("{}", s);
+            s = s.substring(s.lastIndexOf("-") + 1);
+            logger.info("{}", s);
+        };
+        for (int i = 0; i < 1000; i++) {
+            new Thread(r).start();
+        }
+        ThreadUtil.sleep(10000);
+
     }
 }
 
