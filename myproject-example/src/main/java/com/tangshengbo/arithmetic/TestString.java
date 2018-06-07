@@ -214,6 +214,7 @@ public class TestString {
         str = "-125887";
         Matcher isNum = pattern.matcher(str);
         logger.info("{}", isNum.matches());
+        logger.info("{}", StringUtils.defaultString(null, "df"));
 
     }
 
