@@ -14,7 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 
 /**
@@ -188,18 +187,31 @@ public class TestString {
     @Test
     public void testUUID() {
         Runnable r = () -> {
-            String s = UUID.randomUUID().toString();
-            String s1 = s.replaceAll("-", "");
-            logger.info("{}", s1);
+//            String s = UUID.randomUUID().toString();
+//            String s1 = s.replaceAll("-", "");
+//            logger.info("{}", s1);
+////            logger.info("{}", s);
+//            s = s.substring(s.lastIndexOf("-") + 1) + ".back";
 //            logger.info("{}", s);
-            s = s.substring(s.lastIndexOf("-") + 1) + ".back";
-            logger.info("{}", s);
+            logger.info("{}", random());
         };
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             new Thread(r).start();
         }
         ThreadUtil.sleep(10000);
 
+    }
+
+    @Test
+    public void testIsNumber() {
+        String str = "3242342223";
+        logger.info("{}",  StringUtils.isNotBlank(str) && StringUtils.isNumeric(str));
+        str = "testIsNumber";
+        logger.info("{}", StringUtils.capitalize(str));
+    }
+
+    private int random() {
+        return (int) (Math.random() * 9000) + 1000;
     }
 }
 
