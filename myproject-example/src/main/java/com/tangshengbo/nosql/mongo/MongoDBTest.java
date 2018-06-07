@@ -1,11 +1,14 @@
 package com.tangshengbo.nosql.mongo;
 
+import com.google.gson.Gson;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.gridfs.GridFSDBFile;
+import com.mongodb.util.JSON;
 import com.tangshengbo.json.Account;
 import org.apache.commons.io.IOUtils;
 import org.bson.Document;
@@ -91,18 +94,25 @@ public class MongoDBTest {
     }
 
     @Test
-    public void testAddMongoTemplate() {
-        for (int i = 1; i < 20000; i++) {
+    public void testAddMongoTemp3late() {
+        Account a = new Account();
+        a.setMoney(23.2);
+        a.setBirthday(new Date());
+        a.setName("xxxx");
+        Gson gson = new Gson();
+        DBObject dbObject = (DBObject) JSON.parse(gson.toJson(a));
+        for (int i = 3; i < 200; i++) {
             Account account = new Account();
-            account.setName("Mongo-" + i);
+//            account.setName("Mongo-32244" + i);
             account.setBirthday(new Date());
             account.setId(i);
-            account.setMoney(12.22);
+//            account.setMoney(12.22);
             account.setAge(i);
             List<String> titleList = new ArrayList<>();
             titleList.add("tang");
             titleList.add("sheng");
             titleList.add("bo");
+            account.setObject(dbObject);
             account.setTitleList(titleList);
             Map<String, Object> commentMap = new HashMap<>();
             commentMap.put("user" + i, "YES");
