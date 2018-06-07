@@ -14,6 +14,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -208,6 +210,11 @@ public class TestString {
         logger.info("{}",  StringUtils.isNotBlank(str) && StringUtils.isNumeric(str));
         str = "testIsNumber";
         logger.info("{}", StringUtils.capitalize(str));
+        Pattern pattern = Pattern.compile("[-0-9]*");
+        str = "-125887";
+        Matcher isNum = pattern.matcher(str);
+        logger.info("{}", isNum.matches());
+
     }
 
     private int random() {
