@@ -100,7 +100,7 @@ public class MongoDBTest {
         a.setBirthday(new Date());
         a.setName("xxxx");
         Gson gson = new Gson();
-        DBObject dbObject = (DBObject) JSON.parse(gson.toJson(a));
+        Object obj = JSON.parse(gson.toJson(a));
         for (int i = 3; i < 200; i++) {
             Account account = new Account();
 //            account.setName("Mongo-32244" + i);

@@ -1,7 +1,6 @@
 package com.tangshengbo.json;
 
 import com.google.gson.annotations.SerializedName;
-import com.mongodb.DBObject;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -28,17 +27,17 @@ public class Account implements Serializable {
 
     private int age;
 
-    private DBObject object;
+    private Object object;
 
     private List<String> titleList;
 
     private Map<String, Object> commentMap;
 
-    public DBObject getObject() {
+    public Object getObject() {
         return object;
     }
 
-    public void setObject(DBObject object) {
+    public void setObject(Object object) {
         this.object = object;
     }
 
