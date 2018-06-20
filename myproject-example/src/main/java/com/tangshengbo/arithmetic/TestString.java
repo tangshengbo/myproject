@@ -6,6 +6,7 @@ import jodd.util.StringPool;
 import jodd.util.StringUtil;
 import jodd.util.ThreadUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.FastDateFormat;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +28,8 @@ public class TestString {
     private static final int size = 50000;
     private static final Logger logger = LoggerFactory.getLogger(TestString.class);
 
+//    private String STRING = init();
+
     @Test
     public void testPlusStr() {
         TestString testString = new TestString();
@@ -34,6 +38,12 @@ public class TestString {
         testString.testJoin();
         testString.testStringBuffer();
         testString.testStringBuilder();
+    }
+
+    private String init() {
+        String result = "init" + random();
+        logger.info("result {}", result);
+        return result;
     }
 
     private void testPlus() {
@@ -117,7 +127,7 @@ public class TestString {
         for (int i = chars.length - 1; i >= 0; i--) {
             reverse += chars[i];
         }
-        System.out.println(reverse.valueOf(chars, 0, 5));
+        System.out.println(String.valueOf(chars, 0, 5));
         return reverse;
     }
 
@@ -216,10 +226,26 @@ public class TestString {
         logger.info("{}", isNum.matches());
         logger.info("{}", StringUtils.defaultString(null, "df"));
 
+        str = "101617443535435_1528963741403";
+        logger.info("{},{}", StringUtils.substring(str,0, str.indexOf("_")), str.indexOf("_"));
+    }
+
+    @Test
+    public void testEquals() {
+        for (int i = 0; i < 1000; i++) {
+            logger.info("{},{}", StringUtils.equals("32", null),  generateOrderId());
+            logger.info("{},{}", StringUtils.equals(null, "23"),  generateOrderId());
+        }
     }
 
     private int random() {
         return (int) (Math.random() * 9000) + 1000;
+    }
+
+    private String generateOrderId() {
+        StringBuilder sb = new StringBuilder("TANG_");
+        sb.append(FastDateFormat.getInstance("yyyyMMddHHmmssSSS").format(new Date())).append(random());
+        return sb.toString();
     }
 }
 

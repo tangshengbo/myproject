@@ -1,7 +1,6 @@
 package com.tangshengbo.nosql.mongo;
 
 import com.google.gson.Gson;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import com.mongodb.client.FindIterable;
@@ -112,7 +111,7 @@ public class MongoDBTest {
             titleList.add("tang");
             titleList.add("sheng");
             titleList.add("bo");
-            account.setObject(dbObject);
+            account.setObject(obj);
             account.setTitleList(titleList);
             Map<String, Object> commentMap = new HashMap<>();
             commentMap.put("user" + i, "YES");
