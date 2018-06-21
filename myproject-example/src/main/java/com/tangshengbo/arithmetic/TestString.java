@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -217,7 +219,7 @@ public class TestString {
     @Test
     public void testIsNumber() {
         String str = "3242342223";
-        logger.info("{}",  StringUtils.isNotBlank(str) && StringUtils.isNumeric(str));
+        logger.info("{}", StringUtils.isNotBlank(str) && StringUtils.isNumeric(str));
         str = "testIsNumber";
         logger.info("{}", StringUtils.capitalize(str));
         Pattern pattern = Pattern.compile("[-0-9]*");
@@ -227,14 +229,15 @@ public class TestString {
         logger.info("{}", StringUtils.defaultString(null, "df"));
 
         str = "101617443535435_1528963741403";
-        logger.info("{},{}", StringUtils.substring(str,0, str.indexOf("_")), str.indexOf("_"));
+        logger.info("{},{}", StringUtils.substring(str, 0, str.indexOf("_")), str.indexOf("_"));
     }
 
     @Test
-    public void testEquals() {
+    public void testEquals() throws Exception {
         for (int i = 0; i < 1000; i++) {
-            logger.info("{},{}", StringUtils.equals("32", null),  generateOrderId());
-            logger.info("{},{}", StringUtils.equals(null, "23"),  generateOrderId());
+            ThreadUtil.sleep(10);
+            logger.info("{},{}", StringUtils.equals("32", null), generateOrderId());
+            logger.info("{},{}", StringUtils.equals(null, "23"), generateOrderId());
         }
     }
 
@@ -244,6 +247,8 @@ public class TestString {
 
     private String generateOrderId() {
         StringBuilder sb = new StringBuilder("TANG_");
+        sb.append(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now())).append(random());
+        sb.append("|");
         sb.append(FastDateFormat.getInstance("yyyyMMddHHmmssSSS").format(new Date())).append(random());
         return sb.toString();
     }

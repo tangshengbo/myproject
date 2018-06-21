@@ -85,6 +85,13 @@ public class FileTest {
     }
 
     @Test
+    public void testLargeFileSearch() throws Exception {
+        String file = IOUtils.toString(new FileInputStream("D:/大文件.json"),
+                "UTF-8");
+        logger.info("{}", file.contains("find"));
+    }
+
+    @Test
     public void buffered() throws IOException {
         BufferedInputStream ios = new BufferedInputStream(new FileInputStream("E:/SW_DVD5_Visio_Premium_2010_W32_ChnSimp_Std_Pro_Prem_MLF_X16-51022.iso"));
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("D:/spring-framework-0.9.iso"));
