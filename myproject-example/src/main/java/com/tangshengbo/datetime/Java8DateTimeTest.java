@@ -5,12 +5,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.MonthDay;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 /**
  * Created by Tangshengbo on 2018/6/20
@@ -59,8 +57,10 @@ public class Java8DateTimeTest {
     public void testTime() {
         time = time.minusHours(10);
         logger.info("{}", time.format(DateTimeFormatter.ofPattern("HH:mm:ss SSS")));
-        LocalDate nextWeek = today.plus(1, ChronoUnit.WEEKS);
+        LocalDate nextWeek = today.plus(3, ChronoUnit.WEEKS);
         logger.info("{}", nextWeek);
+        Instant timestamp = Instant.now();
+        logger.info("{}, {}", System.currentTimeMillis(), Date.from(timestamp).toInstant().toEpochMilli());
     }
 
     @Test

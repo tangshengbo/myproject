@@ -25,18 +25,18 @@ public class SchedulerTest {
             // 创建jobDetail实例，绑定Job实现类
             // 指明job的名称，所在组的名称，以及绑定job类
             JobDetail job = JobBuilder.newJob(HelloQuartz.class).withIdentity("JobName", "JobGroupName").build();
-
+            job.getJobDataMap().put("name", "糖果");
             // 定义调度触发规则
 
             // SimpleTrigger
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("SimpleTrigger", Scheduler.DEFAULT_GROUP)
-                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(1).withRepeatCount(1))
-                    .startNow().build();
+//            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("SimpleTrigger", Scheduler.DEFAULT_GROUP)
+//                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(1).withRepeatCount(1))
+//                    .startNow().build();
 
             //  corn表达式  每五秒执行一次
-//            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("CronTrigger1", "CronTriggerGroup")
-//                    .withSchedule(CronScheduleBuilder.cronSchedule("*/1 * * * * ?"))
-//                    .startNow().build();
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("CronTrigger1", "CronTriggerGroup")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("*/1 * * * * ?"))
+                    .startNow().build();
 
             // 把作业和触发器注册到任务调度中
             scheduler.scheduleJob(job, trigger);
