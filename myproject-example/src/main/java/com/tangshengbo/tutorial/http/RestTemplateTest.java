@@ -142,11 +142,20 @@ public class RestTemplateTest {
 
     @Test
     public void testPost() {
-//        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, "", String.class);
-//        logger.info("{}", responseEntity.getStatusCode());
-//        logger.info("{}", responseEntity.getHeaders());
-//        logger.info("{}", responseEntity.getBody());
-
+        url = "http://localhost/server.html";
+        Runnable r = () -> {
+            for (int i = 0; i < 10000; i++) {
+                ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, "", String.class);
+//            logger.info("{}", responseEntity.getStatusCode());
+//            logger.info("{}", responseEntity.getHeaders());
+                logger.info("{}", responseEntity.getBody());
+                ThreadUtil.sleep(100);
+            }
+        };
+        for (int i = 0; i < 10; i++) {
+            new Thread(r).start();
+        }
+        ThreadUtil.sleep(30000);
     }
 
     @Test

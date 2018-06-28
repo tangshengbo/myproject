@@ -1,6 +1,9 @@
 package com.tangshengbo.arithmetic;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -15,7 +18,7 @@ import java.util.Scanner;
 public class Calculate {
 
     private static final String DEFAULT_NUMBER_PATTERN = "#,##0.00";
-
+    private static final Logger logger = LoggerFactory.getLogger(Calculate.class);
     private static double num;
     private static Scanner in;
 
@@ -149,5 +152,15 @@ public class Calculate {
     public static double changeF2Y(double amount) {
         BigDecimal decimal = BigDecimal.valueOf(amount).divide(new BigDecimal(100));
         return decimal.doubleValue();
+    }
+
+    @Test
+    public void testMultiply() {
+        BigDecimal amount = BigDecimal.valueOf(6000);
+        double rate = 4.0;
+        double riskReserveFee =
+                amount.multiply(BigDecimal.valueOf(rate))
+                        .divide(new BigDecimal(100)).doubleValue();
+        logger.info("{}", riskReserveFee);
     }
 }

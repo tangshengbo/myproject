@@ -1,12 +1,17 @@
 package com.tangshengbo.tutorial.thread;
 
+
 /**
  * Created by TangShengBo on 2017-07-02.
  */
 public class ThreadTest {
 
+    private final static Object LOCK = new Object();
+    private static int NUM = 1;
+
     public static void main(String[] args) {
-        testThreadSync();
+//        testThreadSync();
+        testAlternatePrint();
     }
 
     public static void testThreadMethods() {
@@ -37,4 +42,42 @@ public class ThreadTest {
         t3.start();
     }
 
+    private static void testAlternatePrint() {
+        Thread thread1 = new Thread(() -> {
+            while (NUM <= 100) {
+                synchronized (LOCK) {
+                    if (NUM % 2 == 0) {
+                        System.out.println("Thread0: " + NUM++);
+                    } else {
+                        LOCK.notifyAll();
+                        try {
+                            LOCK.wait(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            while (NUM <= 100) {
+                synchronized (LOCK) {
+                    if (NUM % 2 != 0) {
+                        System.out.println("Thread1:  " + NUM++);
+                    } else {
+                        LOCK.notifyAll();
+                        try {
+                            LOCK.wait(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        thread1.start();
+        thread2.start();
+    }
 }
+
