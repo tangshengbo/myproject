@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -245,11 +246,18 @@ public class TestString {
         return (int) (Math.random() * 9000) + 1000;
     }
 
-    private String generateOrderId() {
+    private String generateOrderId() throws Exception {
         StringBuilder sb = new StringBuilder("TANG_");
         sb.append(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now())).append(random());
         sb.append("|");
         sb.append(FastDateFormat.getInstance("yyyyMMddHHmmssSSS").format(new Date())).append(random());
+        byte[] ipAddressByteArray = InetAddress.getLocalHost().getAddress();
+        String hostName = InetAddress.getLocalHost().getHostName();
+        long workIdIP = (long)(((ipAddressByteArray[ipAddressByteArray.length - 2] & 3) << 8) + (ipAddressByteArray[ipAddressByteArray.length - 1] & 255));
+        sb.append("|").append(workIdIP);
+        hostName = hostName + "123";
+        long workHostName = Long.valueOf(hostName.replace(hostName.replaceAll("\\d+$", ""), ""));
+        sb.append("|").append(workHostName);
         return sb.toString();
     }
 }
