@@ -171,7 +171,11 @@ public class ZipUtil {
         return null;
     }
 
-
+    /**
+     * 解压文件流
+     * @param bis
+     * @return
+     */
     public static InputStream decompress(InputStream bis) {
         ZipArchiveInputStream zis;
         zis = new ZipArchiveInputStream(bis);
