@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +29,7 @@ public class TestString {
 
     private static final int size = 50000;
     private static final Logger logger = LoggerFactory.getLogger(TestString.class);
+
 
 //    private String STRING = init();
 
@@ -253,12 +253,89 @@ public class TestString {
         sb.append(FastDateFormat.getInstance("yyyyMMddHHmmssSSS").format(new Date())).append(random());
         byte[] ipAddressByteArray = InetAddress.getLocalHost().getAddress();
         String hostName = InetAddress.getLocalHost().getHostName();
-        long workIdIP = (long)(((ipAddressByteArray[ipAddressByteArray.length - 2] & 3) << 8) + (ipAddressByteArray[ipAddressByteArray.length - 1] & 255));
+        long workIdIP = (long) (((ipAddressByteArray[ipAddressByteArray.length - 2] & 3) << 8) + (ipAddressByteArray[ipAddressByteArray.length - 1] & 255));
         sb.append("|").append(workIdIP);
         hostName = hostName + "123";
         long workHostName = Long.valueOf(hostName.replace(hostName.replaceAll("\\d+$", ""), ""));
         sb.append("|").append(workHostName);
         return sb.toString();
+    }
+
+    @Test
+    public void testSessionId() {
+
+        for (int i = 0; i < 100; i++) {
+            logger.info("{}", SessionIdGenerator.generateSessionId(SessionIdGenerator.getJvmRoute()));
+        }
+    }
+
+    private static class SessionIdGenerator {
+
+        private static final Queue<SecureRandom> randoms = new ConcurrentLinkedQueue<>();
+
+        static String generateSessionId(String route) {
+
+            byte random[] = new byte[16];
+            int sessionIdLength = getSessionIdLength();
+
+            // Render the result as a String of hexadecimal digits
+            // Start with enough space for sessionIdLength and medium route size
+            StringBuilder buffer = new StringBuilder(2 * sessionIdLength + 20);
+
+            int resultLenBytes = 0;
+
+            while (resultLenBytes < sessionIdLength) {
+                getRandomBytes(random);
+                for (int j = 0;
+                     j < random.length && resultLenBytes < sessionIdLength;
+                     j++) {
+                    byte b1 = (byte) ((random[j] & 0xf0) >> 4);
+                    byte b2 = (byte) (random[j] & 0x0f);
+                    if (b1 < 10)
+                        buffer.append((char) ('0' + b1));
+                    else
+                        buffer.append((char) ('A' + (b1 - 10)));
+                    if (b2 < 10)
+                        buffer.append((char) ('0' + b2));
+                    else
+                        buffer.append((char) ('A' + (b2 - 10)));
+                    resultLenBytes++;
+                }
+            }
+
+            if (route != null && route.length() > 0) {
+                buffer.append('.').append(route);
+            } else {
+                String jvmRoute = getJvmRoute();
+                if (jvmRoute != null && jvmRoute.length() > 0) {
+                    buffer.append('.').append(jvmRoute);
+                }
+            }
+
+            return buffer.toString();
+        }
+
+        private static int getSessionIdLength() {
+            return 16;
+        }
+
+        private static String getJvmRoute() {
+            return null;
+        }
+
+        private static void getRandomBytes(byte bytes[]) {
+
+            SecureRandom random = randoms.poll();
+            if (random == null) {
+                random = createSecureRandom();
+            }
+            random.nextBytes(bytes);
+            randoms.add(random);
+        }
+
+        private static SecureRandom createSecureRandom() {
+            return new SecureRandom();
+        }
     }
 }
 
