@@ -1,9 +1,16 @@
 package com.tangshengbo.net.url;
 
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.Mailer;
+import org.simplejavamail.mailer.MailerBuilder;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -12,11 +19,12 @@ import java.util.Properties;
 public class EmailUtil {
 
     private static final String HOST = "smtp.qq.com";
-    private static final String PORT = "25";
+    private static final Integer PORT = 25;
     private static final String USER_NAME = "1727185965@qq.com";
     private static final String PASSWORD = "qafhluwqqjbdegbe";
     private static final String TO = "867850520@qq.com";
     private static Properties prop;
+    private static Mailer mailer;
 
     static {
         prop = System.getProperties();
@@ -26,6 +34,12 @@ public class EmailUtil {
         prop.put("mail.transport.protocol", "smtp");
         prop.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         prop.setProperty("mail.smtp.socketFactory.port", "465");
+        mailer = MailerBuilder
+                .withSMTPServer(HOST, PORT, USER_NAME, PASSWORD)
+                .withSessionTimeout(10 * 1000)
+                .clearEmailAddressCriteria()
+                .withDebugLogging(false)
+                .buildMailer();
     }
 
     /**
@@ -58,6 +72,31 @@ public class EmailUtil {
         Transport.send(mailMessage);
         System.out.println("邮件已发送..........");
     }
+
+    public static void sendEmail(List<String> to, List<String> cc, String subject, String content) throws IOException {
+        Email email = EmailBuilder.startingBlank()
+                .from(null, USER_NAME)
+                .to(null, to)
+                .cc(null, cc)
+                .withSubject(subject)
+                .withPlainText(content)
+                .buildEmail();
+        mailer.sendMail(email);
+    }
+
+    public static void sendEmailWithAttachment(List<String> to, List<String> cc, String subject, String content,
+                                               String attachmentName, byte[] attachmentData, String mimetype) throws IOException {
+        Email email = EmailBuilder.startingBlank()
+                .from(null, USER_NAME)
+                .to(null, to)
+                .cc(null, cc)
+                .withSubject(subject)
+                .withPlainText(content)
+                .withAttachment(attachmentName, attachmentData, mimetype)
+                .buildEmail();
+        mailer.sendMail(email);
+    }
+
 
     public static void main(String[] args) {
         try {
