@@ -214,6 +214,9 @@ public class TestString {
             new Thread(r).start();
         }
         ThreadUtil.sleep(10000);
+        int size = 100;
+        logger.info("{}", 5L + (long)size + (long)(size / 10));
+        logger.info("{}", (int)((float)size / 0.75F + 1.0F));
 
     }
 
@@ -263,10 +266,29 @@ public class TestString {
 
     @Test
     public void testSessionId() {
-
         for (int i = 0; i < 100; i++) {
             logger.info("{}", SessionIdGenerator.generateSessionId(SessionIdGenerator.getJvmRoute()));
         }
+    }
+
+    @Test
+    public void testInvitationCode() {
+        for (int i = 0; i < 100; i++) {
+            logger.info("{}", generateRandomStr());
+        }
+    }
+
+    private static String generateRandomStr() {
+        //字符源，可以根据需要删减
+        String generateSource = "23456789abcdefghgklmnpqrstuvwxyzABCDEFGHGKLMNPQRSTUVWXYZ";//去掉1和i ，0和o
+        StringBuilder rtnStr = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            //循环随机获得当次字符，并移走选出的字符
+            String nowStr = String.valueOf(generateSource.charAt((int) Math.floor(Math.random() * generateSource.length())));
+            rtnStr.append(nowStr);
+            generateSource = generateSource.replaceAll(nowStr, "");
+        }
+        return rtnStr.toString();
     }
 
     private static class SessionIdGenerator {
