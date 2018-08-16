@@ -1,17 +1,25 @@
 package com.tangshengbo.json;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GsonTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(GsonTest.class);
 
     public static void main(String[] args) throws IOException {
         Account account = new Account();
@@ -46,5 +54,18 @@ public class GsonTest {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Account account = gson.fromJson(content, Account.class);
         System.out.println(account.toString());
+    }
+
+    @Test
+    public void toJsonStr() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "tang");
+        map.put("age", 18);
+        map.put("sex", null);
+        String json = new Gson().toJson(map);
+        Gson gson = GsonBuilderUtils.gsonBuilderWithBase64EncodedByteArrays()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).serializeNulls().create();
+        json = gson.toJson(map);
+        logger.info("{}", json);
     }
 }
