@@ -13,10 +13,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.StopWatch;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Tangshengbo on 2018/4/24.
@@ -28,12 +25,14 @@ public class RedisTemplateTest {
     private RedisTemplate<String, Object> redisTemplate;
 
     private RedisSerializer hessianSerializer;
+    private Random random;
 
     @Before
     public void init() {
         redisTemplate = new RedisTemplate<>();
-        hessianSerializer = new HessianSerializer();
+        hessianSerializer = new XmlSeralizer();
         redisConfig();
+        random = new Random();
     }
 
     @Test
@@ -58,7 +57,8 @@ public class RedisTemplateTest {
         for (int i = 0; i < 10; i++) {
             Account account = new Account();
             account.setId(i);
-            account.setName("name" + i);
+            account.setName("Name-" + i);
+            account.setAge(random.nextInt(100) + 1);
             map.put(String.valueOf(account.getId()), account);
             accountList.add(account);
             redisTemplate.boundValueOps("kk").set(account.getId());
@@ -69,13 +69,12 @@ public class RedisTemplateTest {
         logger.info("{}", redisTemplate.opsForList().range("accountList", 0, 1));
         redisTemplate.opsForList().rightPushAll("accountList", accountList);
         redisTemplate.opsForHash().putAll("map:custom", map);
-        logger.info("{}", redisTemplate.boundValueOps("credit-server-halfday:juxinli_token").get());
         logger.info("OK.............");
     }
 
     @Test
     public void testPublish() {
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000; i++) {
             redisTemplate.convertAndSend("topic.channel", "Redis" + i);
         }
         ThreadUtil.sleep(100000);
@@ -91,9 +90,10 @@ public class RedisTemplateTest {
         connectionFactory.afterPropertiesSet();
         redisTemplate.setConnectionFactory(connectionFactory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        redisTemplate.setHashKeySerializer(hessianSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
         redisTemplate.setHashValueSerializer(hessianSerializer);
         redisTemplate.afterPropertiesSet();
     }

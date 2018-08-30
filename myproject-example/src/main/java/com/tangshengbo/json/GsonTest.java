@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import java.io.File;
@@ -67,5 +68,21 @@ public class GsonTest {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).serializeNulls().create();
         json = gson.toJson(map);
         logger.info("{}", json);
+
+        MDC.put("first", "Dorothy");
+
+        Logger logger = LoggerFactory.getLogger(GsonTest.class);
+        // We now put the last name
+        MDC.put("last", "Parker");
+
+        // The most beautiful two words in the English language according
+        // to Dorothy Parker:
+        logger.info("Check enclosed.");
+        logger.debug("The most beautiful two words in English.");
+
+        MDC.put("first", "Richard");
+        MDC.put("last", "Nixon");
+        logger.info("I am not a crook.");
+        logger.info("Attributed to the former US president. 17 Nov 1973.");
     }
 }

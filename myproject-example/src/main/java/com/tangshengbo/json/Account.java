@@ -1,6 +1,7 @@
 package com.tangshengbo.json;
 
 import com.google.gson.annotations.SerializedName;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -8,13 +9,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@XStreamAlias("account")
 public class Account implements Serializable {
 
     private static final long serialVersionUID = -5999194121092645042L;
-
+    @XStreamAlias("id")
     private Integer id;
 
     @SerializedName(value = "name", alternate = {"user_name", "NAME"})
+    @XStreamAlias("name")
     private String name;
 
     private String[] majoys;
@@ -72,6 +75,7 @@ public class Account implements Serializable {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
 
     public Integer getId() {
         return id;
