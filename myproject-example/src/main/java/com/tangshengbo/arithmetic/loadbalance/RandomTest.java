@@ -1,5 +1,7 @@
 package com.tangshengbo.arithmetic.loadbalance;
 
+import cn.hutool.core.util.RandomUtil;
+import jodd.util.ThreadUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,5 +34,23 @@ public class RandomTest {
         }
         list.forEach(i -> logger.info("List:{}", i));
         logger.info("Set:{}", set.size());
+    }
+
+    @Test
+    public void testRandomList() {
+        List<String> careerCodeList = Arrays.asList("20000", "30000", "40000", "50000", "60000");
+        Runnable r = () -> {
+            for (int i = 0; i < 1000; i++) {
+                logger.info("{}", RandomUtil.randomEle(careerCodeList));
+                logger.info("{}", RandomUtil.simpleUUID());
+            }
+        };
+
+        for (int i = 0; i < 10; i++) {
+            new Thread(r).start();
+        }
+
+        logger.info("OK................");
+        ThreadUtil.sleep(10000);
     }
 }
