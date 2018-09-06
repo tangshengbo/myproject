@@ -86,4 +86,8 @@ public class JedisClientPool implements JedisClient {
         return result;
     }
 
+    @Override
+    public Jedis getJedis() {
+        return jedisPool.getResource();
+    }
 }
