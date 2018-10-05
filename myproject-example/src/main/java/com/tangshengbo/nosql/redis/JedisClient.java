@@ -1,5 +1,7 @@
 package com.tangshengbo.nosql.redis;
 
+import redis.clients.jedis.Jedis;
+
 public interface JedisClient {
 
     String get(String key);
@@ -17,4 +19,6 @@ public interface JedisClient {
     Long hdel(String hkey, String key);
 
     Long expire(String key, int second);
+
+    Jedis getJedis();
 }

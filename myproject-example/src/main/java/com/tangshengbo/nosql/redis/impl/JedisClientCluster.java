@@ -1,10 +1,7 @@
 package com.tangshengbo.nosql.redis.impl;
 
 import com.tangshengbo.nosql.redis.JedisClient;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
+import redis.clients.jedis.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,4 +86,8 @@ public class JedisClientCluster implements JedisClient {
 		return result;
 	}
 
+	@Override
+	public Jedis getJedis() {
+		return null;
+	}
 }
