@@ -1,10 +1,8 @@
 package com.tangshengbo.annotation.reflect;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 
@@ -15,7 +13,7 @@ public class ReflectTest {
 
     private static final String DB_NAME_KEY = "db_server_name";
 
-    private static final String DB_CONFIG_FILE = "/db.properties";
+    private static final String DB_CONFIG_FILE = "/folder/db.properties";
 
     public static void main(String[] args) {
         ReflectTest reflectTest = new ReflectTest();
@@ -25,7 +23,7 @@ public class ReflectTest {
         System.out.println(server);
         while (true) {
             try {
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -39,14 +37,18 @@ public class ReflectTest {
         try {
             InputStream is;
             String path = this.getClass().getResource(DB_CONFIG_FILE).getPath();
-            is = new FileInputStream(path);
-//            is = ReflectTest.class.getResourceAsStream("/db.properties");
+//            is = new FileInputStream(path);
+//            is = ReflectTest.class.getResourceAsStream("/folder/db.properties");
+            is =  ClassLoader.getSystemClassLoader().getResourceAsStream("folder/db.properties");
             System.out.println(path);
+            System.out.println(is);
+
+
             properties.load(is);
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
-            String dbServerName = resourceBundle.getString(DB_NAME_KEY);
+//            ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
+//            String dbServerName = resourceBundle.getString(DB_NAME_KEY);
 //            dbServerName =  properties.getProperty(DB_NAME_KEY);
-            return (DBServer) Class.forName(dbServerName).newInstance();
+            return (DBServer) Class.forName(properties.get(DB_NAME_KEY).toString()).newInstance();
         } catch (ReflectiveOperationException | IOException e) {
             e.printStackTrace();
         }

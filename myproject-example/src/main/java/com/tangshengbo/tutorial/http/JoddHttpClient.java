@@ -36,7 +36,7 @@ public class JoddHttpClient {
     @Test
     public void testRequest() {
         HttpBrowser browser = new HttpBrowser();
-        HttpRequest request = HttpRequest.get("www.jd.com");
+        HttpRequest request = HttpRequest.get("https://www.jd.com");
         HttpResponse response = browser.sendRequest(request);
         logger.info("{}", response.bodyText());
         logger.info("{}", browser.getPage());
