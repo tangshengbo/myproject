@@ -5,6 +5,7 @@ package com.tangshengbo.json;
 
 import com.alibaba.fastjson.JSON;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,8 +14,9 @@ import java.util.List;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Data {
+public class Data implements Serializable {
 
+    private static final long serialVersionUID = -2276056008079251265L;
     private String shidu;
     private int pm25;
     private int pm10;

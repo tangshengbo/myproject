@@ -4,10 +4,13 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import java.io.Serializable;
+
 /**
  * Created by Tangshengbo on 2017/11/23.
  */
-public class Student implements Cloneable {
+public class Student implements Cloneable, Serializable {
+
 
     private String name;
     private String course;
@@ -110,5 +113,12 @@ public class Student implements Cloneable {
         System.out.println(student2.hashCode() & 10);
         System.out.println(student.toString());
         System.out.println(student.hashCode() + "\t" + student2.hashCode());
+
+
+        long l = 30000000000000L;
+        int i = (int) (l -1);
+        System.out.println(i);
+
+
     }
 }
