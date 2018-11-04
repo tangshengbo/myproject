@@ -1,9 +1,16 @@
 package com.tangshengbo.collection;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.tangshengbo.json.Account;
 import com.tangshengbo.thread.Student;
 import jodd.util.ThreadUtil;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cglib.beans.BeanMap;
+import org.springframework.util.StopWatch;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -14,11 +21,37 @@ import java.util.stream.Collectors;
 
 public class MapTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(MapTest.class);
+
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        testPutIfAbsent();
         testConvertMap();
 //        testLambdaCollect();
 //        testDealLoop();
+
+    }
+
+    @Test
+    public void beanToMap() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        Account account = new Account();
+        account.setObject(new Object());
+        account.setTitleList(Lists.newArrayList());
+        account.setCommentMap(Maps.newHashMap());
+        account.setAge(0);
+        account.setBirthday(new Date());
+        account.setMajoys(new String[]{""});
+        account.setHasGrilFriend(false);
+        account.setId(0);
+        account.setName("");
+        account.setMoney(0.0D);
+        for (int i = 0; i < 1000; i++) {
+            BeanMap beanMap = BeanMap.create(account);
+            logger.info("{}", beanMap);
+        }
+        stopWatch.stop();
+        logger.info("耗时：{}s", stopWatch.getTotalTimeSeconds());
     }
 
     public void hashMap() {
