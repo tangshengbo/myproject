@@ -228,6 +228,7 @@ public class TestString {
         logger.info("{}", StringUtils.capitalize(str));
         Pattern pattern = Pattern.compile("[-0-9]*");
         str = "-125887";
+        // Apache
         Matcher isNum = pattern.matcher(str);
         logger.info("{}", isNum.matches());
         logger.info("{}", StringUtils.defaultString(null, "df"));
@@ -242,6 +243,7 @@ public class TestString {
             ThreadUtil.sleep(10);
             logger.info("{},{}", StringUtils.equals("32", null), generateOrderId());
             logger.info("{},{}", StringUtils.equals(null, "23"), generateOrderId());
+
         }
     }
 

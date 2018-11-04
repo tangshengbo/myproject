@@ -13,11 +13,27 @@ import java.net.URL;
  */
 public class CodeGeneratorTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 //        operationClass();
 //        Account account = new AccountImpl();
 //        account.operation();
         createClass();
+//        loadClass();
+    }
+
+    private static void loadClass() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Class<?> aClass = CodeGeneratorTest.class.getClassLoader().loadClass("com.tangshengbo.loadclass.asm.AccountImpl");
+        Object instance = aClass.newInstance();
+        if (instance instanceof AccountImpl) {
+            ((AccountImpl) instance).operation();
+        }
+        System.out.println(System.getProperty("java.ext.dirs"));
+        System.out.println(System.getProperty("java.io.tmpdir"));
+        String classPath = System.getProperty("java.class.path");
+        String[] strings = classPath.split(";");
+        for (String s : strings) {
+            System.out.println(s);
+        }
     }
 
     private static void operationClass() {

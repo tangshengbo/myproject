@@ -5,6 +5,10 @@ package com.tangshengbo.loadclass.asm;
  */
 public class AccountImpl implements Account {
 
+    static {
+        System.out.println("class load............");
+    }
+
     @Override
     public void operation() {
         System.out.println("operation...");

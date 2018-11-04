@@ -1,8 +1,10 @@
 package com.tangshengbo.loadclass.asm;
 
+import org.apache.commons.io.FileUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
+import java.io.File;
 import java.net.URL;
 
 /**
@@ -22,6 +24,7 @@ public class SecureClassGenerator {
             AddSecurityCheckClassAdapter classAdapter = new AddSecurityCheckClassAdapter(cw);
             cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
             byte[] data = cw.toByteArray();
+            FileUtils.writeByteArrayToFile(new File("D:/tly.class"), data);
             secureAccountClass = classLoader.defineClassFromClassFile("com.tangshengbo.loadclass.asm.AccountImpl$EnhancedByASM", data);
         }
         return (Account) secureAccountClass.newInstance();

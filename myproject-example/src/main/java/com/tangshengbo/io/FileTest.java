@@ -9,10 +9,16 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FileTest {
 
@@ -66,11 +72,140 @@ public class FileTest {
 //        murgeFile("C:/Users/Tangshengbo/Desktop", "IOUtils.java");
 
 //        NetUtil.downloadFile("http://down.360safe.com/cpuleak_scan.exe", new File("E:/xx.exe"));
+//        operationFile();
+//        float i = 100.22f;
+
+//        for(int i=1;i<=5;i++){
+//            for(int j=5; i<=j; j--)
+//                System.out.print(" ");
+//            for(int j=1; j<=i; j++)
+//                System.out.print("*");
+//
+//            System.out.println();
+//        }
+        Map<String, Class> beanClassMap = new LinkedHashMap<>();
+        Map<String, Object> beanValueMap = new LinkedHashMap<>();
+
+        beanClassMap.put("student", Student.class);
+        beanClassMap.put("teacher", Teacher.class);
+        beanClassMap.put("school", School.class);
+        beanClassMap.put("tly", Tyl.class);
+        beanClassMap.forEach((beanName, beanClass) -> {
+            try {
+                //创建实例
+                Object o = beanClass.newInstance();
+                //注入属性
+                Field[] declaredFields = beanClass.getDeclaredFields();
+                for (Field field : declaredFields) {
+                    if (field.isAnnotationPresent(Autowired.class)) {
+                        System.out.println(beanClass + "\t" + field.getName() + ":开始注入");
+                        if (!beanValueMap.containsKey(field.getName())) {
+                            Class autoWiredCls = beanClassMap.get(field.getName());
+                            beanValueMap.put(field.getName(), autoWiredCls.newInstance());
+                        }
+                        field.setAccessible(true);
+                        field.set(o, beanValueMap.get(field.getName()));
+                        System.out.println(beanClass + "\t" + field.getName() + ":注入完成");
+                    }
+                }
+                //实例化完成 加入到bean实例工厂
+                beanValueMap.put(beanName, o);
+            } catch (Exception e) {
+                //
+            }
+        });
+        beanValueMap.forEach((beanName, beanValue) -> {
+            if (beanValue instanceof InitializingBean) {
+                try {
+                    ((InitializingBean) beanValue).afterPropertiesSet();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(beanName + "\t" + beanValue);
+        });
+
+
+//        Constructor[] declaredConstructors = stuCls.getDeclaredConstructors();
+//        for (Constructor constructor : declaredConstructors) {
+//            constructor.setAccessible(true);
+//            if (constructor.getParameters() == null) {
+//
+//                Object o = constructor.newInstance();
+//                System.out.println(o);
+//            }
+//        }
+//        Field[] declaredFields = stuCls.getDeclaredFields();
+//        for (Field field : declaredFields) {
+//           if (field.isAnnotationPresent(Autowired.class)) {
+//                System.out.println(field.getName() +  "注入");
+//                field.setAccessible(true);
+//                field.set(student, "唐雨伦");
+//            }
+//            System.out.println(field.getName());
+//        }
+//        System.out.println(student);
+
+
+//
+//        Student s = new Student();
+//        System.out.println(s);
+
+
+//        int row = 7;
+//        for(int i = 0;i <= row;i++){
+//
+//            //實現每行縮進
+//            for(int k = 0;k < (row - i);k++){
+//                System.out.print("     ");
+//            }
+//
+//            //左半部份
+//            for(int j = 0;j <=i;j++){
+//                //一位數的話4個空格
+//                if(((int)Math.pow(2, j)) < 10){
+//                    System.out.print("   ");
+//                }
+//                //三位數2個空格
+//                else if(((int)Math.pow(2, j)) > 99){
+//                    System.out.print(" ");
+//                }
+//                //兩位數3個空格
+//                else{
+//                    System.out.print("  ");
+//                }
+//                System.out.print(" " + (int)Math.pow(2,j));
+//            }
+//
+//
+//            //左右縮進
+//            System.out.print("   ");
+//
+//            //右半部份
+//            for(int l = i - 1 ;l >= 0;l--){
+//                System.out.print(" " + (int)Math.pow(2, l));
+//                //一位數的話4個空格
+//                if(((int)Math.pow(2, l)) < 10){
+//                    System.out.print("   ");
+//                }
+//                //三位數2個空格
+//                else if(((int)Math.pow(2, l)) > 99){
+//                    System.out.print(" ");
+//                }
+//                //兩位數3個空格
+//                else{
+//                    System.out.print("  ");
+//                }
+//            }
+//            System.out.println();
+//
+//        }
 
     }
 
-    public void operationFile() throws IOException {
+    public static void operationFile() throws IOException {
         File file = new File("D:\\tang.txt");
+        System.out.println(file.toURI().toURL());
         if (file.exists()) {
             file.delete();
         } else {
@@ -81,6 +216,8 @@ public class FileTest {
         fw.write("hello world!" + System.getProperty("line.separator"));
         fw.write("你好！北京！");
         fw.close();
+        URL url = new URL("file:/E:/Users/TangShengBo/intellJidea/myproject/myproject-example/target/classes/com/tangshengbo/loadclass/asm/AccountImpl.class");
+
 
     }
 
