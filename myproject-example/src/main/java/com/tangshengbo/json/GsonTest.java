@@ -1,21 +1,26 @@
 package com.tangshengbo.json;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import com.google.gson.FieldNamingPolicy;
-import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.tangshengbo.thread.Student;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.converter.json.GsonBuilderUtils;
+import org.springframework.util.StopWatch;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GsonTest {
@@ -23,27 +28,76 @@ public class GsonTest {
     private static final Logger logger = LoggerFactory.getLogger(GsonTest.class);
 
     public static void main(String[] args) throws IOException {
-        Account account = new Account();
-        account.setId(1);
-        account.setMoney(22.32);
-        account.setName("糖糖");
-        account.setHasGrilFriend(false);
-        account.setMajoys(new String[]{"唐阿卡", "卡卡"});
-        account.setBirthday(new Date());
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        builder.setFieldNamingStrategy(new FieldNamingStrategy() {
+        testPerformance();
 
-            public String translateName(Field field) {
+//
+//        Account account = new Account();
+//        account.setId(1);
+//        account.setMoney(22.32);
+//        account.setName("糖糖");
+//        account.setHasGrilFriend(false);
+//        account.setMajoys(new String[]{"唐阿卡", "卡卡"});
+//        account.setBirthday(new Date());
+//        GsonBuilder builder = new GsonBuilder();
+//        builder.setPrettyPrinting();
+//        builder.setFieldNamingStrategy(new FieldNamingStrategy() {
+//
+//            public String translateName(Field field) {
+//
+//                return field.getName();
+//            }
+//        });
+//        builder.setDateFormat("yyyy-MM-dd");
+//        Gson gson = builder.create();
+//        System.out.println(gson.toJson(account));
+//        GsonTest gsonTest = new GsonTest();
+//        gsonTest.readFileByGson();
+    }
 
-                return field.getName();
-            }
-        });
-        builder.setDateFormat("yyyy-MM-dd");
-        Gson gson = builder.create();
-        System.out.println(gson.toJson(account));
-        GsonTest gsonTest = new GsonTest();
-        gsonTest.readFileByGson();
+    private static void testPerformance() throws IOException {
+        //生成较大的json
+        List<Student> list = Lists.newLinkedList();
+        for (int i = 0; i < 1000000; i++) {
+            Student student = new Student();
+            student.setAge(i);
+            student.setName("唐声波:" + i);
+            list.add(student);
+        }
+        System.out.println("数据成功完毕.................");
+        Gson gson = new GsonBuilder().create();
+        String str = gson.toJson(list);
+
+        for (int i = 0; i < 5; i++) {
+            System.out.println("-----------------------------------------");
+            //1,gson解析
+            StopWatch gsonWatch = new StopWatch();
+            gsonWatch.start();
+            List l = gson.fromJson(str, new TypeToken<List<Student>>() {
+            }.getType());
+            System.out.println(l.size());
+            gsonWatch.stop();
+            System.out.println("gson time elapse:" + gsonWatch.getTotalTimeSeconds());
+
+            //2,jackson解析
+            ObjectMapper mapper = new ObjectMapper();
+            StopWatch jackSonWatch = new StopWatch();
+            jackSonWatch.start();
+            List l2 = mapper.readValue(str, new TypeReference<List<Student>>() {
+            });
+            System.out.println(l2.size());
+            jackSonWatch.stop();
+            System.out.println("jackson time elapse:" + jackSonWatch.getTotalTimeSeconds());
+
+            //fastJson解析
+            StopWatch fastJsonWatch = new StopWatch();
+            fastJsonWatch.start();
+            List l3 = JSON.parseObject(str, new com.alibaba.fastjson.TypeReference<List<Student>>() {
+            });
+            System.out.println(l3.size());
+            fastJsonWatch.stop();
+            System.out.println("fastJson time elapse:" + fastJsonWatch.getTotalTimeSeconds());
+        }
+//
     }
 
     @Test
