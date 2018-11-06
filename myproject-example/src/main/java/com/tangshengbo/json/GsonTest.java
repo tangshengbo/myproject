@@ -19,6 +19,7 @@ import org.springframework.util.StopWatch;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class GsonTest {
     private static void testPerformance() throws IOException {
         //生成较大的json
         List<Student> list = Lists.newLinkedList();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 500000000; i++) {
             Student student = new Student();
             student.setAge(i);
             student.setName("唐声波:" + i);
@@ -65,18 +66,27 @@ public class GsonTest {
         }
         System.out.println("数据成功完毕.................");
         Gson gson = new GsonBuilder().create();
+        int number = 20;
+
+        double gsonTime = 0;
+        double jackSonTime = 0;
+        double fastJsonTime = 0;
+
         String str = gson.toJson(list);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < number; i++) {
             System.out.println("-----------------------------------------");
-            //1,gson解析
-            StopWatch gsonWatch = new StopWatch();
-            gsonWatch.start();
-            List l = gson.fromJson(str, new TypeToken<List<Student>>() {
-            }.getType());
-            System.out.println(l.size());
-            gsonWatch.stop();
-            System.out.println("gson time elapse:" + gsonWatch.getTotalTimeSeconds());
+
+            //fastJson解析
+            StopWatch fastJsonWatch = new StopWatch();
+            fastJsonWatch.start();
+            List l3 = JSON.parseObject(str, new com.alibaba.fastjson.TypeReference<List<Student>>() {
+            });
+            System.out.println(l3.size());
+            fastJsonWatch.stop();
+            fastJsonTime += fastJsonWatch.getTotalTimeSeconds();
+            System.out.println("fastJson time elapse:" + fastJsonWatch.getTotalTimeSeconds());
+
 
             //2,jackson解析
             ObjectMapper mapper = new ObjectMapper();
@@ -86,18 +96,32 @@ public class GsonTest {
             });
             System.out.println(l2.size());
             jackSonWatch.stop();
+            jackSonTime += jackSonWatch.getTotalTimeSeconds();
             System.out.println("jackson time elapse:" + jackSonWatch.getTotalTimeSeconds());
 
-            //fastJson解析
-            StopWatch fastJsonWatch = new StopWatch();
-            fastJsonWatch.start();
-            List l3 = JSON.parseObject(str, new com.alibaba.fastjson.TypeReference<List<Student>>() {
-            });
-            System.out.println(l3.size());
-            fastJsonWatch.stop();
-            System.out.println("fastJson time elapse:" + fastJsonWatch.getTotalTimeSeconds());
+
+            //1,gson解析
+            StopWatch gsonWatch = new StopWatch();
+            gsonWatch.start();
+            List l = gson.fromJson(str, new TypeToken<List<Student>>() {
+            }.getType());
+            System.out.println(l.size());
+            gsonWatch.stop();
+            gsonTime += gsonWatch.getTotalTimeSeconds();
+            System.out.println("gson time elapse:" +  gsonWatch.getTotalTimeSeconds());
+
+
+
+
         }
-//
+
+        System.out.println("========================================================");
+        System.out.println("gson             jackSon              fastJson");
+        System.out.println((gsonTime) + "            " + (jackSonTime) + "            " + (fastJsonTime));
+        System.out.println((BigDecimal.valueOf(gsonTime).divide(BigDecimal.valueOf(number), 3,  BigDecimal.ROUND_DOWN))
+                + "            " + (BigDecimal.valueOf(jackSonTime).divide(BigDecimal.valueOf(number), 3,  BigDecimal.ROUND_DOWN))
+                + "            " + (BigDecimal.valueOf(fastJsonTime).divide(BigDecimal.valueOf(number), 3,  BigDecimal.ROUND_DOWN)));
+
     }
 
     @Test
