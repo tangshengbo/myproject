@@ -58,7 +58,7 @@ public class GsonTest {
     private static void testPerformance() throws IOException {
         //生成较大的json
         List<Student> list = Lists.newLinkedList();
-        for (int i = 0; i < 500000000; i++) {
+        for (int i = 0; i < 5000000; i++) {
             Student student = new Student();
             student.setAge(i);
             student.setName("唐声波:" + i);
