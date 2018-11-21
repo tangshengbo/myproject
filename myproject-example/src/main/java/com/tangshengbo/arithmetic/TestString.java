@@ -280,6 +280,19 @@ public class TestString {
         }
     }
 
+    @Test
+    public void testArrayToStr() {
+        String[] arr = {"1", "2", "3"};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                sb.append(',');
+            }
+            sb.append(arr[i]);
+        }
+        logger.info("{}", sb.toString());
+    }
+
     private static String generateRandomStr() {
         //字符源，可以根据需要删减
         String generateSource = "23456789abcdefghgklmnpqrstuvwxyzABCDEFGHGKLMNPQRSTUVWXYZ";//去掉1和i ，0和o
