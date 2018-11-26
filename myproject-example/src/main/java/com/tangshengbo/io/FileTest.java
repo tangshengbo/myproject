@@ -1,5 +1,7 @@
 package com.tangshengbo.io;
 
+import cn.hutool.core.io.FileUtil;
+import com.google.common.collect.Maps;
 import jodd.io.FileNameUtil;
 import jodd.util.StringPool;
 import org.apache.commons.io.FileUtils;
@@ -18,6 +20,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FileTest {
@@ -47,6 +50,28 @@ public class FileTest {
         IOUtils.write(result, fw);
         fw.flush();
         IOUtils.closeQuietly(fw);
+    }
+
+    @Test
+    public void testFile() throws Exception {
+        List<String> list = IOUtils.readLines(FileUtil.getInputStream("C:\\Users\\Tangshengbo\\Desktop\\source.txt"), "UTF-8");
+        System.out.println(list.size());
+        Map<String, String> fileNameMap = Maps.newHashMap();
+        list.forEach(str -> {
+            String[] fileName = str.split(",");
+            fileNameMap.put(fileName[0], fileName[1].trim());
+        });
+        System.out.println(fileNameMap.size());
+        System.out.println(fileNameMap);
+        List<File> fileList = FileUtil.loopFiles("C:\\Users\\Tangshengbo\\Desktop\\新建文件夹");
+        System.out.println(fileList.size());
+        fileList.forEach(file -> {
+            String newFileName = fileNameMap.get(file.getName());
+            if (!org.springframework.util.StringUtils.isEmpty(newFileName)) {
+                file.renameTo(new File(newFileName));
+            }
+            System.out.println(file.getName());
+        });
     }
 
     @Test

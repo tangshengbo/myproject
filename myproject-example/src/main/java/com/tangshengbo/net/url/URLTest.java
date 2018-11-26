@@ -106,6 +106,7 @@ public class URLTest {
     public void downloadURL() throws IOException {
         URL baseUrl = new URL("https", "aecpm.alicdn.com", "");
         URL url = new URL(baseUrl, "/simba/img/TB1W4nPJFXXXXbSXpXXSutbFXXX.jpg");
+        System.out.println(url);
         BufferedImage img = ImageIO.read(url);
         ImageIO.write(img, "jpg", new File("E:/xx.jpg"));
         new ImageFrame(img).setVisible(true);
