@@ -1,8 +1,10 @@
 package com.tangshengbo.tutorial.http;
 
 import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
 import com.tangshengbo.json.Account;
+import jodd.io.FileNameUtil;
 import jodd.io.NetUtil;
 import jodd.util.StringPool;
 import org.apache.commons.io.FileUtils;
@@ -271,5 +273,14 @@ public class HttpClient {
         post.setEntity(entity);
         HttpResponse response = client.execute(post);
         logger.info("{}", IOUtils.toString(response.getEntity().getContent(), "UTF-8"));
+    }
+
+    @Test
+    public void testBatchDownload() throws Exception {
+        List<String> list = IOUtils.readLines(FileUtil.getInputStream("C:\\Users\\Tangshengbo\\Desktop\\input.txt"), "UTF-8");
+        String parent = "C:/Users/Tangshengbo/Desktop/xxx";
+        for (String url : list) {
+            NetUtil.downloadFile(url, FileUtil.file(parent, FileNameUtil.getName(url)));
+        }
     }
 }
