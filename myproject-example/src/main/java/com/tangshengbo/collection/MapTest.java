@@ -13,6 +13,7 @@ import org.springframework.cglib.beans.BeanMap;
 import org.springframework.util.StopWatch;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -181,5 +182,40 @@ public class MapTest {
 //                });
         studentMap = students.stream().collect(Collectors.toMap(Student::getName, Function.identity(), (key1, key2) -> key2));
         studentMap.forEach((k, v) -> System.out.println("Key : " + k + " \t Value : " + v));
+    }
+
+    @Test
+    public void testReflectInvoke() throws Exception {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(123);
+        list.add(456);
+        list.add(789);
+        // list.add("abc") 如何存进去呢？
+        /*
+         * 使用反射技术绕过泛型编译期间检查，将不同的数据类型 存储到带有泛型的集合 （泛型的擦除）
+         */
+        // 获取list字节文字对象
+        Class clazz = list.getClass();
+        System.out.println(clazz);
+
+        // 存储对象 调用的是集合中的 add()方法 那么通过反射获取add方法
+        @SuppressWarnings("unchecked")
+        Method addMethod = clazz.getMethod("add", Object.class);
+        addMethod.setAccessible(true);
+        System.out.println(addMethod);
+
+        //对象有了   方法有了 运行add方法
+        addMethod.invoke(list, "abc");
+        addMethod.invoke(list, "sss");
+        addMethod.invoke(list, "qqq");
+        @SuppressWarnings("unchecked")
+        Method removeMethod = clazz.getMethod("remove", Object.class);
+        removeMethod.setAccessible(true);
+        System.out.println(removeMethod);
+        removeMethod.invoke(list, "qqq");
+
+        for (Object aList : list) {
+            System.out.println(aList);
+        }
     }
 }
