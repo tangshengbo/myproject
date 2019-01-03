@@ -22,6 +22,8 @@ public class VelocityTest {
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.setProperty(RuntimeConstants.INPUT_ENCODING, "UTF-8");
+        ve.setProperty(RuntimeConstants.OUTPUT_ENCODING, "UTF-8");
         ve.init();
 
         Template t = ve.getTemplate("velocity.vm");
