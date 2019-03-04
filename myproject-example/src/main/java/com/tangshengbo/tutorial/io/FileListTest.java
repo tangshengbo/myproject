@@ -28,7 +28,7 @@ public class FileListTest {
         long ts = System.currentTimeMillis();
         Optional<File> maxFile;
         maxFile = getMaxFileB(fileListTest);
-        OptionalDouble maxSize = getMaxFileSize(fileListTest);
+        OptionalDouble maxSize = getAvgFileSize(fileListTest);
         long te = System.currentTimeMillis();
         print(fileListTest, ts, maxFile, maxSize, te);
     }
@@ -42,7 +42,7 @@ public class FileListTest {
                 + "\t total:" + fileListTest.fileList.size() + "个");
     }
 
-    private static OptionalDouble getMaxFileSize(FileListTest fileListTest) {
+    private static OptionalDouble getAvgFileSize(FileListTest fileListTest) {
         return fileListTest.fileList.parallelStream()
                     .mapToLong(File::length)
                     .average();
