@@ -31,6 +31,28 @@ public class MapTest {
 //        testDealLoop();
 
     }
+    @Test
+    public void testLinkedMap() {
+        final int cacheSize = 10;
+        Map<String, String> map = new LinkedHashMap<String, String>((int) Math.ceil(cacheSize / 0.75f) + 1, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+                return size() > cacheSize;
+            }
+        };
+
+        for (int i = 0; i < 100; i++) {
+            map.put(String.valueOf(i), String.valueOf(i));
+        }
+        System.out.println(map);
+        for (int i = 0; i < 100; i++) {
+            map.get(String.valueOf(91));
+        }
+        System.out.println(map);
+
+        map = new TreeMap<>(map);
+        System.out.println(map);
+    }
 
     @Test
     public void beanToMap() {
