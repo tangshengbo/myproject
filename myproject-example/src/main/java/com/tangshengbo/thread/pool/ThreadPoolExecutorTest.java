@@ -24,10 +24,13 @@ public class ThreadPoolExecutorTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         System.out.println(Runtime.getRuntime().availableProcessors());
-        Future futureTask = submit();
-        Future<String> future = callable();
-        String result = future.get();
-        System.out.println("result: " + result + "\t" + futureTask.get());
+        for (int i = 0; i < 50; i++) {
+            Future futureTask = submit();
+            Future<String> future = callable();
+            String result = future.get();
+            System.out.println("result: " + result + "\t" + futureTask.get());
+        }
+
         executor.shutdown();
     }
 
@@ -37,6 +40,11 @@ public class ThreadPoolExecutorTest {
                 public String call() throws Exception {
                     System.out.println(Thread.currentThread().getName() + " for thread pool");
                     ThreadUtil.sleep(1000);
+                    try {
+                        int i = 1/0;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return Thread.currentThread().getName();
                 }
             });
