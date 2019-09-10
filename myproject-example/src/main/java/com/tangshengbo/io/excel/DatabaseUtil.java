@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DatabaseUtil {
@@ -98,7 +99,6 @@ public class DatabaseUtil {
     }
 
 
-
     public static Map<String, TableEntity> getColumnInfo(String tableName) {
         Map<String, TableEntity> dbTableEntity = new LinkedHashMap<>();
         //与数据库的连接
@@ -116,7 +116,9 @@ public class DatabaseUtil {
             //表列数
             int size = rsmd.getColumnCount();
             System.out.println("table:" + tableName + "\t ColumnCount:" + size);
+            StringBuilder sb = new StringBuilder();
             while (rs.next()) {
+                sb.append(",").append(rs.getString("Field"));
                 TableEntity tableEntity = new TableEntity();
                 tableEntity.setColumnName(rs.getString("Field"));
                 tableEntity.setColumnType(rs.getString("Type"));
@@ -126,6 +128,7 @@ public class DatabaseUtil {
                 tableEntity.setExtra(rs.getString("Extra"));
                 dbTableEntity.put(tableName + "-" + tableEntity.getColumnName(), tableEntity);
             }
+            System.out.println(sb.toString());
 
         } catch (SQLException e) {
             LOGGER.error("getColumnNames failure", e);
@@ -154,10 +157,31 @@ public class DatabaseUtil {
 //        });
 
 //        System.out.println(!ReUtil.contains("^[u4e00-u9fa5]{0,}$", "口口声声"));
-        Pattern compile = Pattern.compile(".*[\\u4e00-\\u9faf].*");
+        Pattern compile = Pattern.compile(".*[\\u4e00-\\u9faf].*||.*[\\u0030-\\u0039]*");
         System.out.println(compile.matcher("fsdsdfsdf").matches());
 
+        String str = "32423<23423>**LL(fsefs) 【了老老实实】（范德萨范德萨发）fdsfsd KKKKSS:杭州周发生的方式（就就开始）{kksj},:3232L进口件AADD     范德萨发生_3_";
+        System.out.println(filter(str));
+    }
 
 
+    /**
+     * 过滤特殊符号
+     *
+     * @param str 需要过滤的字符串
+     * @return str(只留数字汉字字母)
+     */
+    private static String filter(String str) {
+        if (str.trim().isEmpty()) {
+            return str;
+        }
+        String patternStr = "[\u4E00-\u9FA5]|[A-Za-z0-9]";
+        Pattern pattern = Pattern.compile(patternStr);
+        Matcher matcher = pattern.matcher(str);
+        StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            sb.append(matcher.group());
+        }
+        return sb.toString();
     }
 }
