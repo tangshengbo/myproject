@@ -67,9 +67,28 @@ public class SimpleList<T> {
 //        testCollections();
 
 //        testSubList();
-        testMerge();
+//        testMerge();
+
+        System.out.println(NoException());
+
 
     }
+
+    private static int NoException() {
+        int i = 10;
+        try {
+            System.out.println("i in try block is" + i);
+            return --i;
+        } catch (Exception e) {
+            --i;
+            System.out.println("i in catch - form try block is" + i);
+            return --i;
+        } finally {
+            System.out.println("i in finally - from try or catch block is" + i);
+            return --i;
+        }
+    }
+
 
     private static void change(String s1, String s2) {
         s1 = s2;

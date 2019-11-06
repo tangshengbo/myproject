@@ -9,9 +9,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +32,83 @@ public final class DateUtil {
     public static final String ISO_DATE_PATTERN = "yyyy-MM-dd";
 
     private static final long ONE_DAY_TIME = 1000 * 60 * 60 * 24L;
+
+    private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATE_PATTERN);
+
+    private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN);
+
+
+
+    /**
+     * 获取执行日期date 为空默认取前一天
+     *
+     * @param dateStr 日期字符串
+     * @return 日期类型
+     */
+    public static java.sql.Date getExecuteDate(String dateStr) {
+        LocalDate localDateTime;
+        if (StringUtils.isBlank(dateStr)) {
+            //默认是前一天
+            localDateTime = LocalDate.now().minusDays(1);
+        } else {
+            localDateTime = LocalDate.parse(dateStr, DATE_FORMATTER);
+        }
+        return java.sql.Date.valueOf(localDateTime);
+    }
+
+    /**
+     * 获取减去指定天数日期
+     *
+     * @param date   日期
+     * @param amount 减去的天数
+     * @return 日期类型
+     */
+    public static java.sql.Date minusDays(java.sql.Date date, int amount) {
+        long time = org.apache.commons.lang.time.DateUtils.addDays(date, -amount).getTime();
+        return new java.sql.Date(time);
+    }
+
+    /**
+     * 获取当前日期字符格式
+     *
+     * @return 日期字符串 (yyyy-MM-dd)
+     */
+    public static String getCurrentDateStr() {
+        return LocalDate.now().format(DATE_FORMATTER);
+    }
+
+
+    /**
+     * 获取执行日期
+     *
+     * @param dateTimeStr 日期字符串
+     * @return 日期类型
+     */
+    public static Timestamp getDateTime(String dateTimeStr) {
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTimeStr, DATETIME_FORMATTER);
+        return Timestamp.valueOf(localDateTime);
+    }
+
+    /**
+     * 获取当前日期字符格式
+     *
+     * @return 日期字符串 (yyyy-MM-dd HH:mm:ss)
+     */
+    public static String getCurrentDateTimeStr() {
+        return LocalDateTime.now().format(DATETIME_FORMATTER);
+    }
+
+    /**
+     * 获取当前日期字符格式
+     *
+     * @param timestamp 时间类型
+     * @return 日期字符串 (yyyy-MM-dd HH:mm:ss)
+     */
+    public static String getDateTimeStr(Timestamp timestamp) {
+        return timestamp.toLocalDateTime().format(DATETIME_FORMATTER);
+    }
 
     public static List<String> formatDate(Date begin, Date end) {
         List<String> dates = new ArrayList<>();
@@ -157,4 +238,11 @@ public final class DateUtil {
         logger.info("{}", DateFormatUtils.format(DateUtils.ceiling(current, Calendar.MINUTE), ISO_DATETIME_PATTERN));
     }
 
+    @Test
+    public void testTimestamp() {
+        Timestamp dateTime = DateUtil.getDateTime(DateUtil.getCurrentDateTimeStr());
+        logger.info("{}", dateTime.getTime());
+    }
+
 }
+
