@@ -9,9 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/11/30.
@@ -133,5 +132,55 @@ public class DateTimeTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private static final List<LocalDate> dateCache = new ArrayList<>();
+
+
+    /**
+     * 通过俩个日期获取中间的日期的集合
+     *
+     * @param startLocalDate 开始日期
+     * @param endLocalDate   结束日期
+     * @return 日期集合
+     */
+    public static List<LocalDate> getDateIntervalList(LocalDate startLocalDate, LocalDate endLocalDate) {
+        if (Objects.isNull(startLocalDate) || Objects.isNull(endLocalDate)) {
+            return Collections.emptyList();
+        }
+        if (dateCache.isEmpty()) {
+            List<LocalDate> daysBetweenDates = getDaysBetweenDates(startLocalDate, endLocalDate);
+            dateCache.addAll(daysBetweenDates);
+            return daysBetweenDates;
+        }
+        LocalDate minLocalDate = dateCache.get(0);
+        LocalDate maxLocalDate = dateCache.get(dateCache.size() - 1);
+        if (minLocalDate.compareTo(startLocalDate) > 0) {
+            dateCache.addAll(0, getDaysBetweenDates(
+                    startLocalDate, minLocalDate.minusDays(1)));
+        }
+        if (maxLocalDate.compareTo(endLocalDate) < 0) {
+            dateCache.addAll(getDaysBetweenDates(maxLocalDate.plusDays(1), endLocalDate));
+        }
+
+        int startIndex = dateCache.indexOf(startLocalDate);
+        int endIndex = dateCache.indexOf(endLocalDate);
+        return dateCache.subList(startIndex, endIndex + 1);
+    }
+
+    /**
+     * 获取日期区间之间所有日期集合
+     *
+     * @param startLocalDate 开始日期
+     * @param endLocalDate   结束日期
+     * @return 日期区间之间所有日期集合
+     */
+    private static List<LocalDate> getDaysBetweenDates(LocalDate startLocalDate, LocalDate endLocalDate) {
+        List<LocalDate> dateList = new ArrayList<>();
+        for (LocalDate localDate = startLocalDate; localDate.compareTo(endLocalDate) <= 0;
+             localDate = localDate.plusDays(1)) {
+            dateList.add(localDate);
+        }
+        return dateList;
     }
 }
