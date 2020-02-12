@@ -154,6 +154,28 @@ public class Calculate {
         return decimal.doubleValue();
     }
 
+    /**
+     * 判断参数为0 返回指定的字符串
+     * @param str String类型参数
+     * @param defaultStr 默认字符串
+     * @return 指定的字符串
+     */
+    public static String defaultIfZero(String str, String defaultStr) {
+        if (defaultStr.equals(str)) {
+            return str;
+        }
+        try {
+            float floatValue = Float.parseFloat(str);
+            if (Float.compare(floatValue, 0.0F) == 0) {
+                return defaultStr;
+            }
+        } catch (NumberFormatException e) {
+            return defaultStr;
+        }
+        return str;
+    }
+
+
     @Test
     public void testMultiply() {
         BigDecimal amount = BigDecimal.valueOf(6000);

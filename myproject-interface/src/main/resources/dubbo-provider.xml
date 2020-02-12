@@ -21,7 +21,7 @@
     <!-- 监控注册 -->
     <dubbo:monitor address="${dubbo.monitor.address}"/>
 
-    <dubbo:consumer check="false" lazy="true"/>
+    <dubbo:consumer check="false" lazy="true" mock="true"/>
 
     <!-- 默认超时时间2分钟，重试次数0次 -->
     <dubbo:provider timeout="120000" retries="0" delay="${dubbo.registry.delay}"/>
