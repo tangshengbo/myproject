@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -187,6 +188,29 @@ public final class DateUtil {
         return date;
     }
 
+
+    /**
+     * 计算当前日期与{@code endDate}的间隔天数
+     *
+     * @param endDate
+     * @return 间隔天数
+     */
+    public static long until(LocalDate endDate) {
+        return LocalDate.now().until(endDate, ChronoUnit.DAYS);
+    }
+
+    /**
+     * 计算日期{@code startDate}与{@code endDate}的间隔天数
+     *
+     * @param startDate
+     * @param endDate
+     * @return 间隔天数
+     */
+    public static long until(LocalDate startDate, LocalDate endDate) {
+        return startDate.until(endDate, ChronoUnit.DAYS);
+    }
+
+
     public static Date dateFormat(String dateStr, String format) {
         if (StringUtils.isBlank(dateStr)) {
             return null;
@@ -242,6 +266,11 @@ public final class DateUtil {
     public void testTimestamp() {
         Timestamp dateTime = DateUtil.getDateTime(DateUtil.getCurrentDateTimeStr());
         logger.info("{}", dateTime.getTime());
+
+        System.out.println(Math.abs(DateUtil.until(LocalDate.of(2019, 9, 23))));
+
+        System.out.println(LocalDate.now().minusDays(30));
+
     }
 
 }

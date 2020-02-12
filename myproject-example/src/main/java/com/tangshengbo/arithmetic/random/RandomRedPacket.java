@@ -1,7 +1,9 @@
 package com.tangshengbo.arithmetic.random;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang.math.RandomUtils;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 /**
@@ -12,6 +14,11 @@ public class RandomRedPacket {
     private int leftMoney;
     private int leftNum;
     private Random rnd;
+
+    private static final int MAX_DIGITS = 4;
+
+    private static final int BASE_MULTIPLE_VALUE = 10;
+
 
     public RandomRedPacket(int total, int num) {
         this.leftMoney = total;
@@ -72,4 +79,35 @@ public class RandomRedPacket {
 
         System.out.println(Pair.makePair(124, "天天"));
     }
+
+    private int extractDecimalDigits(BigDecimal bigDecimal) {
+        int digits;
+        int scale = bigDecimal.scale();
+        if (scale == 0) {
+            return 0;
+        }
+        digits = scale;
+        if (digits > MAX_DIGITS) {
+            digits = MAX_DIGITS;
+        }
+        return (int) Math.pow(BASE_MULTIPLE_VALUE, digits);
+    }
+
+    private BigDecimal randomRange(BigDecimal start, BigDecimal end) {
+        int startDecimalDigits = extractDecimalDigits(start);
+        int endDecimalDigits = extractDecimalDigits(end);
+        int multipleValue = Math.max(startDecimalDigits, endDecimalDigits);
+
+        int startNum = start.multiply(BigDecimal.valueOf(multipleValue)).intValue();
+        int endNum = end.multiply(BigDecimal.valueOf(multipleValue)).intValue();
+        int temp = startNum;
+        if (endNum < startNum) {
+            startNum = endNum;
+            endNum = temp;
+        }
+        //产生随机数
+        int result = RandomUtils.nextInt(endNum - startNum + 1) + startNum;
+        return BigDecimal.valueOf(result).divide(BigDecimal.valueOf(multipleValue));
+    }
+
 }

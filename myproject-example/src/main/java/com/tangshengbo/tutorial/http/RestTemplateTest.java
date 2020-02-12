@@ -1,5 +1,7 @@
 package com.tangshengbo.tutorial.http;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tangshengbo.json.Weather;
@@ -8,6 +10,7 @@ import jodd.util.StringPool;
 import jodd.util.ThreadUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -28,7 +31,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
-import java.nio.charset.Charset;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -56,7 +60,7 @@ public class RestTemplateTest {
 
         asyncRestTemplate = new AsyncRestTemplate();
         restTemplate.getMessageConverters()
-                .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+                .add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
     private ClientHttpRequestFactory createFactory() throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
@@ -138,35 +142,66 @@ public class RestTemplateTest {
     }
 
     @Test
-    public void testPost() {
-        url = "http://localhost/server.html";
-        Runnable r = () -> {
-            for (int i = 0; i < 100000; i++) {
-                ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, "", String.class);
-//            logger.info("{}", responseEntity.getStatusCode());
-//            logger.info("{}", responseEntity.getHeaders());
-                logger.info("{}", responseEntity.getBody());
-                ThreadUtil.sleep(100);
-            }
-        };
+    public void testPost() throws Exception {
+//        url = "http://localhost/server.html";
+//        Runnable r = () -> {
+//            for (int i = 0; i < 100000; i++) {
+//                ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, "", String.class);
+////            logger.info("{}", responseEntity.getStatusCode());
+////            logger.info("{}", responseEntity.getHeaders());
+//                logger.info("{}", responseEntity.getBody());
+//                ThreadUtil.sleep(100);
+//            }
+//        };
+//        for (int i = 0; i < 1000; i++) {
+//            new Thread(r).start();
+//        }
+//        ThreadUtil.sleep(100000);
+//        PrintStream ps = new PrintStream("D:/sql.txt");
+//        System.setOut(ps);
+//
+//        String sql = "CREATE TABLE IF NOT EXISTS t_order_%s (order_id BIGINT AUTO_INCREMENT, user_id INT NOT NULL, STATUS VARCHAR(50),`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间', PRIMARY KEY (order_id));\n" +
+//                "CREATE TABLE IF NOT EXISTS t_order_item_%s (order_item_id BIGINT AUTO_INCREMENT, order_id BIGINT, user_id INT NOT NULL, STATUS VARCHAR(50),`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',`update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间', PRIMARY KEY (order_item_id));\n";
+//        sql = "TRUNCATE TABLE `t_order_%s`;\n" +
+//                "TRUNCATE TABLE `t_order_item_%s`;";
+////        sql = "SELECT * FROM `t_order_%s`;";
+//
+//        for (int i = 0; i < 100; i++) {
+//            System.out.println(String.format(sql, String.valueOf(i), String.valueOf(i)));
+//
+//        }
+//        for (int i = 0; i < 100; i++) {
+//            System.out.println(RandomUtils.nextLong());
+//        }
+
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Long.MAX_VALUE);
+        double d = 100;
+
         for (int i = 0; i < 1000; i++) {
-            new Thread(r).start();
+
+            BigDecimal multiply = BigDecimal.valueOf(d).multiply(BigDecimal.valueOf(1 + RandomUtils.nextFloat() / 1000));
+            multiply = multiply.setScale(4, BigDecimal.ROUND_HALF_UP);
+
+            System.out.println(multiply);
         }
-        ThreadUtil.sleep(100000);
+
     }
 
     @Test
-    public void testExchange() {
-        url = "http://localhost:8085/portal/account/list";
+    public void testExchange() throws Exception {
+        url = "http://localhost:8080/order";
         HttpHeaders header = new HttpHeaders();
-//        header.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-//        header.setContentType(MediaType);
-//        JSONObject params = new JSONObject();
-//        params.put("id", "10");
+
         header.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> httpEntity = new HttpEntity<>(header);
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-        printLog(responseEntity);
+        for (int i = 1; i <= 10000000; i++) {
+            JSONObject params = new JSONObject();
+            params.put("userId", String.valueOf(i));
+            params.put("status", "INSERT_TEST");
+            HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(params), header);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+            printLog(responseEntity);
+        }
     }
 
     @Test

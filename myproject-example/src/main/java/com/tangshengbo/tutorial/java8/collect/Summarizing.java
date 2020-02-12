@@ -31,17 +31,17 @@ public class Summarizing {
     }
 
     private static Dish findMostCaloricDish() {
-        return menu.stream().collect(reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2)).get();
+        return menu.stream().reduce((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2).get();
     }
 
     private static Dish findMostCaloricDishUsingComparator() {
         Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
         BinaryOperator<Dish> moreCaloricOf = BinaryOperator.maxBy(dishCaloriesComparator);
-        return menu.stream().collect(reducing(moreCaloricOf)).get();
+        return menu.stream().reduce(moreCaloricOf).get();
     }
 
     private static int calculateTotalCalories() {
-        return menu.stream().collect(summingInt(Dish::getCalories));
+        return menu.stream().mapToInt(Dish::getCalories).sum();
     }
 
     private static Double calculateAverageCalories() {
