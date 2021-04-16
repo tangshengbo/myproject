@@ -7,6 +7,7 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
 
 import java.io.FileInputStream;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -16,10 +17,99 @@ import java.util.regex.Pattern;
 public class ExcelTest {
 
     public static void main(String[] args) {
+            ZoneId defaultZone = ZoneId.systemDefault();
+            System.out.println(defaultZone);
+
+
+    //
+    ////        parseExcelByDB();
+    //        Map<String, String> newTableEntity = new LinkedHashMap<>();
+    //        try {
+    //            FileInputStream fis = new FileInputStream("C:\\Users\\admin\\Desktop\\中资美元债\\【中资美元债-海外评级部分】主体评级处理逻辑.xlsx");
+    //            ExcelReader reader = new ExcelReader(fis, ExcelTypeEnum.XLSX, null,
+    //                    new AnalysisEventListener<Rate>() {
+    //                        @Override
+    //                        public void invoke(Rate object, AnalysisContext context) {
+    //
+    ////                            System.out.println(object);
+    ////                            String[] split = object.getDetail().split("\r\n");
+    ////                            System.out.println(split);
+    //
+    //
+    //
+    //
+    //                            newTableEntity.put(object.getCompany(), object.getDetail());
+    //
+    //                        }
+    //
+    //                        @Override
+    //                        public void doAfterAllAnalysed(AnalysisContext context) {
+    //                            System.out.println(context.getCurrentSheet());
+    //                        }
+    //                    });
+    //
+    //            reader.read(new Sheet(1, 1, Rate.class));
+    //
+    //
+    ////            System.out.println(newTableEntity);
+    //            List<String> keyword = Arrays.asList("级有限公司", 管理服务", "公司");
+    //            PrintStream out = new PrintStream("e:/test.txt");
+    //            System.setOut(out);
+    //            newTableEntity.forEach((k, v) -> {
+    //                boolean contains = false;
+    //                boolean never = true;
+    //                if (StringUtils.isBlank(v)) {
+    //                    System.out.println(k);
+    //                    return;
+    //                }
+    //                String[] split = v.split("\r\n");
+    //                for (String s : split) {
+    //                    for (String key : keyword) {
+    //                        if (s.contains(key)) {
+    //                            contains = true;
+    //                            never = false;
+    //                            break;
+    //                        }
+    //                    }
+    //                    if (contains) {
+    //                        System.out.println(k  + " \t" + s);
+    //                    }
+    //                    contains = false;
+    //                }
+    //
+    //                if (never) {
+    //                    System.out.println(k);
+    //                }
+    //
+    //
+    //            });
+
+    //
+    //
+    //
+    //            String value = newTableEntity.get("有限公司");
+    //            String[] split = value.split("\r\n");
+    //            System.out.println(split.length);
+    //            for (String s : split) {
+    //
+    //                System.out.println(s);
+    //
+    //
+    //            }
+
+    //            System.out.println();
+    //
+    //
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    }
+
+    private static void parseExcelByDB() {
         Map<String, TableEntity> newTableEntity = new LinkedHashMap<>();
 
         try {
-            FileInputStream fis = new FileInputStream("E:/xxx.xlsx");
+            FileInputStream fis = new FileInputStream("E:/数据字段.xlsx");
             ExcelReader reader = new ExcelReader(fis, ExcelTypeEnum.XLSX, null,
                     new AnalysisEventListener<TableEntity>() {
                         @Override
@@ -39,7 +129,7 @@ public class ExcelTest {
             }
 
 
-            List<String> tableNameList = Arrays.asList("xxxTable", "xxx");
+            List<String> tableNameList = Collections.singletonList("online_quote");
 
             Pattern compile = Pattern.compile(".*[\\u4e00-\\u9faf].*");
 
@@ -68,6 +158,8 @@ public class ExcelTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println(1 << 30);
     }
 
 }

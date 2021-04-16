@@ -7,12 +7,10 @@ package com.tangshengbo.io.excel;
 import cn.hutool.db.DbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.beans.BeanMap;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -106,7 +104,6 @@ public class DatabaseUtil {
         PreparedStatement pStemt = null;
         String tableSql = SQL + tableName;
         ResultSet rs = null;
-
         try {
             pStemt = conn.prepareStatement(tableSql);
             //结果集元数据
@@ -157,11 +154,39 @@ public class DatabaseUtil {
 //        });
 
 //        System.out.println(!ReUtil.contains("^[u4e00-u9fa5]{0,}$", "口口声声"));
-        Pattern compile = Pattern.compile(".*[\\u4e00-\\u9faf].*||.*[\\u0030-\\u0039]*");
-        System.out.println(compile.matcher("fsdsdfsdf").matches());
+//        Pattern compile = Pattern.compile(".*[\\u4e00-\\u9faf].*||.*[\\u0030-\\u0039]*");
+//        System.out.println(compile.matcher("fsdsdfsdf").matches());
+//
+//        String str = "32423<23423>**LL(fsefs) 【了老老实实】（范德萨范德萨发）fdsfsd KKKKSS:杭州周发生的方式（就就开始）{kksj},:3232L进口件AADD     范德萨发生_3_";
+//        System.out.println(filter(str));
 
-        String str = "32423<23423>**LL(fsefs) 【了老老实实】（范德萨范德萨发）fdsfsd KKKKSS:杭州周发生的方式（就就开始）{kksj},:3232L进口件AADD     范德萨发生_3_";
-        System.out.println(filter(str));
+        Rate e = new Rate();
+        e.setCompany("fsdfdsf");
+        e.setDetail("kkkk");
+        BeanMap original = BeanMap.create(e);
+
+        System.out.println(original.get("company"));
+        System.out.println(original.get("detail"));
+
+        List<Long> longList = new ArrayList<>();
+        longList.add(10L);
+        longList.add(11L);
+        longList.add(12L);
+        longList.add(13L);
+        longList.add(14L);
+        longList.add(14L);
+        longList.add(14L);
+        longList.add(14L);
+        longList.add(14L);
+        longList.add(14L);
+        longList.add(14L);
+
+        System.out.println(Arrays.toString(longList.toArray(new Long[0])));
+
+        String str = null;
+        Optional<String> str1 = Optional.of(str);
+        System.out.println(str1.get());
+
     }
 
 

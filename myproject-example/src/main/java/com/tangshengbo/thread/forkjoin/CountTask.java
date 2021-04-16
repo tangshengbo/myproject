@@ -1,15 +1,18 @@
 package com.tangshengbo.thread.forkjoin;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveTask;
 
-/**
- * Created by Tangshengbo on 2017/11/17.
- */
+
 public class CountTask extends RecursiveTask<Integer> {
+
+    private static final Logger logger = LoggerFactory.getLogger(CountTask.class);
 
     // 阈值
     private static final int THRESHOLD = 2;
@@ -36,6 +39,7 @@ public class CountTask extends RecursiveTask<Integer> {
                 sum += i;
             }
         } else {
+            System.out.println("=====任务分解======");
             // 如果任务大于阈值，就分裂成两个子任务计算
             int middle = (start + end) / 2;
             System.out.println(String.format("middle %s", middle));
@@ -54,15 +58,21 @@ public class CountTask extends RecursiveTask<Integer> {
     }
 
     public static void main(String[] args) {
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        StopWatch watch = new StopWatch();
+        watch.start("ForkJoinPool");
+        ForkJoinPool forkJoinPool = new ForkJoinPool(5);
         // 生成一个计算任务，负责计算1+2+3+4
         CountTask task = new CountTask(1, 100);
         // 执行一个任务
         Future<Integer> result = forkJoinPool.submit(task);
+        Integer resultNum = null;
         try {
-            System.out.println(result.get());
+            resultNum = result.get();
         } catch (Exception e) {
             System.out.println(e);
         }
+        watch.stop();
+        logger.info("result1:{} time:{}", resultNum, watch.prettyPrint());
+
     }
 }

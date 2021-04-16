@@ -1,7 +1,9 @@
 package com.tangshengbo.nosql.redis;
 
 import com.tangshengbo.json.Account;
+import jodd.util.SystemUtil;
 import jodd.util.ThreadUtil;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -13,6 +15,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.StopWatch;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -37,15 +41,25 @@ public class RedisTemplateTest {
 
     @Test
     public void testQuery() {
-        StopWatch watch = new StopWatch();
-        watch.start();
-        for (int i = 0; i < 20000; i++) {
-            Object value = redisTemplate.opsForValue().get(String.valueOf(i));
-            logger.info("{}", value);
-        }
-        watch.stop();
+//        StopWatch watch = new StopWatch();
+//        watch.start();
+//        for (int i = 0; i < 20000; i++) {
+//            Object value = redisTemplate.opsForValue().get(String.valueOf(i));
+//            logger.info("{}", value);
+//        }
+//        watch.stop();
+        System.out.println(SystemUtil.osName() + "\t" + SystemUtil.osVersion());
 //        redisTemplate.convertAndSend();
-        logger.info("{}", watch.prettyPrint());
+//        logger.info("{}", watch.prettyPrint());
+        try {
+            Process exec = Runtime.getRuntime().exec("java -version");
+            System.out.println(IOUtils.toString(exec.getInputStream(), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println(Runtime.getRuntime().totalMemory());
     }
 
     @Test

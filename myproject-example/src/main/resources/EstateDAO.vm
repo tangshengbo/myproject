@@ -1,0 +1,49 @@
+package com.innodealing.onshore.externaldataservice.dao.estate;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.github.wz2cool.dynamic.DynamicQuery;
+import com.github.wz2cool.dynamic.builder.DynamicQueryBuilder;
+import com.innodealing.onshore.bondmetadata.entity.estate.${classNameUpCase}DO;
+import com.innodealing.onshore.externaldataservice.mapper.estate.${classNameUpCase}Mapper;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.util.List;
+
+import static com.github.wz2cool.dynamic.builder.DynamicQueryBuilderHelper.*;
+
+
+/**
+* ${classNameComment}DAO
+*
+* @author Tangshengbo
+* @date 2020/5/26
+*/
+@Repository
+public class ${classNameUpCase}DAO {
+
+    @Resource
+    private ${classNameUpCase}Mapper ${classNameUpCaseName}Mapper;
+
+    /**
+    * 获取${classNameComment}
+    *
+    * @param id         主键起始位置
+    * @param updateTime 更新时间
+    * @param pageSize   页大小
+    * @return ${classNameComment}列表
+    */
+    public List<${classNameUpCase}DO> get${classNameUpCase}ListByUpdateTime(Long id, Timestamp updateTime, int pageSize) {
+        DynamicQuery<${classNameUpCase}DO> dynamicQuery = DynamicQueryBuilder.create(${classNameUpCase}DO.class)
+            .selectAll()
+            .where(${classNameUpCase}DO::getId, greaterThan(id))
+            .and(${classNameUpCase}DO::getUpdateTime, greaterThanOrEqual(updateTime))
+            .orderBy(${classNameUpCase}DO::getId, asc())
+            .build();
+        PageInfo<${classNameUpCase}DO> ${classNameUpCaseName}PageInfo = PageHelper.startPage(1, pageSize, false)
+                .doSelectPageInfo(() -> ${classNameUpCaseName}Mapper.selectByDynamicQuery(dynamicQuery));
+        return ${classNameUpCaseName}PageInfo.getList();
+    }
+}
