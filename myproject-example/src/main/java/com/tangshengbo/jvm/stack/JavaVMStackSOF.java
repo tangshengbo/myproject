@@ -18,7 +18,11 @@ public class JavaVMStackSOF {
             sof.stackLeak();
         } catch (Throwable e) {
             System.out.println("stack length:" + sof.stackLength);
-            throw e;
+//            throw e;
         }
+        System.out.println(Runtime.getRuntime().availableProcessors());
+
+
+
     }
 }

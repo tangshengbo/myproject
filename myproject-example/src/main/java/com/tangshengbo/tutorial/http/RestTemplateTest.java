@@ -40,6 +40,8 @@ import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Tangshengbo on 2018/1/19.
@@ -190,17 +192,23 @@ public class RestTemplateTest {
 
     @Test
     public void testExchange() throws Exception {
-        url = "http://localhost:8080/order";
+        url = "http://localhost:8080/user/findAll";
         HttpHeaders header = new HttpHeaders();
 
         header.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        for (int i = 1; i <= 10000000; i++) {
-            JSONObject params = new JSONObject();
-            params.put("userId", String.valueOf(i));
-            params.put("status", "INSERT_TEST");
-            HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(params), header);
-            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
-            printLog(responseEntity);
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        for (int i = 1; i <= 100000000; i++) {
+
+            Runnable r = () -> {
+                JSONObject params = new JSONObject();
+                params.put("userId", String.valueOf(1));
+                params.put("status", "INSERT_TEST");
+                HttpEntity<String> httpEntity = new HttpEntity<>(JSON.toJSONString(params), header);
+                ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+                printLog(responseEntity);
+            };
+            executorService.execute(r);
+
         }
     }
 

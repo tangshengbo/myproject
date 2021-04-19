@@ -5,17 +5,17 @@ import java.net.URLEncoder;
 
 public class QueryString {
 
-    private StringBuilder query = new StringBuilder();
+    private final StringBuilder query = new StringBuilder();
 
     public QueryString() {
     }
 
-    public synchronized void add(String name, String value) {
+    public void add(String name, String value) {
         query.append('&');
         encode(name, value);
     }
 
-    private synchronized void encode(String name, String value) {
+    private void encode(String name, String value) {
         try {
             query.append(URLEncoder.encode(name, "UTF-8"));
             query.append('=');
@@ -25,8 +25,8 @@ public class QueryString {
         }
     }
 
-    public synchronized String getQuery() {
-        return query.toString().substring(1);
+    public String getQuery() {
+        return query.substring(1);
     }
 
     @Override

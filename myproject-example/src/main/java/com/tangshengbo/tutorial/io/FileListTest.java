@@ -9,7 +9,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
-import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
@@ -21,7 +20,7 @@ public class FileListTest {
     private List<File> fileList = Lists.newArrayListWithExpectedSize(1000000);
 
     public static void main(String[] args) {
-        File file = new File("D:/");
+        File file = new File("E:/");
         FileListTest fileListTest = new FileListTest();
         System.out.println(file.getName());
         fileListTest.tree(file, 0);
@@ -38,7 +37,7 @@ public class FileListTest {
         System.out.println(String.format("+ cost %s ms", (te - ts) / 1000.0));
         System.out.println("average:" + formatFileSize(new Double(maxSize.orElse(0.0)).longValue()));
         System.out.println(maxFile + "\tsize:"
-                + formatFileSize(maxFile.isPresent()? maxFile.get().length():0L)
+                + formatFileSize(maxFile.map(File::length).orElse(0L))
                 + "\t total:" + fileListTest.fileList.size() + "个");
     }
 
@@ -51,8 +50,7 @@ public class FileListTest {
     private static Optional<File> getMaxFileB(FileListTest fileListTest) {
         Optional<File> maxFile;Comparator<File> fileComparator = Comparator.comparingLong(File::length);
         maxFile = fileListTest.fileList
-                .parallelStream()
-                .collect(Collectors.maxBy(fileComparator));
+                .parallelStream().max(fileComparator);
         return maxFile;
     }
 
