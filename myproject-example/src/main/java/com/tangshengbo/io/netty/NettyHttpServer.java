@@ -13,6 +13,9 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by Tangshengbo on 2021/4/19
  */
@@ -20,7 +23,31 @@ public class NettyHttpServer {
 
 
     public static void main(String[] args) {
-        new NettyHttpServer().start();
+//        new NettyHttpServer().start();
+//        testPowerOfTow();
+
+
+        Long[] comUniCodes = new Long[]{};
+        comUniCodes = Arrays.stream(comUniCodes).distinct().toArray(Long[]::new);
+    }
+
+    private static void testPowerOfTow() {
+        AtomicInteger idx = new AtomicInteger();
+        idx.getAndIncrement();
+        int length = 16;
+        for (int i = 0; i < 1000; i++) {
+            if (isPowerOfTwo(i)) {
+                System.out.printf("val:%s (val & -val):%s%n", i, (i & -i));
+            }
+            int index = idx.getAndIncrement() & length - 1;
+            System.err.println(i + "index" + index);;
+        }
+    }
+
+    // 判断线程任务执行的个数是否为 2 的幂次方。e.g: 2、4、8、16
+    private static boolean isPowerOfTwo(int val) {
+//        System.out.println((val & -val) );
+        return (val & -val) == val;
     }
 
 
@@ -71,7 +98,7 @@ public class NettyHttpServer {
                     .childOption(ChannelOption.TCP_NODELAY, true);
 
             //3、启动服务器
-            int port = 8080;
+            int port = 6666;
             ChannelFuture f = server.bind(port).sync();
             System.out.println("Netty Tomcat 已启动，监听的端口是：" + port);
             f.channel().closeFuture().sync();

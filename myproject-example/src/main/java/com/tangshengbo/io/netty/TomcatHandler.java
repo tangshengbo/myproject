@@ -32,6 +32,8 @@ public class TomcatHandler extends ChannelInboundHandlerAdapter {
         mediaTypeMap.put(".js", "text/html");
         mediaTypeMap.put(".html", "text/html");
         mediaTypeMap.put(".mp4", "video/mpeg4");
+        mediaTypeMap.put(".ico", "image/x-icon");
+        mediaTypeMap.put(".jpg", "image/*");
     }
 
     @Override
@@ -55,11 +57,12 @@ public class TomcatHandler extends ChannelInboundHandlerAdapter {
 
     }
 
-    private void handler(NettyRequest request, NettyResponse response) {
+    private void handler(NettyRequest request, NettyResponse response) throws Exception {
         // 实际业务处理
         String url = request.getUrl();
         try {
             url = URLDecoder.decode(url, "UTF-8");
+            System.out.println(url);
             File theFile = new File(rootDirectory,
                     url);
             if (theFile.isDirectory()) {
@@ -77,13 +80,15 @@ public class TomcatHandler extends ChannelInboundHandlerAdapter {
                 }
                 response.write(builder.toString(), "text/html");
             } else {
-                String substring = url.substring(url.indexOf("."));
+                String substring = url.substring(url.lastIndexOf("."));
                 String mediaType = mediaTypeMap.get(substring);
                 byte[] theData = Files.readAllBytes(theFile.toPath());
                 response.write(new String(theData), mediaType);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+            response.write("文件没有找到", "text/html");
         }
     }
 
