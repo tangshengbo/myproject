@@ -13,7 +13,6 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -23,12 +22,8 @@ public class NettyHttpServer {
 
 
     public static void main(String[] args) {
-//        new NettyHttpServer().start();
-//        testPowerOfTow();
-
-
-        Long[] comUniCodes = new Long[]{};
-        comUniCodes = Arrays.stream(comUniCodes).distinct().toArray(Long[]::new);
+        new NettyHttpServer().start();
+        testPowerOfTow();
     }
 
     private static void testPowerOfTow() {
@@ -98,7 +93,7 @@ public class NettyHttpServer {
                     .childOption(ChannelOption.TCP_NODELAY, true);
 
             //3、启动服务器
-            int port = 6666;
+            int port = 8888;
             ChannelFuture f = server.bind(port).sync();
             System.out.println("Netty Tomcat 已启动，监听的端口是：" + port);
             f.channel().closeFuture().sync();

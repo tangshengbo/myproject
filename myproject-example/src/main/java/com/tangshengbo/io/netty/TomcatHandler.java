@@ -30,10 +30,12 @@ public class TomcatHandler extends ChannelInboundHandlerAdapter {
         mediaTypeMap.put(".pdf", "application/pdf");
         mediaTypeMap.put(".css", "text/html");
         mediaTypeMap.put(".js", "text/html");
-        mediaTypeMap.put(".html", "text/html");
+        mediaTypeMap.put(".html", "text/html;charset=utf-8");
         mediaTypeMap.put(".mp4", "video/mpeg4");
         mediaTypeMap.put(".ico", "image/x-icon");
         mediaTypeMap.put(".jpg", "image/*");
+        mediaTypeMap.put(".doc", "application/msword");
+        mediaTypeMap.put(".docx", "application/msword");
     }
 
     @Override
@@ -78,7 +80,7 @@ public class TomcatHandler extends ChannelInboundHandlerAdapter {
                     String name = String.format("<a href='%s'>%s</a>", path, file.getName());
                     builder.append(name).append("</br>");
                 }
-                response.write(builder.toString(), "text/html");
+                response.write(builder.toString(), "text/html;charset=utf-8");
             } else {
                 String substring = url.substring(url.lastIndexOf("."));
                 String mediaType = mediaTypeMap.get(substring);
