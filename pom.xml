@@ -18,7 +18,7 @@
     <properties>
         <spring-version>4.3.10.RELEASE</spring-version>
         <spring-security-version>3.2.2.RELEASE</spring-security-version>
-        <spring.data.version>1.10.1.RELEASE</spring.data.version>
+        <spring.data.version>3.3.5</spring.data.version>
     </properties>
     <dependencies>
         <!-- 添加Spring4.1.4的核心包 -->
